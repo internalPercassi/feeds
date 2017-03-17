@@ -1,7 +1,7 @@
 package it.percassi.perparser.parsers.products;
 
+import it.percassi.parsers.products.model.FacebookProduct;
 import it.percassi.perparser.parsers.BaseParser;
-import it.percassi.perparser.parsers.products.model.FacebookProduct;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

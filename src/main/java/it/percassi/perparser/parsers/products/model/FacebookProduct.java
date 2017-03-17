@@ -1,6 +1,6 @@
-package it.percassi.perparser.parsers.products.model;
+package it.percassi.parsers.products.model;
 
-import com.perparser.parsers.products.model.AvailabilityEnum;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 

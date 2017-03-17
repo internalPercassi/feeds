@@ -1,4 +1,4 @@
-package it.percassi.perparser.ajax;
+package it.percassi.perparser.servlet;
 
 import it.percassi.perparser.parsers.BaseParser;
 import it.percassi.perparser.parsers.ParserProvider;

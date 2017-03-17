@@ -1,4 +1,4 @@
-package com.perparser.parsers.products.model;
+package it.percassi.parsers.products.model;
 
 /**
  *
