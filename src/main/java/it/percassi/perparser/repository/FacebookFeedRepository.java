@@ -4,8 +4,13 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
+import it.percassi.perparser.model.AppEnum;
+import it.percassi.perparser.model.parser.BaseModel;
 import it.percassi.perparser.properties.PropertiesProvider;
-import it.percassi.perparser.model.FacebookFeed;
+import it.percassi.perparser.model.parser.FacebookFeed;
+import it.percassi.perparser.model.parser.GLmodel;
+import it.percassi.perparser.model.parser.OSmodel;
+import it.percassi.perparser.service.parsers.BaseParser;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +18,7 @@ import javax.annotation.PreDestroy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Repository;
 
@@ -31,10 +37,11 @@ public class FacebookFeedRepository extends BaseRepository {
 		return collection;
 	}
 
-	public void saveFacebookFeed(List<FacebookFeed> facebookFeeds) throws IOException {
+	public void saveFacebookFeed(List<BaseModel> facebookFeeds,String fileType) throws IOException {
 		List<Document> jsonToInsert = new ArrayList<Document>();
-		for (FacebookFeed ff : facebookFeeds) {
-			String jsonStr = jsonMapper.writeValueAsString(ff);
+		for (BaseModel ff : facebookFeeds) {
+			String jsonStr = "";
+			jsonStr = jsonMapper.writeValueAsString(ff);
 			if (jsonStr != null) {
 				Document doc = Document.parse(jsonStr);
 				jsonToInsert.add(doc);
@@ -75,4 +82,14 @@ public class FacebookFeedRepository extends BaseRepository {
 		LOG.info("contextDestroyed");
 	}
 
+	private Class getParser(String fileType) {
+		if (AppEnum.FileType.FACEBOOK.getCode().equalsIgnoreCase(fileType)) {
+			return FacebookFeed.class;
+		} else if (AppEnum.FileType.GL.getCode().equalsIgnoreCase(fileType)) {
+			return GLmodel.class;
+		} else if (AppEnum.FileType.OS.getCode().equalsIgnoreCase(fileType)) {
+			return OSmodel.class;
+		}
+		return null;
+	}
 }

@@ -1,13 +1,10 @@
-package it.percassi.perparser.model;
-
-
-import org.json.simple.JSONArray;
+package it.percassi.perparser.model.parser;
 
 /**
  *
  * @author Daniele Sperto
  */
-public class FacebookFeed {
+public class FacebookFeed extends BaseModel{
 	
 	public  static final String FIELD_SEPARATOR = "|";
 	
@@ -38,7 +35,6 @@ public class FacebookFeed {
 	private String customLabel2;
 	private String customLabel3;
 	private String customLabel4;
-	private String md5;
 
 	public String getId() {
 		return id;
@@ -254,46 +250,5 @@ public class FacebookFeed {
 
 	public void setCustomLabel4(String customLabel4) {
 		this.customLabel4 = customLabel4;
-	}
-
-	public String getMd5() {
-		return md5;
-	}
-
-	public void setMd5(String md5) {
-		this.md5 = md5;
-	}	
-		
-	
-	public JSONArray toJSONArray(){
-		JSONArray ret = new JSONArray();
-		ret.add(this.id);
-		ret.add(this.availability);
-		ret.add(this.condition);
-		ret.add(this.description);
-		ret.add(this.imageLink);
-		ret.add(this.link);
-		ret.add(this.title);
-		ret.add(this.price);
-		ret.add(this.brand);
-		ret.add(this.additionalImageLink);
-		ret.add(this.ageGroup);
-		ret.add(this.color);
-		ret.add(this.expirationDate);
-		ret.add(this.gender);
-		ret.add(this.itemGroupId);
-		ret.add(this.googleProductCategory);
-		ret.add(this.material);
-		ret.add(this.pattern);
-		ret.add(this.productType);
-		ret.add(this.salePrice);
-		ret.add(this.shipping);
-		ret.add(this.shippingWeight);
-		ret.add(this.customLabel0);
-		ret.add(this.customLabel1);
-		ret.add(this.customLabel2);
-		ret.add(this.customLabel3);
-		ret.add(this.customLabel4);
-		return ret;
-	}
+	}		
 }

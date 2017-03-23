@@ -10,5 +10,5 @@ import java.util.List;
  */
 public abstract class BaseParser<T> {
 
-	public abstract List<T> parse(InputStream stream, String md5)  throws IOException;			
+	public abstract List<T> parse(InputStream stream)  throws IOException;			
 }

@@ -114,7 +114,7 @@ var searchFilter = function () {
 	var _drawFiltersActive = function () {
 		$(filtersActiveSelector).empty();
 		for (var i = 0; i < filters.length; i++) {
-			var span$ = $('<span/>').addClass('label label-default').html(filters[i].field + " " + filters[i].searchOperator + " " + filters[i].searchVal);
+			var span$ = $('<span/>').addClass('label label-default filter').html("  "+filters[i].field + " " + filters[i].searchOperator + " " + filters[i].searchVal+"  ");
 			$(filtersActiveSelector).append(span$);
 		}
 	};
@@ -161,7 +161,7 @@ var searchFilter = function () {
 			}
 		}
 		for (var j = 0; j < indexToRemove.length; j++) {
-			filters.splice(j, 1);
+			filters.splice(indexToRemove[j], 1);
 		}
 		var filter = {
 			field: "md5",
@@ -176,7 +176,12 @@ var searchFilter = function () {
 			$(addFilterBtnSelector).off("click");
 			$(addFilterBtnSelector).on('click', _addFilterBtnCallback);
 			$(searchBtnSelector).off("click");
-			$(searchBtnSelector).on('click', searchCallback);
+			$(searchBtnSelector).on('click', function(event){
+				event.preventDefault();
+				event.stopImmediatePropagation();
+				jsonTable.resetPage();
+				searchCallback(0,10,false);
+			});
 			$(removeFilterSelector).off("click");
 			$(removeFilterSelector).on('click', _reset);
 		},

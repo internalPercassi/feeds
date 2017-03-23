@@ -1,0 +1,170 @@
+package it.percassi.perparser.service.parsers;
+
+import it.percassi.perparser.model.AppEnum;
+import it.percassi.perparser.model.parser.FacebookFeed;
+import it.percassi.perparser.model.parser.WAFModel;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+/**
+ *
+ * @author Daniele Sperto
+ */
+@Service("wafParser")
+public class WAFParser extends BaseParser<WAFModel> {
+
+	public static final String FIELD_SEPARATOR = ",";
+
+	@Override
+	public List<WAFModel> parse(InputStream stream) throws IOException {
+		List<WAFModel> ret = new ArrayList<WAFModel>();
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
+		String line = null;
+		while ((line = bufferedReader.readLine()) != null) {
+			WAFModel fbp = this.build(line);
+			if (fbp != null) {
+				ret.add(fbp);
+			}
+		}
+		return ret;
+	}
+
+	private WAFModel build(String line) {
+		WAFModel ret = new WAFModel();
+		String[] tokens = StringUtils.splitPreserveAllTokens(line, WAFParser.FIELD_SEPARATOR);
+		for (int c = 0; c < tokens.length; c++) {
+			String tmp = tokens[c];
+			switch (c + 1) {
+				case 1:
+					ret.setRemote_addr(tmp);
+					break;
+				case 2:
+					ret.setTime_iso8601(tmp);
+					break;
+				case 3:
+					ret.setRemote_user(tmp);
+					break;
+				case 4:
+					ret.setStatus(tmp);
+					break;
+				case 5:
+					ret.setBytes_sent(tmp);
+					break;
+				case 6:
+					ret.setMethod(tmp);
+					break;
+				case 7:
+					ret.setRequest(tmp);
+					break;
+				case 8:
+					ret.setProto_version(tmp);
+					break;
+				case 9:
+					ret.setHttp_user_agent(tmp);
+					break;
+				case 10:
+					ret.setBlocked(tmp);
+					break;
+				case 11:
+					ret.setIs_human(tmp);
+					break;
+				case 12:
+					ret.setBlock_reason(tmp);
+					break;
+				case 13:
+					ret.setGeoip_city_country_name(tmp);
+					break;
+				case 14:
+					ret.setGeoip_city(tmp);
+					break;
+				case 15:
+					ret.setGeoip_longitude(tmp);
+					break;
+				case 16:
+					ret.setGeoip_latitude(tmp);
+					break;
+				case 17:
+					ret.setRequest_id(tmp);
+					break;
+				case 18:
+					ret.setMatched_asnum(tmp);
+					break;
+				case 19:
+					ret.setCaptured_vector(tmp);
+					break;
+				case 20:
+					ret.setRequest_time(tmp);
+					break;
+				case 21:
+					ret.setUpstream_addr(tmp);
+					break;
+				case 22:
+					ret.setUpstream_response_time(tmp);
+					break;
+				case 23:
+					ret.setDomain_name(tmp);
+				case 24:
+					ret.setHost(tmp);
+					break;
+				case 25:
+					ret.setReferer(tmp);
+					break;
+				case 26:
+					ret.setRequest_headers(tmp);
+					break;
+				case 27:
+					ret.setOrganization(tmp);
+					break;
+				case 28:
+					ret.setUpstream_status(tmp);
+					break;
+				case 29:
+					ret.setUri(tmp);
+					break;
+				case 30:
+					ret.setHostname(tmp);
+					break;
+				case 31:
+					ret.setIs_tor(tmp);
+					break;
+				case 33:
+					ret.setIs_vpn(tmp);
+					break;
+				case 34:
+					ret.setIs_anonymizer(tmp);
+					break;
+				case 35:
+					ret.setIs_proxy(tmp);
+					break;
+				case 36:
+					ret.setRbzsessionid(tmp);
+					break;
+				case 37:
+					ret.setRequest_length(tmp);
+					break;
+				case 38:
+					ret.setSent_http_cache_control(tmp);
+					break;
+				case 39:
+					ret.setSent_http_expires(tmp);
+					break;
+				case 40:
+					ret.setCookie_rbzid(tmp);
+					break;
+				case 41:
+					ret.setSent_http_content_type(tmp);
+					break;
+				case 42:
+					ret.setAnything_else(tmp);
+					break;
+			}
+		}
+		return ret;
+	}
+}

@@ -2,11 +2,10 @@ package it.percassi.perparser.service.mongo;
 
 import com.mongodb.BasicDBObject;
 import it.percassi.perparser.repository.FacebookFeedRepository;
-import it.percassi.perparser.model.FacebookFeed;
 import it.percassi.perparser.model.MongodbFilter;
 import it.percassi.perparser.model.UploadedFileModel;
+import it.percassi.perparser.model.parser.BaseModel;
 import it.percassi.perparser.repository.UploadedFileRepository;
-import it.percassi.perparser.servlet.QueryFacebookFeedServlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +30,8 @@ public class MongoService {
 	@Autowired
 	private UploadedFileRepository uploadedFileRepository;
 
-	public void saveFacebookFeed(List<FacebookFeed> feedToSave) throws IOException {
-		facebookFeedRepository.saveFacebookFeed(feedToSave);
+	public void saveFacebookFeed(List<BaseModel> feedToSave,String fileType) throws IOException {
+		facebookFeedRepository.saveFacebookFeed(feedToSave,fileType);
 	}
 
 	public JSONObject getFacebookFeed(List<MongodbFilter> filters,Integer start, Integer length) throws IOException {

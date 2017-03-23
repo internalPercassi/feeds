@@ -5,9 +5,10 @@ var PerParserController = function () {
 	var _uploadButtonCallback = function () {
 		var form = $('#uploadForm')[0];
 		var formData = new FormData(form);
+		var fileType= $('#fileType').val();
 		$.ajax({
 			enctype: 'multipart/form-data',
-			url: 'parseFile',
+			url: 'parseFile?fileType='+fileType,
 			data: formData,
 			cache: false,
 			contentType: false,

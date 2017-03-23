@@ -33,56 +33,22 @@ public class AppEnum {
 			}
 			return OUTOFSTOCK;
 		}
-	}
-
-	public static enum ColumnNames {
-		FACEBOOK("id","availability","condition","description","imageLink","link","title","price","brand","additionalImageLink","ageGroup","color","expirationDate","gender","itemGroupId","googleProductCategory","material","pattern","productType","salePrice","shipping","shippingWeight","customLabel0","customLabel1","customLabel2","customLabel3","customLabel4"),
-		GL(),
-		OS();
-
-		private String[] names;
-
-		private ColumnNames(String... names) {
-			this.names = names;
-		}
-
-		public String[] getNames() {
-			return this.names;
-		}
-	}
+	}	
 	
-	
-	public static enum FeedType{
+	public static enum FileType{
 		FACEBOOK("FacebookProduct"),
 		GL("GL"),
-		OS("OS");
+		OS("OS"),
+		WAF("WAF");
 
 		private String code;
 
-		private FeedType(String code) {
+		private FileType(String code) {
 			this.code = code;
 		}
 
 		public String getCode() {
 			return this.code;
 		}
-	}
-	
-	
-	public static enum FeedTitle{
-		FACEBOOK("Facebook Product View"),
-		GL("Stocks File View"),
-		OS("Overselling File View");
-
-		private String titleText;
-
-		private FeedTitle(String titleText) {
-			this.titleText = titleText;
-		}
-
-		public String getTitleText() {
-			return this.titleText;
-		}
-	}
-			
+	}	
 }

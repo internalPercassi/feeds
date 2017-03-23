@@ -1,6 +1,6 @@
 package it.percassi.perparser.service.parsers;
 
-import it.percassi.perparser.model.OSmodel;
+import it.percassi.perparser.model.parser.OSmodel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -38,7 +38,7 @@ public class OSParser extends BaseParser<OSmodel> {
 //	}
 
 	@Override
-	public List<OSmodel> parse(InputStream stream,String md5) throws IOException {
+	public List<OSmodel> parse(InputStream stream) throws IOException {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 

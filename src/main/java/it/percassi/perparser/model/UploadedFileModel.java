@@ -1,6 +1,8 @@
 package it.percassi.perparser.model;
 
+import java.io.IOException;
 import java.util.Date;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -13,6 +15,18 @@ public class UploadedFileModel {
 	private Date date;
 	private Integer rowCount;
 
+	public UploadedFileModel() {
+	}
+	
+	public UploadedFileModel(byte[] bytes,String type) throws IOException {
+		String md5 = this.getMD5(bytes);
+		this.setDate(new Date());
+		this.setMd5(md5);
+		this.setRowCount(0);
+		this.setType(type);
+	}
+
+	
 	public String getMd5() {
 		return md5;
 	}
@@ -45,4 +59,8 @@ public class UploadedFileModel {
 		this.rowCount = rowCount;
 	}
 		
+	private static String getMD5(byte[] bytes) throws IOException {												
+		String md5 = DigestUtils.md5Hex(bytes);				
+		return md5;
+	}
 }

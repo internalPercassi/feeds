@@ -52,7 +52,7 @@
 							<select name="fileType" id="fileType" class="btn btn-default selectpicker form-control">
 								<option value="FacebookProduct">Facebook Product</option>
 								<option value="GL">GL File</option>
-								<option value="OS">OverSelling</option>								
+								<option value="WAF">WAF</option>								
 							</select>
 						</div>
 						<div class="col-md-3">
@@ -80,53 +80,53 @@
 
 
 
-<section id="section-filters">			
-	<div class="container">
-		<form class="col-md-12">
-			<div class="input-group col-sm-12  col-md-12">
-				<div class="col-md-2">
-					<select name="searchField" id="searchField" class="btn btn-default selectpicker form-control">														
-					</select>
+		<section id="section-filters">			
+			<div class="container">
+				<form class="col-md-12">
+					<div class="input-group col-sm-12  col-md-12">
+						<div class="col-md-2">
+							<select name="searchField" id="searchField" class="btn btn-default selectpicker form-control">														
+							</select>
+						</div>
+						<div class="col-md-2">
+							<select name="searchOperator" id="searchOperator" class="btn btn-default selectpicker form-control">
+								<option value="$eq">&#61;</option>
+								<option value="$ne">&#33;&#61;</option>
+								<option value="$gt">gt</option>	
+								<option value="$lt">lt</option>
+							</select>
+						</div>	
+						<div class="col-md-2">
+							<input type="text" class="form-control" name="searchVal" id="searchVal">
+						</div>
+						<div class="col-md-2">
+							<input id="addFilterBtn" class="btn btn-default form-control" type="button" value="Add Filter" />
+						</div>
+						<div class="col-md-2">
+							<input id="removeFilter" class="btn btn-default form-control" type="button" value="Remove filter" />
+						</div>
+						<div class="col-md-2">
+							<input id="searchBtn" class="btn btn-default form-control" type="button" value="Search" />
+						</div>
+					</div>
+				</form>
+				<div id="filtersActive" class="col-sm-12  col-md-12">
 				</div>
-				<div class="col-md-2">
-					<select name="searchOperator" id="searchOperator" class="btn btn-default selectpicker form-control">
-						<option value="$eq">&#61;</option>
-						<option value="$ne">&#33;&#61;</option>
-						<option value="$gt">gt</option>	
-						<option value="$lt">lt</option>
-					</select>
+			</div>			
+		</section>
+		<br>
+		<section id="section-table">
+			<div class="col-sm-12  col-md-12">
+				<table id="dataGrid" class="col-sm-12  col-md-12"></table>
+				<div class="col-sm-6  col-md-6" id="tableActions">			
 				</div>	
-				<div class="col-md-2">
-					<input type="text" class="form-control" name="searchVal" id="searchVal">
-				</div>
-				<div class="col-md-2">
-					<input id="addFilterBtn" class="btn btn-default form-control" type="button" value="Add Filter" />
-				</div>
-				<div class="col-md-2">
-					<input id="removeFilter" class="btn btn-default form-control" type="button" value="Remove filter" />
-				</div>
-				<div class="col-md-2">
-					<input id="searchBtn" class="btn btn-default form-control" type="button" value="Search" />
-				</div>
+				<div class="col-sm-6  col-md-6" id="tablePager"></div>		
 			</div>
-		</form>
-		<div id="filtersActive" class="col-sm-12  col-md-12">
-		</div>
-	</div>			
-</section>
+		</section>
 
-<section id="section-table">
-	<div class="col-sm-12  col-md-12">
-		<table id="dataGrid" class="col-sm-12  col-md-12"></table>
-		<div class="col-sm-6  col-md-6" id="tableActions">			
-		</div>	
-		<div class="col-sm-6  col-md-6" id="tablePager"></div>		
-	</div>
-</section>
-
-<div class="loader"><!-- Place at bottom of page --></div>
-<script src="/PerParserSPA/resources/js/prototypeFunctions.js" type="text/javascript" ></script>
-<script src="/PerParserSPA/resources/js/modules.js" type="text/javascript" ></script>
-<script src="/PerParserSPA/resources/js/controller.js" type="text/javascript" ></script>		
-</body>
+		<div class="loader"><!-- Place at bottom of page --></div>
+		<script src="/PerParserSPA/resources/js/prototypeFunctions.js" type="text/javascript" ></script>
+		<script src="/PerParserSPA/resources/js/modules.js" type="text/javascript" ></script>
+		<script src="/PerParserSPA/resources/js/controller.js" type="text/javascript" ></script>		
+	</body>
 </html>

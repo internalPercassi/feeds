@@ -56,10 +56,7 @@ public class FileParserServlet extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 				return;
 			}
-			String md5 = "";
-			if (AppEnum.FeedType.FACEBOOK.getCode().equalsIgnoreCase(fileType)){
-				md5 = uploadFileFacade.parseAndSaveFacebook(bytes);				
-			}
+			String md5 = uploadFileFacade.parseAndSave(fileType,bytes);
 			response.setStatus(HttpServletResponse.SC_OK);
 			PrintWriter out = response.getWriter();
 			JSONObject ret = new JSONObject();

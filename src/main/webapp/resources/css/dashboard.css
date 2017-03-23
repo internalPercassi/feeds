@@ -151,3 +151,7 @@ body.loading {
 body.loading .loader {
     display: block;
 }
+
+span.filter{
+	margin: 7px;
+}

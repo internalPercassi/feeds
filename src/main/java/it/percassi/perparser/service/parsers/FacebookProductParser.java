@@ -1,7 +1,7 @@
 package it.percassi.perparser.service.parsers;
 
 import it.percassi.perparser.model.AppEnum;
-import it.percassi.perparser.model.FacebookFeed;
+import it.percassi.perparser.model.parser.FacebookFeed;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,12 +20,12 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
 
 
 	@Override
-	public List<FacebookFeed> parse(InputStream stream, String md5) throws IOException {
+	public List<FacebookFeed> parse(InputStream stream) throws IOException {
 		List<FacebookFeed> ret = new ArrayList<FacebookFeed>();
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
 		String line = null;
 		while ((line = bufferedReader.readLine()) != null) {
-			FacebookFeed fbp = this.build(line,md5);
+			FacebookFeed fbp = this.build(line);
 			if (fbp != null){
 				ret.add(fbp);
 			}
@@ -34,7 +34,7 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
 	}
 	
 	
-	private FacebookFeed build(String line, String md5) {		
+	private FacebookFeed build(String line) {		
 		FacebookFeed ret = new FacebookFeed();
 		String[] tokens = StringUtils.splitPreserveAllTokens(line, FacebookFeed.FIELD_SEPARATOR);
 		String priceTmp = "";
@@ -60,7 +60,6 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
 		}
 		ret.setId(idTmp);
 		ret.setPrice(priceTmp+" "+currencyCodeTmp);
-		ret.setMd5(md5);
 		return ret;
 	}
 
