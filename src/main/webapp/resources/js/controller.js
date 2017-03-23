@@ -47,9 +47,9 @@ var PerParserController = function () {
 				callback: clickMd5CellCallback
 			}];
 		var url = "getUploadedFile?start=" + start + "&length=" + length;
-		var renderUploadedFileCallback = function (start, length) {
+		var renderUploadedFileCallback = function (start, length, getCsv) {
 			var callbackUrl = "getUploadedFile?start=" + start + "&length=" + length;
-			__renderGenericTable("", callbackUrl, renderUploadedFileCallback);
+			__renderGenericTable("", callbackUrl, renderUploadedFileCallback, getCsv);
 		};
 		searchFilter.reset();
 		__renderGenericTable("", url, renderUploadedFileCallback, cellCallbackConfig);
@@ -59,28 +59,40 @@ var PerParserController = function () {
 	var _renderFeedTable = function (md5, start, length) {
 		jsonTable.resetPage();
 		var url = "getFacebookFeed?start=" + start + "&length=" + length;
-		var renderFeedTableCallback = function (start, length) {
-			var callbackUrl = "getFacebookFeed?&start=" + start + "&length=" + length;
-			__renderGenericTable(md5, callbackUrl, renderFeedTableCallback);
+		var renderFeedTableCallback = function (start, length, getCsv) {
+			var callbackUrl = "getFacebookFeed?start=" + start + "&length=" + length;
+			__renderGenericTable(md5, callbackUrl, renderFeedTableCallback, {}, getCsv);
 		};
-		
+
 		searchFilter.reset();
 		__renderGenericTable(md5, url, renderFeedTableCallback);
-	};	
-	
-	var __renderGenericTable = function (md5, url, searchAndPagingCallback, cellCallbackConfig) {
+	};
+
+	var __renderGenericTable = function (md5, url, searchAndPagingCallback, cellCallbackConfig, getCsv) {
 		var filters = searchFilter.getFilters();
 		var postData;
+		var dataType = 'json';
 		if (md5) {
 			postData = searchFilter.addMd5(md5);
 		}
 		if (filters && filters.length > 0) {
 			postData = filters;
 		}
+		if (getCsv) {
+			url += "&getCsv=true";
+			dataType = 'text';
+			var form$ = $('<form/>').attr("method", "post");
+			var inputFilters = $('<input>').attr('type', 'hidden').attr('name', 'postData').val(JSON.stringify(postData));
+			form$.append(inputFilters);
+			form$.attr('action', url); 
+			$(document.body).append(form$);
+			form$.submit();
+			return;
+		}
 		$.ajax({
 			url: url,
 			data: JSON.stringify(postData),
-			dataType: 'json',
+			dataType: dataType,
 			cache: false,
 			contentType: false,
 			processData: false,
@@ -89,8 +101,10 @@ var PerParserController = function () {
 				$("body").addClass("loading");
 			},
 			success: function (res) {
-				jsonTable.drawTable(res.data, res.recordsTotal, '#dataGrid', '#tablePager', searchAndPagingCallback, cellCallbackConfig);
-				searchFilter.init(res.data,searchAndPagingCallback);
+				if (!getCsv) {
+					jsonTable.drawTable(res.data, res.recordsTotal, '#dataGrid', '#tablePager', searchAndPagingCallback, cellCallbackConfig);
+					searchFilter.init(res.data, searchAndPagingCallback);
+				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.error(JSON.stringify(jqXHR));
@@ -101,11 +115,13 @@ var PerParserController = function () {
 		});
 	}
 
+
 	return {
 		init: function () {
 			console.log("PerParserController initialized");
 			$("#uploadBtn").click(_uploadButtonCallback);
-			$("#showUploadedFile").click(_showUploadedFileButtonCallback);			
+			$("#showUploadedFile").click(_showUploadedFileButtonCallback);
+			$('#getCsv').off("click");
 		}
 	}
 }();

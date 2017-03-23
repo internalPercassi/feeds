@@ -15,9 +15,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class BaseRepository {
 
 	ObjectMapper jsonMapper = new ObjectMapper();
-	static MongoClient mongoClient;
+	MongoClient mongoClient;
 
-	protected static MongoDatabase getDb() throws IOException {
+	protected MongoDatabase getDb() throws IOException {
 		String dbName = PropertiesProvider.getProperty("mongoDB.DBname");
 		return mongoClient.getDatabase(dbName);
 	}
@@ -28,8 +28,5 @@ public class BaseRepository {
 		MongoClientURI uri = new MongoClientURI(dbURI);
 		mongoClient = new MongoClient(uri);
 	}
-
-	public static void destroy() {
-		mongoClient.close();
-	}	
+		
 }

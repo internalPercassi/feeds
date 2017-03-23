@@ -10,6 +10,7 @@ import it.percassi.perparser.properties.PropertiesProvider;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PreDestroy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
@@ -25,9 +26,9 @@ public class UploadedFileRepository  extends BaseRepository{
 
 	private final static Logger LOG = LogManager.getLogger(UploadedFileRepository.class);
 	
-	private static MongoCollection getCollection() throws IOException{
+	private MongoCollection getCollection() throws IOException{
 		String collectionName = PropertiesProvider.getProperty("mongoDB.collection.UploadedFile");
-		MongoCollection collection = BaseRepository.getDb().getCollection(collectionName);
+		MongoCollection collection = this.getDb().getCollection(collectionName);
 		return collection;
 	}
 	
@@ -38,7 +39,7 @@ public class UploadedFileRepository  extends BaseRepository{
 				Document doc = Document.parse(jsonStr);
 				jsonToInsert.add(doc);
 			}		
-		UploadedFileRepository.getCollection().insertMany(jsonToInsert);
+		this.getCollection().insertMany(jsonToInsert);
 	}
 	
 	public void updatetUploadedFileModel(UploadedFileModel uploadedFile) throws IOException {
@@ -47,13 +48,13 @@ public class UploadedFileRepository  extends BaseRepository{
 			if (jsonStr != null) {
 				jsonToInsert = Document.parse(jsonStr);
 			}		
-		UploadedFileRepository.getCollection().replaceOne(eq("md5", uploadedFile.getMd5()), jsonToInsert);
+		this.getCollection().replaceOne(eq("md5", uploadedFile.getMd5()), jsonToInsert);
 	}
 	
 	public boolean isFileAlreadyUploaded(String md5) throws IOException{		
 		BasicDBObject whereQuery = new BasicDBObject();
 		whereQuery.put("md5", md5);
-		MongoCursor cursor = UploadedFileRepository.getCollection().find(whereQuery).iterator();
+		MongoCursor cursor = this.getCollection().find(whereQuery).iterator();
 		try {
 			if (cursor.hasNext()) {
 				return true;
@@ -66,14 +67,14 @@ public class UploadedFileRepository  extends BaseRepository{
 	}
 	
 	public Long getUploadedFileCount() throws IOException {								
-		Long ret = UploadedFileRepository.getCollection().count();			
+		Long ret = this.getCollection().count();			
 		return ret;
 	}
 	
 	public JSONArray getUploadedFile(Integer start, Integer length) throws IOException {		
 		int c = 0;
 		JSONArray ret = new JSONArray();		
-		MongoCursor<Document> cursor = UploadedFileRepository.getCollection().find().skip(start).limit(length).projection(Projections.excludeId()).iterator();
+		MongoCursor<Document> cursor = this.getCollection().find().skip(start).limit(length).projection(Projections.excludeId()).iterator();
 		try {			
 			while (cursor.hasNext()) {
 				ret.add(cursor.next());
@@ -84,5 +85,16 @@ public class UploadedFileRepository  extends BaseRepository{
 		}		
 			LOG.trace("get "+c+" rows, skip("+start+").limit("+length+")");			
 		return ret;
+	}
+	
+	@PreDestroy
+	public void cleanUp() throws Exception {
+		try {
+			this.mongoClient.close();
+			LOG.info("MongoDb connection close");
+		} catch (Exception e) {
+			LOG.error(LOG, e);
+		}
+		LOG.info("contextDestroyed");
 	}
 }

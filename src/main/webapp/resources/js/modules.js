@@ -61,6 +61,14 @@ var jsonTable = function () {
 			console.log("Paging event! num=" + num + ', start=' + start + ", length=" + length);
 			pagingCallback(start, length);
 		});
+		$('#tableActions').html("<input id='getCsv' class='btn btn-default form-control' type='button' value='Get CSV' />");
+		var getCvsBtn = $('#getCsv');
+		getCvsBtn.off("click");
+		getCvsBtn.on("click", function (event, num) {
+			event.preventDefault();
+			event.stopImmediatePropagation();
+			pagingCallback(0, recordCount, true);
+		});
 	};
 
 	var _addAllColumnHeaders = function (JSONData, tableSelector) {
@@ -101,12 +109,13 @@ var searchFilter = function () {
 	var searchValSelector = '#searchVal';
 	var addFilterBtnSelector = '#addFilterBtn';
 	var searchBtnSelector = '#searchBtn';
+	var removeFilterSelector = '#removeFilter';
 
 	var _drawFiltersActive = function () {
 		$(filtersActiveSelector).empty();
 		for (var i = 0; i < filters.length; i++) {
-			var p$ = $('<p/>').html(filters[i].field + " " + filters[i].searchOperator + " " + filters[i].searchVal);
-			$(filtersActiveSelector).append(p$);
+			var span$ = $('<span/>').addClass('label label-default').html(filters[i].field + " " + filters[i].searchOperator + " " + filters[i].searchVal);
+			$(filtersActiveSelector).append(span$);
 		}
 	};
 
@@ -127,6 +136,7 @@ var searchFilter = function () {
 		var field = $(searchFieldSelector).val();
 		var searchOperator = $(searchOperatorSelector).val();
 		var searchVal = $(searchValSelector).val();
+
 		var filter = {
 			field: field,
 			searchOperator: searchOperator,
@@ -146,12 +156,12 @@ var searchFilter = function () {
 		var indexToRemove = [];
 		for (var i = 0; i < filters.length; i++) {
 			var filter = filters[i];
-			if (filter.field=='md5'){
+			if (filter.field == 'md5') {
 				indexToRemove.push(i);
 			}
 		}
-		for (var j = 0; j < indexToRemove.length; j++ ){
-			filters.splice(j,1);
+		for (var j = 0; j < indexToRemove.length; j++) {
+			filters.splice(j, 1);
 		}
 		var filter = {
 			field: "md5",
@@ -167,6 +177,8 @@ var searchFilter = function () {
 			$(addFilterBtnSelector).on('click', _addFilterBtnCallback);
 			$(searchBtnSelector).off("click");
 			$(searchBtnSelector).on('click', searchCallback);
+			$(removeFilterSelector).off("click");
+			$(removeFilterSelector).on('click', _reset);
 		},
 		reset: function () {
 			_reset();
@@ -179,6 +191,7 @@ var searchFilter = function () {
 		}
 	}
 }();
+
 
 
 

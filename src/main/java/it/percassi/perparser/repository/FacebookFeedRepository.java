@@ -9,6 +9,7 @@ import it.percassi.perparser.model.FacebookFeed;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PreDestroy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
@@ -24,9 +25,9 @@ public class FacebookFeedRepository extends BaseRepository {
 
 	private final static Logger LOG = LogManager.getLogger(FacebookFeedRepository.class);
 
-	private static MongoCollection getCollection() throws IOException {
+	private MongoCollection getCollection() throws IOException {
 		String collectionName = PropertiesProvider.getProperty("mongoDB.collection.facebookFeed");
-		MongoCollection collection = BaseRepository.getDb().getCollection(collectionName);
+		MongoCollection collection = this.getDb().getCollection(collectionName);
 		return collection;
 	}
 
@@ -39,18 +40,18 @@ public class FacebookFeedRepository extends BaseRepository {
 				jsonToInsert.add(doc);
 			}
 		}
-		FacebookFeedRepository.getCollection().insertMany(jsonToInsert);
+		this.getCollection().insertMany(jsonToInsert);
 	}
 
 	public Long getFacebookFeedCount(BasicDBObject filters) throws IOException {
-		Long ret = FacebookFeedRepository.getCollection().count(filters);
+		Long ret = this.getCollection().count(filters);
 		return ret;
 	}
 
 	public JSONArray getFacebookFeed(BasicDBObject filters, Integer start, Integer length) throws IOException {
 		int c = 0;
 		JSONArray ret = new JSONArray();//Filters.eq("fileMd5", md5)		
-		MongoCursor<Document> cursor = FacebookFeedRepository.getCollection().find(filters).skip(start).limit(length).projection(Projections.excludeId()).iterator();
+		MongoCursor<Document> cursor = this.getCollection().find(filters).skip(start).limit(length).projection(Projections.excludeId()).iterator();
 		try {
 			while (cursor.hasNext()) {
 				ret.add(cursor.next());
@@ -61,6 +62,17 @@ public class FacebookFeedRepository extends BaseRepository {
 		}
 		LOG.trace("get " + c + " rows, skip(" + start + ").limit(" + length + ")");
 		return ret;
+	}
+
+	@PreDestroy
+	public void cleanUp() throws Exception {
+		try {
+			this.mongoClient.close();
+			LOG.info("MongoDb connection close");
+		} catch (Exception e) {
+			LOG.error(LOG, e);
+		}
+		LOG.info("contextDestroyed");
 	}
 
 }

@@ -1,10 +1,12 @@
 package it.percassi.perparser.servlet;
 
+import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.QueryFacade;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,7 +18,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -34,6 +35,10 @@ public class QueryFacebookFeedServlet extends HttpServlet {
 	@Qualifier("queryFacade")
 	private QueryFacade queryFacade;
 
+	@Autowired
+	@Qualifier("csvFacade")
+	private CsvFacade cvsFacade;
+
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
@@ -49,7 +54,7 @@ public class QueryFacebookFeedServlet extends HttpServlet {
 		try {
 			String filters = getBody(request);
 			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=UTF-8");			
+			response.setContentType("application/json; charset=UTF-8");
 
 			Integer start = 0;
 			try {
@@ -64,14 +69,32 @@ public class QueryFacebookFeedServlet extends HttpServlet {
 				LOG.warn("Unable to parse length parameter");
 			}
 
-			PrintWriter out = response.getWriter();
+			Boolean getCsv = false;
+			try {
+				getCsv = Boolean.valueOf(request.getParameter("getCsv"));
+				if (getCsv) {
+					response.setContentType("text/csv");
+					response.setHeader("Content-Disposition", "attachment; filename=\"facebook.csv\"");
+					filters = java.net.URLDecoder.decode(filters, "UTF-8");
+				}
+			} catch (Exception e) {
+				LOG.warn("Unable to parse start parameter");
+			}
 
 			JSONObject ret = new JSONObject();
 			ret = queryFacade.getFacebookFeed(filters, start, length);
 			response.setStatus(HttpServletResponse.SC_OK);
-			out.print(ret);
-			out.flush();
-
+			if (getCsv) {
+				OutputStream outputStream = response.getOutputStream();
+				StringBuffer buf = cvsFacade.getCvs((JSONArray) ret.get("data"));
+				outputStream.write(buf.toString().getBytes("UTF-8"));
+				outputStream.flush();
+				outputStream.close();
+			} else {
+				PrintWriter out = response.getWriter();
+				out.print(ret);
+				out.flush();
+			}
 		} catch (Exception e) {
 			LOG.error("", e);
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -98,7 +121,7 @@ public class QueryFacebookFeedServlet extends HttpServlet {
 				stringBuilder.append("");
 			}
 		} catch (IOException ex) {
-			LOG.warn("",ex);
+			LOG.warn("", ex);
 			return "";
 		} finally {
 			if (bufferedReader != null) {
