@@ -1,4 +1,4 @@
-package it.percassi.perparser.service.parsers.parser;
+package it.percassi.perparser.service.parsers.model;
 
 import java.io.Serializable;
 

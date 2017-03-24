@@ -1,6 +1,6 @@
 package it.percassi.perparser.service.parsers;
 
-import it.percassi.perparser.service.parsers.parser.OSmodel;
+import it.percassi.perparser.service.parsers.model.OSmodel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;

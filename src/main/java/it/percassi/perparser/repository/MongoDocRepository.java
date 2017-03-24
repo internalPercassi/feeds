@@ -3,7 +3,7 @@ package it.percassi.perparser.repository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
-import it.percassi.perparser.service.parsers.parser.BaseModel;
+import it.percassi.perparser.service.parsers.model.BaseModel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

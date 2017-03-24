@@ -1,7 +1,7 @@
 package it.percassi.perparser.service.parsers;
 
 import it.percassi.perparser.model.AppEnum;
-import it.percassi.perparser.service.parsers.parser.FacebookFeed;
+import it.percassi.perparser.service.parsers.model.FacebookFeed;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
