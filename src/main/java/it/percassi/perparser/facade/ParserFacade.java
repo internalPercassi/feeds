@@ -23,10 +23,10 @@ import org.springframework.stereotype.Service;
  *
  * @author Daniele Sperto
  */
-@Service("uploadFileFacade")
-public class UploadFileFacade {
+@Service("parserFacade")
+public class ParserFacade {
 
-	private final static Logger LOG = LogManager.getLogger(UploadFileFacade.class);
+	private final static Logger LOG = LogManager.getLogger(ParserFacade.class);
 
 	@Autowired
 	@Qualifier("facebookProductParser")
@@ -56,7 +56,7 @@ public class UploadFileFacade {
 				model.setMd5(fileModel.getMd5());
 			}
 			mongoService.saveUploadedFileModel(fileModel);
-			mongoService.saveFacebookFeed(feeds, fileType);
+			mongoService.saveDocs(fileType,feeds, fileType);
 			fileModel.setRowCount(feeds.size());
 			mongoService.updatetUploadedFileModel(fileModel);
 		}

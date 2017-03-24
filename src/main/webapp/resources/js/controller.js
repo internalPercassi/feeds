@@ -1,8 +1,8 @@
 'use strict';
 
 var appConstants = {
-	getDocUrl : 'getDocuments',
-	uploadFileUrl : 'parseFile'
+	getDocUrl: 'getDocuments',
+	uploadFileUrl: 'parseFile'
 };
 
 var PerParserController = function () {
@@ -10,10 +10,10 @@ var PerParserController = function () {
 	var _uploadButtonCallback = function () {
 		var form = $('#uploadForm')[0];
 		var formData = new FormData(form);
-		var fileType= $('#fileType').val();
+		var fileType = $('#fileType').val();
 		$.ajax({
 			enctype: 'multipart/form-data',
-			url: appConstants.uploadFileUrl+'?fileType='+fileType,
+			url: appConstants.uploadFileUrl + '?fileType=' + fileType,
 			data: formData,
 			cache: false,
 			contentType: false,
@@ -24,7 +24,7 @@ var PerParserController = function () {
 			},
 			success: function (res) {
 				try {
-					_renderFeedTable(res.md5);
+					_showUploadFile(0,10);
 				} catch (e) {
 					$("body").removeClass("loading");
 					console.error(e);
@@ -39,14 +39,12 @@ var PerParserController = function () {
 		});
 	};
 
-	var _showUploadedFileButtonCallback = function (event, start, length) {
-		event.preventDefault();
-		event.stopImmediatePropagation();
+	var _showUploadFile = function (start, length) {
 		jsonTable.resetPage();
-		var clickMd5CellCallback = function (event) {
-			event.preventDefault();
-			event.stopImmediatePropagation();
-			_renderFeedTable(event.target.innerHTML, start, length);
+		searchFilter.reset();
+		var clickMd5CellCallback = function (rowData) {
+			console.log(rowData);
+			_renderFeedTable(rowData.type,rowData.md5, start, length);
 		};
 		var cellCallbackConfig = [{
 				columnIndex: 1,
@@ -55,37 +53,33 @@ var PerParserController = function () {
 		var url = "getUploadedFile?start=" + start + "&length=" + length;
 		var renderUploadedFileCallback = function (start, length, getCsv) {
 			var callbackUrl = "getUploadedFile?start=" + start + "&length=" + length;
-			__renderGenericTable("", callbackUrl, renderUploadedFileCallback, getCsv);
-		};
-		searchFilter.reset();
-		__renderGenericTable("", url, renderUploadedFileCallback, cellCallbackConfig);
+			__renderGenericTable(callbackUrl, renderUploadedFileCallback, getCsv);
+		};		
+		__renderGenericTable(url, renderUploadedFileCallback, cellCallbackConfig);
 	};
 
 
-	var _renderFeedTable = function (md5, start, length) {
+	var _renderFeedTable = function (fileType, md5, start, length) {
 		jsonTable.resetPage();
-		var url = appConstants.getDocUrl+"?start=" + start + "&length=" + length;
-		var renderFeedTableCallback = function (start, length, getCsv) {
-			var callbackUrl = appConstants.getDocUrl+"?start=" + start + "&length=" + length;
-			__renderGenericTable(md5, callbackUrl, renderFeedTableCallback, {}, getCsv);
-		};
-
 		searchFilter.reset();
-		__renderGenericTable(md5, url, renderFeedTableCallback);
+		var url = appConstants.getDocUrl + "?collectionName=" + fileType + "&start=" + start + "&length=" + length;
+		searchFilter.addFilter("md5", "$eq", md5);		
+		var renderFeedTableCallback = function (start, length, getCsv) {
+			var callbackUrl = appConstants.getDocUrl + "?collectionName=" + fileType + "&start=" + start + "&length=" + length;
+			__renderGenericTable(callbackUrl, renderFeedTableCallback, {}, getCsv);
+		};		
+		__renderGenericTable(url, renderFeedTableCallback);
 	};
 
-	var __renderGenericTable = function (md5, url, searchAndPagingCallback, cellCallbackConfig, getCsv) {		
+	var __renderGenericTable = function (url, searchAndPagingCallback, cellCallbackConfig, getCsv) {
 		var dataType = 'json';
-		if (md5) {
-			searchFilter.addMd5(md5);
-		}
-		var filters = JSON.stringify(searchFilter.getFilters());	
-		url += "&filters="+filters;
+		var filters = JSON.stringify(searchFilter.getFilters());
+		url += "&filters=" + filters;
 		if (getCsv) {
 			url += "&getCsv=true";
 			dataType = 'text';
-			var form$ = $('<form/>').attr("method", "post");						
-			form$.attr('action', encodeURI(url)); 
+			var form$ = $('<form/>').attr("method", "post");
+			form$.attr('action', encodeURI(url));
 			$(document.body).append(form$);
 			form$.empty();
 			$(document.body).remove(form$);
@@ -120,8 +114,14 @@ var PerParserController = function () {
 	return {
 		init: function () {
 			console.log("PerParserController initialized");
-			$("#uploadBtn").click(_uploadButtonCallback);
-			$("#showUploadedFile").click(_showUploadedFileButtonCallback);
+			$("#uploadBtn").click(function () {
+				_uploadButtonCallback();
+			});
+			$("#showUploadedFile").click(function (event) {
+				event.preventDefault();
+				event.stopImmediatePropagation();
+				_showUploadFile();
+			});
 			$('#getCsv').off("click");
 		}
 	}

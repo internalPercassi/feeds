@@ -1,7 +1,7 @@
 package it.percassi.perparser.service.mongo;
 
 import com.mongodb.BasicDBObject;
-import it.percassi.perparser.repository.FacebookFeedRepository;
+import it.percassi.perparser.repository.MongoDocRepository;
 import it.percassi.perparser.model.MongodbFilter;
 import it.percassi.perparser.model.UploadedFileModel;
 import it.percassi.perparser.service.parsers.parser.BaseModel;
@@ -26,18 +26,18 @@ public class MongoService {
 	private final static Logger LOG = LogManager.getLogger(MongoService.class);
 
 	@Autowired
-	private FacebookFeedRepository facebookFeedRepository;
+	private MongoDocRepository facebookFeedRepository;
 	@Autowired
 	private UploadedFileRepository uploadedFileRepository;
 
-	public void saveFacebookFeed(List<BaseModel> feedToSave,String fileType) throws IOException {
-		facebookFeedRepository.saveFacebookFeed(feedToSave,fileType);
+	public void saveDocs(String collectionName,List<BaseModel> feedToSave,String fileType) throws IOException {
+		facebookFeedRepository.saveDocs(collectionName,feedToSave,fileType);
 	}
 
-	public JSONObject getFacebookFeed(List<MongodbFilter> filters,Integer start, Integer length) throws IOException {
+	public JSONObject getDocs(String collectionName,List<MongodbFilter> filters,Integer start, Integer length) throws IOException {
 		BasicDBObject filter = buildFilter(filters);
-		JSONArray jarr = facebookFeedRepository.getFacebookFeed(filter,start, length);
-		Long count = facebookFeedRepository.getFacebookFeedCount(filter);
+		JSONArray jarr = facebookFeedRepository.getDocs(collectionName,filter,start, length);
+		Long count = facebookFeedRepository.getDocCount(collectionName,filter);
 		JSONObject ret = new JSONObject();
 		ret.put("data",jarr);
 		ret.put("recordsTotal",count);

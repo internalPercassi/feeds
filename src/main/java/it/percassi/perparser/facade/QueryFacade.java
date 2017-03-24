@@ -26,9 +26,9 @@ public class QueryFacade {
 	@Autowired
 	MongoService mongoService;
 
-	public JSONObject getFacebookFeed(String jsonfilters, Integer start, Integer length) throws IOException {
+	public JSONObject getDocs(String collectionName,String jsonfilters, Integer start, Integer length) throws IOException {
 		List<MongodbFilter> filters = buildFilterList(jsonfilters);
-		return mongoService.getFacebookFeed(filters, start, length);
+		return mongoService.getDocs(collectionName,filters, start, length);
 	}
 
 	public JSONObject getUploadedFile(String md5, String jsonfilters, Integer start, Integer length) throws IOException {

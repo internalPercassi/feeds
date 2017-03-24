@@ -1,6 +1,6 @@
 package it.percassi.perparser.servlet;
 
-import it.percassi.perparser.facade.UploadFileFacade;
+import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.model.AppEnum;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,8 +40,8 @@ public class FileParserServlet extends HttpServlet {
 //	private ParserService parserFacade;
 	
 	@Autowired
-	@Qualifier("uploadFileFacade")
-	private UploadFileFacade uploadFileFacade;
+	@Qualifier("parserFacade")
+	private ParserFacade parserFacade;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,7 +56,7 @@ public class FileParserServlet extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 				return;
 			}
-			String md5 = uploadFileFacade.parseAndSave(fileType,bytes);
+			String md5 = parserFacade.parseAndSave(fileType,bytes);
 			response.setStatus(HttpServletResponse.SC_OK);
 			PrintWriter out = response.getWriter();
 			JSONObject ret = new JSONObject();

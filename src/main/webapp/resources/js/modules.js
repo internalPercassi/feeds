@@ -37,7 +37,11 @@ var jsonTable = function () {
 				if (cellCallbackConfig) {
 					for (var cccI = 0; cccI < cellCallbackConfig.length; cccI++) {
 						if (colIndex + 1 == cellCallbackConfig[cccI].columnIndex) {
-							cell$.click(cellCallbackConfig[cccI].callback);
+							cell$.click({rowData: JSONData[i],callback:cellCallbackConfig[cccI].callback},function (event) {
+								event.preventDefault();
+								event.stopImmediatePropagation();
+								event.data.callback(event.data.rowData);
+							});
 							cell$.hover(function () {
 								$(this).css('cursor', 'pointer');
 							});
@@ -102,6 +106,7 @@ var jsonTable = function () {
 }();
 
 var searchFilter = function () {
+	var that = this;
 	var filters = [];
 	var filtersActiveSelector = '#filtersActive';
 	var searchFieldSelector = '#searchField';
@@ -170,6 +175,26 @@ var searchFilter = function () {
 		};
 		filters.push(filter);
 	};
+
+	var _addFilter = function (filterName, filterOperator, filterValue) {
+		var indexToRemove = [];
+		for (var i = 0; i < filters.length; i++) {
+			var filter = filters[i];
+			if (filter.field == filterName) {
+				indexToRemove.push(i);
+			}
+		}
+		for (var j = 0; j < indexToRemove.length; j++) {
+			filters.splice(indexToRemove[j], 1);
+		}
+		var filter = {
+			field: filterName,
+			searchOperator: filterOperator,
+			searchVal: filterValue
+		};
+		filters.push(filter);
+	};
+
 	return {
 		init: function (JSONData, searchCallback) {
 			_buildFilterSelect(JSONData);
@@ -193,10 +218,9 @@ var searchFilter = function () {
 		},
 		addMd5: function (md5) {
 			_addMd5(md5);
+		},
+		addFilter: function (filterName, filterOperator, filterValue) {
+			_addFilter(filterName, filterOperator, filterValue);
 		}
 	}
 }();
-
-
-
-

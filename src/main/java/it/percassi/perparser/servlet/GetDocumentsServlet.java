@@ -52,6 +52,7 @@ public class GetDocumentsServlet extends HttpServlet {
 		}
 		try {
 			String filters = request.getParameter("filters");
+			String collectionName = request.getParameter("collectionName");
 			Integer start = 0;
 			if (StringUtils.isNumeric(request.getParameter("start"))) {
 				start = Integer.parseInt(request.getParameter("start"));
@@ -63,7 +64,7 @@ public class GetDocumentsServlet extends HttpServlet {
 			Boolean getCsv = Boolean.parseBoolean(request.getParameter("getCsv"));
 
 			JSONObject ret = new JSONObject();
-			ret = queryFacade.getFacebookFeed(filters, start, length);			
+			ret = queryFacade.getDocs(collectionName,filters, start, length);			
 			if (getCsv) {
 				response.setContentType("text/csv");
 				response.setHeader("Content-Disposition", "attachment; filename=\"parParser.csv\"");				
