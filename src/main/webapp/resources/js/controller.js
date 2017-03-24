@@ -81,7 +81,7 @@ var PerParserController = function () {
 			var form$ = $('<form/>').attr("method", "post");
 			form$.attr('action', encodeURI(url));
 			$(document.body).append(form$);
-			form$.empty();
+			form$.submit();
 			$(document.body).remove(form$);
 			return;
 		}
