@@ -1,6 +1,6 @@
 package it.percassi.perparser.service.parsers;
 
-import it.percassi.perparser.model.parser.GLmodel;
+import it.percassi.perparser.service.parsers.parser.GLmodel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

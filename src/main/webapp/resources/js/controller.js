@@ -1,5 +1,10 @@
 'use strict';
 
+var appConstants = {
+	getDocUrl : 'getDocuments',
+	uploadFileUrl : 'parseFile'
+};
+
 var PerParserController = function () {
 
 	var _uploadButtonCallback = function () {
@@ -8,7 +13,7 @@ var PerParserController = function () {
 		var fileType= $('#fileType').val();
 		$.ajax({
 			enctype: 'multipart/form-data',
-			url: 'parseFile?fileType='+fileType,
+			url: appConstants.uploadFileUrl+'?fileType='+fileType,
 			data: formData,
 			cache: false,
 			contentType: false,
@@ -17,7 +22,7 @@ var PerParserController = function () {
 			beforeSend: function () {
 				$("body").addClass("loading");
 			},
-			success: function (res) {//TODO the servlet must return md5 of file...
+			success: function (res) {
 				try {
 					_renderFeedTable(res.md5);
 				} catch (e) {
@@ -59,9 +64,9 @@ var PerParserController = function () {
 
 	var _renderFeedTable = function (md5, start, length) {
 		jsonTable.resetPage();
-		var url = "getFacebookFeed?start=" + start + "&length=" + length;
+		var url = appConstants.getDocUrl+"?start=" + start + "&length=" + length;
 		var renderFeedTableCallback = function (start, length, getCsv) {
-			var callbackUrl = "getFacebookFeed?start=" + start + "&length=" + length;
+			var callbackUrl = appConstants.getDocUrl+"?start=" + start + "&length=" + length;
 			__renderGenericTable(md5, callbackUrl, renderFeedTableCallback, {}, getCsv);
 		};
 
@@ -69,30 +74,25 @@ var PerParserController = function () {
 		__renderGenericTable(md5, url, renderFeedTableCallback);
 	};
 
-	var __renderGenericTable = function (md5, url, searchAndPagingCallback, cellCallbackConfig, getCsv) {
-		var filters = searchFilter.getFilters();
-		var postData;
+	var __renderGenericTable = function (md5, url, searchAndPagingCallback, cellCallbackConfig, getCsv) {		
 		var dataType = 'json';
 		if (md5) {
-			postData = searchFilter.addMd5(md5);
+			searchFilter.addMd5(md5);
 		}
-		if (filters && filters.length > 0) {
-			postData = filters;
-		}
+		var filters = JSON.stringify(searchFilter.getFilters());	
+		url += "&filters="+filters;
 		if (getCsv) {
 			url += "&getCsv=true";
 			dataType = 'text';
-			var form$ = $('<form/>').attr("method", "post");
-			var inputFilters = $('<input>').attr('type', 'hidden').attr('name', 'postData').val(JSON.stringify(postData));
-			form$.append(inputFilters);
-			form$.attr('action', url); 
+			var form$ = $('<form/>').attr("method", "post");						
+			form$.attr('action', encodeURI(url)); 
 			$(document.body).append(form$);
-			form$.submit();
+			form$.empty();
+			$(document.body).remove(form$);
 			return;
 		}
 		$.ajax({
-			url: url,
-			data: JSON.stringify(postData),
+			url: encodeURI(url),
 			dataType: dataType,
 			cache: false,
 			contentType: false,

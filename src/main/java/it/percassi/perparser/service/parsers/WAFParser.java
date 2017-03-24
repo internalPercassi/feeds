@@ -1,15 +1,14 @@
 package it.percassi.perparser.service.parsers;
 
-import it.percassi.perparser.model.AppEnum;
-import it.percassi.perparser.model.parser.FacebookFeed;
-import it.percassi.perparser.model.parser.WAFModel;
+import it.percassi.perparser.service.parsers.parser.WAFModel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,9 +24,9 @@ public class WAFParser extends BaseParser<WAFModel> {
 	public List<WAFModel> parse(InputStream stream) throws IOException {
 		List<WAFModel> ret = new ArrayList<WAFModel>();
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
-		String line = null;
-		while ((line = bufferedReader.readLine()) != null) {
-			WAFModel fbp = this.build(line);
+		final CSVFormat csvFileFormat = CSVFormat.RFC4180;
+		for (CSVRecord record : csvFileFormat.parse(bufferedReader)) {
+			WAFModel fbp = this.build(record);
 			if (fbp != null) {
 				ret.add(fbp);
 			}
@@ -35,12 +34,12 @@ public class WAFParser extends BaseParser<WAFModel> {
 		return ret;
 	}
 
-	private WAFModel build(String line) {
+	private WAFModel build(CSVRecord record) {
 		WAFModel ret = new WAFModel();
-		String[] tokens = StringUtils.splitPreserveAllTokens(line, WAFParser.FIELD_SEPARATOR);
-		for (int c = 0; c < tokens.length; c++) {
-			String tmp = tokens[c];
-			switch (c + 1) {
+		int c = 0;
+		for (String field : record) {
+			String tmp = field;
+			switch (++c) {
 				case 1:
 					ret.setRemote_addr(tmp);
 					break;

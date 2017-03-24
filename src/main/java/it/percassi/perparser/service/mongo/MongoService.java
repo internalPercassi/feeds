@@ -4,7 +4,7 @@ import com.mongodb.BasicDBObject;
 import it.percassi.perparser.repository.FacebookFeedRepository;
 import it.percassi.perparser.model.MongodbFilter;
 import it.percassi.perparser.model.UploadedFileModel;
-import it.percassi.perparser.model.parser.BaseModel;
+import it.percassi.perparser.service.parsers.parser.BaseModel;
 import it.percassi.perparser.repository.UploadedFileRepository;
 import java.io.IOException;
 import java.util.ArrayList;

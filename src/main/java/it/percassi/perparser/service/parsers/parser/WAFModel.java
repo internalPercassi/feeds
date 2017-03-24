@@ -1,4 +1,4 @@
-package it.percassi.perparser.model.parser;
+package it.percassi.perparser.service.parsers.parser;
 
 /**
  *

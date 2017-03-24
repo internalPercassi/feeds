@@ -1,13 +1,13 @@
 package it.percassi.perparser.facade;
 
 import it.percassi.perparser.model.AppEnum;
-import it.percassi.perparser.model.parser.BaseModel;
+import it.percassi.perparser.service.parsers.parser.BaseModel;
 import it.percassi.perparser.service.mongo.MongoService;
-import it.percassi.perparser.model.parser.FacebookFeed;
-import it.percassi.perparser.model.parser.GLmodel;
-import it.percassi.perparser.model.parser.OSmodel;
+import it.percassi.perparser.service.parsers.parser.FacebookFeed;
+import it.percassi.perparser.service.parsers.parser.GLmodel;
+import it.percassi.perparser.service.parsers.parser.OSmodel;
 import it.percassi.perparser.model.UploadedFileModel;
-import it.percassi.perparser.model.parser.WAFModel;
+import it.percassi.perparser.service.parsers.parser.WAFModel;
 import it.percassi.perparser.service.parsers.BaseParser;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
