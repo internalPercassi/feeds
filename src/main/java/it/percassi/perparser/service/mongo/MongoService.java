@@ -34,9 +34,10 @@ public class MongoService {
 		facebookFeedRepository.saveDocs(collectionName,feedToSave,fileType);
 	}
 
-	public JSONObject getDocs(String collectionName,List<MongodbFilter> filters, String[] excludes,Integer start, Integer length) throws IOException {
+	public JSONObject getDocs(String collectionName,List<MongodbFilter> filters, String[] excludes, String sortField, Integer sortType, Integer start, Integer length) throws IOException {
 		BasicDBObject filter = buildFilter(filters);
-		JSONArray jarr = facebookFeedRepository.getDocs(collectionName,filter,excludes,start, length);
+		BasicDBObject sort = buildSort(sortField, sortType);
+		JSONArray jarr = facebookFeedRepository.getDocs(collectionName,filter,excludes,sort,start, length);
 		Long count = facebookFeedRepository.getDocCount(collectionName,filter);
 		JSONObject ret = new JSONObject();
 		ret.put("data",jarr);
@@ -68,14 +69,28 @@ public class MongoService {
 	public static final BasicDBObject buildFilter(List<MongodbFilter> filters) {
 		BasicDBObject query = new BasicDBObject();
 		List<BasicDBObject> objList = new ArrayList<BasicDBObject>();
+		BasicDBObject subQ = null;
 		for (MongodbFilter filter : filters) {			
-			BasicDBObject subQ = new BasicDBObject();
+			subQ = new BasicDBObject();
 			subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(),filter.getSearchVal()));
 			objList.add(subQ);
 		}
-		if (objList.size()>0){			
+		
+		if (objList.size()>1){			
 			query.put("$and", objList);
+			return query;
+		} else if (objList.size() == 1){
+			return subQ;
 		}
-		return query;
+		return new BasicDBObject();
+	}
+	
+	
+	public static final BasicDBObject buildSort(String sortField, Integer sortType) {
+		BasicDBObject sort = null;
+		if (sortType != null && sortField != null){
+			sort = new BasicDBObject(sortField,sortType);
+		}
+		return sort;
 	}
 }

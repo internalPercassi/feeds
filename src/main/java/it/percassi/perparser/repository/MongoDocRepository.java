@@ -46,7 +46,7 @@ public class MongoDocRepository extends BaseRepository {
 		return ret;
 	}
 
-	public JSONArray getDocs(String collectionName, BasicDBObject filters, String[] excludes, Integer start, Integer length) throws IOException {
+	public JSONArray getDocs(String collectionName, BasicDBObject filters, String[] excludes, BasicDBObject sort, Integer start, Integer length) throws IOException {
 		int c = 0;
 		JSONArray ret = new JSONArray();//Filters.eq("fileMd5", md5)	
 		int excludesLength = 1;
@@ -60,7 +60,12 @@ public class MongoDocRepository extends BaseRepository {
 			}
 		}
 		bexcludes.append("_id", false);
-		MongoCursor<Document> cursor = this.getDb().getCollection(collectionName).find(filters).skip(start).limit(length).projection(bexcludes).iterator();
+		MongoCursor<Document> cursor = null;
+		if (sort != null) {
+			cursor = this.getDb().getCollection(collectionName).find(filters).sort(sort).skip(start).limit(length).projection(bexcludes).iterator();
+		} else {
+			cursor = this.getDb().getCollection(collectionName).find(filters).skip(start).limit(length).projection(bexcludes).iterator();
+		}
 		try {
 			while (cursor.hasNext()) {
 				ret.add(cursor.next());

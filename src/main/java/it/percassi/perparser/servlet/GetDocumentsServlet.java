@@ -45,15 +45,21 @@ public class GetDocumentsServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Enumeration params = request.getParameterNames();
-		while (params.hasMoreElements()) {
-			String paramName = (String) params.nextElement();
-			LOG.trace("Parameter Name - " + paramName + ", Value - " + request.getParameter(paramName));
-		}
 		try {
 			String filters = request.getParameter("filters");
-			String[] excludes=request.getParameterValues("exclude");
+			String[] excludes = request.getParameterValues("exclude");
 			String collectionName = request.getParameter("collectionName");
+
+			String sortField = StringUtils.isBlank(request.getParameter("sortField")) ? null : request.getParameter("sortField");
+			Integer sortType = null;
+			if (request.getParameter("sortType") != null) {
+				try {
+					sortType = Integer.parseInt(request.getParameter("sortType"));
+				} catch (NumberFormatException nfe) {
+					LOG.warn("Param sortType is not numeric, is " + sortType);
+				}
+			}
+
 			Integer start = 0;
 			if (StringUtils.isNumeric(request.getParameter("start"))) {
 				start = Integer.parseInt(request.getParameter("start"));
@@ -65,10 +71,10 @@ public class GetDocumentsServlet extends HttpServlet {
 			Boolean getCsv = Boolean.parseBoolean(request.getParameter("getCsv"));
 
 			JSONObject ret = new JSONObject();
-			ret = queryFacade.getDocs(collectionName,filters, excludes,start, length);			
+			ret = queryFacade.getDocs(collectionName, filters, excludes, sortField, sortType, start, length);
 			if (getCsv) {
 				response.setContentType("text/csv");
-				response.setHeader("Content-Disposition", "attachment; filename=\"parParser.csv\"");				
+				response.setHeader("Content-Disposition", "attachment; filename=\"parParser.csv\"");
 				OutputStream outputStream = response.getOutputStream();
 				StringBuffer buf = cvsFacade.getCvs((JSONArray) ret.get("data"));
 				outputStream.write(buf.toString().getBytes("UTF-8"));

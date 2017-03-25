@@ -26,9 +26,9 @@ public class QueryFacade {
 	@Autowired
 	MongoService mongoService;
 
-	public JSONObject getDocs(String collectionName,String jsonfilters,String[] excludes, Integer start, Integer length) throws IOException {
+	public JSONObject getDocs(String collectionName,String jsonfilters,String[] excludes, String sortField, Integer sortType, Integer start, Integer length) throws IOException {
 		List<MongodbFilter> filters = buildFilterList(jsonfilters);
-		return mongoService.getDocs(collectionName,filters,excludes, start, length);
+		return mongoService.getDocs(collectionName,filters,excludes,sortField, sortType, start, length);
 	}
 
 	public JSONObject getUploadedFile(String md5, String jsonfilters, Integer start, Integer length) throws IOException {
