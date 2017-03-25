@@ -11,6 +11,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class UploadedFileModel {
 
 	private String md5;
+	private String fileName;
 	private String type;
 	private Date date;
 	private Integer rowCount;
@@ -18,14 +19,22 @@ public class UploadedFileModel {
 	public UploadedFileModel() {
 	}
 	
-	public UploadedFileModel(byte[] bytes,String type) throws IOException {
+	public UploadedFileModel(String fileName,byte[] bytes,String type) throws IOException {
 		String md5 = this.getMD5(bytes);
-		this.setDate(new Date());
-		this.setMd5(md5);
-		this.setRowCount(0);
-		this.setType(type);
+		this.date = new Date();
+		this.md5 = md5;
+		this.rowCount = 0;
+		this.type = type;
+		this.fileName = fileName;
 	}
 
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 	
 	public String getMd5() {
 		return md5;

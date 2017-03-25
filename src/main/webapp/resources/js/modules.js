@@ -19,13 +19,13 @@ var jsonTable = function () {
 		firstClass: 'first'
 	};
 
-	var _buildHtmlTable = function (JSONData, recordCount, tableSelector, tablePagerSelector, pagingCallback, cellCallbackConfig) {
+	var _buildHtmlTable = function (JSONData, recordCount, tableSelector, tablePagerSelector, pagingCallback, cellConfig) {
 		$(tableSelector).empty();
 		$(tablePagerSelector).empty();
 		var totalPage = Math.floor(recordCount / JSONData.length);
 		pagingConfig.total = totalPage;
 		pagingConfig.page = _actualPageNum;
-		var columns = _addAllColumnHeaders(JSONData, tableSelector);
+		var columns = _addAllColumnHeaders(JSONData, tableSelector, cellConfig);
 		var tBody$ = $('<tbody/>');
 		for (var i = 0; i < JSONData.length; i++) {
 			var row$ = $('<tr/>');
@@ -34,21 +34,29 @@ var jsonTable = function () {
 				if (cellValue == null)
 					cellValue = "";
 				var cell$ = $('<td/>').html(cellValue);
-				if (cellCallbackConfig) {
-					for (var cccI = 0; cccI < cellCallbackConfig.length; cccI++) {
-						if (colIndex + 1 == cellCallbackConfig[cccI].columnIndex) {
-							cell$.click({rowData: JSONData[i],callback:cellCallbackConfig[cccI].callback},function (event) {
-								event.preventDefault();
-								event.stopImmediatePropagation();
-								event.data.callback(event.data.rowData);
-							});
-							cell$.hover(function () {
-								$(this).css('cursor', 'pointer');
-							});
+				if (cellConfig) {
+					for (var cccI = 0; cccI < cellConfig.length; cccI++) {
+						if (colIndex + 1 == cellConfig[cccI].columnIndex) {
+							if (cellConfig[cccI].callback) {
+								cell$.click({rowData: JSONData[i], callback: cellConfig[cccI].callback}, function (event) {
+									event.preventDefault();
+									event.stopImmediatePropagation();
+									event.data.callback(event.data.rowData);
+								});
+								cell$.hover(function () {
+									$(this).css('cursor', 'pointer');
+								});
+							}
+							if (cellConfig[cccI].show) {
+								row$.append(cell$);
+							}
+						} else {
+							row$.append(cell$);
 						}
 					}
+				} else {
+					row$.append(cell$);
 				}
-				row$.append(cell$);
 			}
 			tBody$.append(row$);
 		}
@@ -75,18 +83,26 @@ var jsonTable = function () {
 		});
 	};
 
-	var _addAllColumnHeaders = function (JSONData, tableSelector) {
+	var _addAllColumnHeaders = function (JSONData, tableSelector, cellConfig) {
 		var columnSet = [];
 		var tHead$ = $('<thead/>');
 		var headerTr$ = $('<tr/>');
-		for (var i = 0; i < JSONData.length; i++) {
-			var rowHash = JSONData[i];
-			for (var key in rowHash) {
-				if ($.inArray(key, columnSet) == -1) {
-					columnSet.push(key);
-					headerTr$.append($('<th/>').html(key));
+		var row = JSONData[0];
+		var colIndex = 1;
+		for (var columnName in row) {
+			for (var cccI = 0; cccI < cellConfig.length; cccI++) {
+				columnSet[colIndex - 1] = columnName;
+				if (colIndex == cellConfig[cccI].columnIndex) {
+					if (cellConfig[cccI].show) {
+						headerTr$.append($('<th/>').html(columnName));
+					}
+					break;
+				} else {
+					headerTr$.append($('<th/>').html(columnName));
+					break;
 				}
 			}
+			colIndex++;
 		}
 		tHead$.append(headerTr$)
 		$(tableSelector).append(tHead$);
@@ -96,8 +112,8 @@ var jsonTable = function () {
 
 
 	return {
-		drawTable: function (JSONData, recordCount, tableSelector, tablePagerSelector, pagingCallback, cellCallbackConfig) {
-			_buildHtmlTable(JSONData, recordCount, tableSelector, tablePagerSelector, pagingCallback, cellCallbackConfig);
+		drawTable: function (JSONData, recordCount, tableSelector, tablePagerSelector, pagingCallback, cellConfig) {
+			_buildHtmlTable(JSONData, recordCount, tableSelector, tablePagerSelector, pagingCallback, cellConfig);
 		},
 		resetPage: function () {
 			_actualPageNum = 1;
@@ -221,6 +237,12 @@ var searchFilter = function () {
 		},
 		addFilter: function (filterName, filterOperator, filterValue) {
 			_addFilter(filterName, filterOperator, filterValue);
+		},
+		show: function () {
+			$('#section-filters').show();
+		},
+		hide: function () {
+			$('#section-filters').hide();
 		}
 	}
 }();

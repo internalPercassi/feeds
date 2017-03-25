@@ -28,8 +28,7 @@ public class MongoDocRepository extends BaseRepository {
 //		MongoCollection collection = this.getDb().getCollection(collectionName);
 //		return collection;
 //	}
-
-	public void saveDocs(String collectionName,List<BaseModel> docs,String fileType) throws IOException {
+	public void saveDocs(String collectionName, List<BaseModel> docs, String fileType) throws IOException {
 		List<Document> jsonToInsert = new ArrayList<Document>();
 		for (BaseModel ff : docs) {
 			String jsonStr = "";
@@ -42,15 +41,26 @@ public class MongoDocRepository extends BaseRepository {
 		this.getDb().getCollection(collectionName).insertMany(jsonToInsert);
 	}
 
-	public Long getDocCount(String collectionName,BasicDBObject filters) throws IOException {
+	public Long getDocCount(String collectionName, BasicDBObject filters) throws IOException {
 		Long ret = this.getDb().getCollection(collectionName).count(filters);
 		return ret;
 	}
 
-	public JSONArray getDocs(String collectionName,BasicDBObject filters, Integer start, Integer length) throws IOException {
+	public JSONArray getDocs(String collectionName, BasicDBObject filters, String[] excludes, Integer start, Integer length) throws IOException {
 		int c = 0;
-		JSONArray ret = new JSONArray();//Filters.eq("fileMd5", md5)		
-		MongoCursor<Document> cursor = this.getDb().getCollection(collectionName).find(filters).skip(start).limit(length).projection(Projections.excludeId()).iterator();
+		JSONArray ret = new JSONArray();//Filters.eq("fileMd5", md5)	
+		int excludesLength = 1;
+		if (excludes != null) {
+			excludesLength++;
+		}
+		BasicDBObject bexcludes = new BasicDBObject(excludesLength);
+		if (excludes != null) {
+			for (String ex : excludes) {
+				bexcludes.append(ex, false);
+			}
+		}
+		bexcludes.append("_id", false);
+		MongoCursor<Document> cursor = this.getDb().getCollection(collectionName).find(filters).skip(start).limit(length).projection(bexcludes).iterator();
 		try {
 			while (cursor.hasNext()) {
 				ret.add(cursor.next());

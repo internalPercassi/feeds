@@ -42,12 +42,18 @@ var PerParserController = function () {
 	var _showUploadFile = function (start, length) {
 		jsonTable.resetPage();
 		searchFilter.reset();
+		searchFilter.hide();
 		var clickMd5CellCallback = function (rowData) {
 			console.log(rowData);
 			_renderFeedTable(rowData.type,rowData.md5, start, length);
 		};
 		var cellCallbackConfig = [{
 				columnIndex: 1,
+				show: false
+			},
+			{
+				columnIndex: 2,
+				show: true,
 				callback: clickMd5CellCallback
 			}];
 		var url = "getUploadedFile?start=" + start + "&length=" + length;
@@ -62,6 +68,7 @@ var PerParserController = function () {
 	var _renderFeedTable = function (fileType, md5, start, length) {
 		jsonTable.resetPage();
 		searchFilter.reset();
+		searchFilter.show();
 		var url = appConstants.getDocUrl + "?collectionName=" + fileType + "&start=" + start + "&length=" + length;
 		searchFilter.addFilter("md5", "$eq", md5);		
 		var renderFeedTableCallback = function (start, length, getCsv) {
@@ -71,7 +78,7 @@ var PerParserController = function () {
 		__renderGenericTable(url, renderFeedTableCallback);
 	};
 
-	var __renderGenericTable = function (url, searchAndPagingCallback, cellCallbackConfig, getCsv) {
+	var __renderGenericTable = function (url, searchAndPagingCallback, cellCallbackConfig, getCsv) {		
 		var dataType = 'json';
 		var filters = JSON.stringify(searchFilter.getFilters());
 		url += "&filters=" + filters;

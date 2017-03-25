@@ -34,9 +34,9 @@ public class MongoService {
 		facebookFeedRepository.saveDocs(collectionName,feedToSave,fileType);
 	}
 
-	public JSONObject getDocs(String collectionName,List<MongodbFilter> filters,Integer start, Integer length) throws IOException {
+	public JSONObject getDocs(String collectionName,List<MongodbFilter> filters, String[] excludes,Integer start, Integer length) throws IOException {
 		BasicDBObject filter = buildFilter(filters);
-		JSONArray jarr = facebookFeedRepository.getDocs(collectionName,filter,start, length);
+		JSONArray jarr = facebookFeedRepository.getDocs(collectionName,filter,excludes,start, length);
 		Long count = facebookFeedRepository.getDocCount(collectionName,filter);
 		JSONObject ret = new JSONObject();
 		ret.put("data",jarr);

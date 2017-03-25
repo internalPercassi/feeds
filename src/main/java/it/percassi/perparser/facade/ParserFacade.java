@@ -47,9 +47,9 @@ public class ParserFacade {
 	@Autowired
 	MongoService mongoService;
 
-	public String parseAndSave(String fileType, byte[] bytes) throws IOException {
+	public String parseAndSave(String fileName, String fileType, byte[] bytes) throws IOException {
 		InputStream inputStream = new ByteArrayInputStream(bytes);
-		UploadedFileModel fileModel = new UploadedFileModel(bytes, fileType);
+		UploadedFileModel fileModel = new UploadedFileModel(fileName,bytes, fileType);
 		if (!mongoService.isFileAlreadyUploaded(fileModel.getMd5())) {
 			List<BaseModel> feeds = getParser(fileType).parse(inputStream);
 			for (BaseModel model : feeds) {

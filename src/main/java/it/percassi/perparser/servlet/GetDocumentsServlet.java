@@ -52,6 +52,7 @@ public class GetDocumentsServlet extends HttpServlet {
 		}
 		try {
 			String filters = request.getParameter("filters");
+			String[] excludes=request.getParameterValues("exclude");
 			String collectionName = request.getParameter("collectionName");
 			Integer start = 0;
 			if (StringUtils.isNumeric(request.getParameter("start"))) {
@@ -64,7 +65,7 @@ public class GetDocumentsServlet extends HttpServlet {
 			Boolean getCsv = Boolean.parseBoolean(request.getParameter("getCsv"));
 
 			JSONObject ret = new JSONObject();
-			ret = queryFacade.getDocs(collectionName,filters, start, length);			
+			ret = queryFacade.getDocs(collectionName,filters, excludes,start, length);			
 			if (getCsv) {
 				response.setContentType("text/csv");
 				response.setHeader("Content-Disposition", "attachment; filename=\"parParser.csv\"");				

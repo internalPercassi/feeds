@@ -38,35 +38,46 @@ public class FileParserServlet extends HttpServlet {
 //	@Autowired
 //	@Qualifier("parserFacade")
 //	private ParserService parserFacade;
-	
 	@Autowired
 	@Qualifier("parserFacade")
 	private ParserFacade parserFacade;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");	
-		response.setContentType("application/json; charset=UTF-8");	
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json; charset=UTF-8");
 		String fileType = request.getParameter("fileType"); // Retrieves <input type="text" name="description">
 		Part filePart = request.getPart("uploadedFile"); // Retrieves <input type="file" name="file">						
-
-		try {			
+		String fileName = getFileName(filePart);
+		try {
 			byte[] bytes = IOUtils.toByteArray(filePart.getInputStream());
-			if (bytes.length==0){
+			if (bytes.length == 0) {
 				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 				return;
 			}
-			String md5 = parserFacade.parseAndSave(fileType,bytes);
+			String md5 = parserFacade.parseAndSave(fileName,fileType, bytes);
 			response.setStatus(HttpServletResponse.SC_OK);
 			PrintWriter out = response.getWriter();
 			JSONObject ret = new JSONObject();
-			ret.put("md5", md5);			
+			ret.put("md5", md5);
 			out.print(ret);
-			out.flush();			
+			out.flush();
 
 		} catch (Exception e) {
 			LOG.error("", e);
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	private String getFileName(final Part part) {
+		final String partHeader = part.getHeader("content-disposition");
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename")) {
+				return content.substring(
+						content.indexOf('=') + 1).trim().replace("\"", "");
+			}
+		}
+		return null;
+	}
+
 }
