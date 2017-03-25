@@ -2,7 +2,8 @@ package it.percassi.perparser.repository;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.Projections;
+import static com.mongodb.client.model.Filters.eq;
+import it.percassi.perparser.model.UploadedFileModel;
 import it.percassi.perparser.service.parsers.model.BaseModel;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,12 +23,8 @@ import org.springframework.stereotype.Repository;
 public class MongoDocRepository extends BaseRepository {
 
 	private final static Logger LOG = LogManager.getLogger(MongoDocRepository.class);
-
-//	private MongoCollection getCollection() throws IOException {
-//		String collectionName = PropertiesProvider.getProperty("mongoDB.collection.facebookFeed");
-//		MongoCollection collection = this.getDb().getCollection(collectionName);
-//		return collection;
-//	}
+	private final static String UPLOAD_FILE_COLLECTION = "uploadedFile";
+	
 	public void saveDocs(String collectionName, List<BaseModel> docs, String fileType) throws IOException {
 		List<Document> jsonToInsert = new ArrayList<Document>();
 		for (BaseModel ff : docs) {
@@ -78,6 +75,41 @@ public class MongoDocRepository extends BaseRepository {
 		return ret;
 	}
 
+	
+	public void saveUploadedFileModel(UploadedFileModel uploadedFile) throws IOException {
+		List<Document> jsonToInsert = new ArrayList<Document>();		
+			String jsonStr = jsonMapper.writeValueAsString(uploadedFile);
+			if (jsonStr != null) {
+				Document doc = Document.parse(jsonStr);
+				jsonToInsert.add(doc);
+			}		
+		this.getDb().getCollection(UPLOAD_FILE_COLLECTION).insertMany(jsonToInsert);
+	}
+	
+	public void updatetUploadedFileModel(UploadedFileModel uploadedFile) throws IOException {
+		Document jsonToInsert = new Document();		
+			String jsonStr = jsonMapper.writeValueAsString(uploadedFile);
+			if (jsonStr != null) {
+				jsonToInsert = Document.parse(jsonStr);
+			}		
+		this.getDb().getCollection(UPLOAD_FILE_COLLECTION).replaceOne(eq("md5", uploadedFile.getMd5()), jsonToInsert);
+	}
+	
+	public boolean isFileAlreadyUploaded(String md5) throws IOException{		
+		BasicDBObject whereQuery = new BasicDBObject();
+		whereQuery.put("md5", md5);
+		MongoCursor cursor = this.getDb().getCollection(UPLOAD_FILE_COLLECTION).find(whereQuery).iterator();
+		try {
+			if (cursor.hasNext()) {
+				return true;
+			} else {
+				return false;
+			}
+		} finally {
+			cursor.close();
+		}
+	}
+	
 	@PreDestroy
 	public void cleanUp() throws Exception {
 		try {

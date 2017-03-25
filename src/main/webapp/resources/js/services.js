@@ -28,10 +28,10 @@ var dataService = function () {
 			});
 			return  colArr;
 		},
-		getData : function(){
+		getData: function () {
 			return dataArr;
 		},
-		getColumns : function(){
+		getColumns: function () {
 			return colArr;
 		}
 	}
@@ -42,25 +42,31 @@ var urlService = function () {
 		getDocUrl: 'getDocuments',
 		uploadFileUrl: 'parseFile'
 	}
-	var _getUploadedFiles =  function () {
-			return constats.getDocUrl + "?collectionName=uploadedFile&start=0&length=1000&exclude=md5";
-		};
+	var _uploadFile = function (fileType) {
+		return constats.uploadFileUrl + '?fileType=' + fileType;
+	}
+	var _getUploadedFiles = function () {
+		return constats.getDocUrl + "?collectionName=uploadedFile&start=0&length=1000&exclude=md5";
+	};
 	var _getDocs = function (collectionName) {
-			return constats.getDocUrl + "?collectionName=" + collectionName + "&start=0&length=1000&exclude=md5";
-		};
-		var _getDocsFilter =  function (collectionName,filters,sortConfig) {
-			var filterstr = JSON.stringify(filters);
-			return _getDocs(collectionName)+"&sortField="+sortConfig.sortField+"&sortType="+sortConfig.sortType+"&filters=" + filterstr;
-		};
+		return constats.getDocUrl + "?collectionName=" + collectionName + "&start=0&length=1000&exclude=md5";
+	};
+	var _getDocsFilter = function (collectionName, filters, sortConfig) {
+		var filterstr = JSON.stringify(filters);
+		return _getDocs(collectionName) + "&sortField=" + sortConfig.sortField + "&sortType=" + sortConfig.sortType + "&filters=" + filterstr;
+	};
 	return {
+		uploadFile: function (fileType) {
+			return encodeURI(_uploadFile(fileType));
+		},
 		getUploadedFiles: function () {
 			return encodeURI(_getUploadedFiles());
 		},
 		getDocs: function (collectionName) {
 			return  encodeURI(_getDocs(collectionName));
 		},
-		getDocsFilter: function (collectionName,filters,sortConfig) {
-			return encodeURI(_getDocsFilter(collectionName,filters,sortConfig));
+		getDocsFilter: function (collectionName, filters, sortConfig) {
+			return encodeURI(_getDocsFilter(collectionName, filters, sortConfig));
 		}
 	}
 }($);

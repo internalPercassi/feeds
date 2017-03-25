@@ -22,23 +22,18 @@ import org.springframework.stereotype.Service;
 public class QueryFacade {
 
 	private final static Logger LOG = LogManager.getLogger(QueryFacade.class);
-	
+
 	@Autowired
 	MongoService mongoService;
 
-	public JSONObject getDocs(String collectionName,String jsonfilters,String[] excludes, String sortField, Integer sortType, Integer start, Integer length) throws IOException {
+	public JSONObject getDocs(String collectionName, String jsonfilters, String[] excludes, String sortField, Integer sortType, Integer start, Integer length) throws IOException {
 		List<MongodbFilter> filters = buildFilterList(jsonfilters);
-		return mongoService.getDocs(collectionName,filters,excludes,sortField, sortType, start, length);
-	}
-
-	public JSONObject getUploadedFile(String md5, String jsonfilters, Integer start, Integer length) throws IOException {
-		List<MongodbFilter> filters = buildFilterList(jsonfilters);
-		return mongoService.getUploadedFile(start, length);
+		return mongoService.getDocs(collectionName, filters, excludes, sortField, sortType, start, length);
 	}
 
 	private static List<MongodbFilter> buildFilterList(String jsonfilters) throws IOException {
 		List<MongodbFilter> ret = new ArrayList<MongodbFilter>();
-		if (StringUtils.isBlank(jsonfilters)){
+		if (StringUtils.isBlank(jsonfilters)) {
 			return ret;
 		}
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -46,7 +41,7 @@ public class QueryFacade {
 			ret = objectMapper.readValue(jsonfilters, new TypeReference<List<MongodbFilter>>() {
 			});
 		} catch (Exception e) {
-			LOG.warn("",e);
+			LOG.warn("", e);
 			return new ArrayList<MongodbFilter>();
 		}
 		return ret;
