@@ -51,6 +51,7 @@ var tableController = function () {
 
 	var _buildFiltersSelect = function () {
 		$(sortFieldSel).empty();
+		$(serverFiltersFieldsSel).empty();
 		var rowHash = dataService.getColumns();
 		for (var key in rowHash) {
 			$(sortFieldSel).append($('<option>', {
