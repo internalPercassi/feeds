@@ -33,7 +33,7 @@ var tableController = function () {
 		sortConfig.sortType = $('input[name=sortType]:checked').val();
 
 
-		var url = urlService.getDocsFilter(collectionName, filterService.getFilters(), sortConfig);
+		var url = urlService.getDocs(collectionName, filterService.getFilters(), sortConfig);
 		_showDocs(collectionName, url);
 	};
 
@@ -165,7 +165,11 @@ var tableController = function () {
 			myTable = $(selectorId).DataTable(tabOpt);
 			$(selectorId + ' tbody').on('click', 'tr', function () {
 				var data = myTable.row(this).data();
-				_showDocs(data[1]);//data[1]=collectionName
+				var md5 = data[0];
+				var collectionName = data[2];
+				filterService.reset();
+				filterService.addFilter('md5','$eq',md5);
+				_showDocs(collectionName);//data[1]=collectionName
 			});
 			_hideFilters();
 		};
@@ -177,7 +181,7 @@ var tableController = function () {
 			collectionName = collectionNamePar;
 		}
 		if (!url) {
-			url = urlService.getDocs(collectionName);
+			url = urlService.getDocs(collectionName,filterService.getFilters());
 		}
 		var callback = function (res) {
 			var tabOpt = jQuery.extend(true, {}, tableOptions);

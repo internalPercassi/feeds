@@ -54,7 +54,7 @@ var urlService = function () {
 		return constats.uploadFileUrl + '?fileType=' + fileType;
 	}
 	var _getUploadedFiles = function () {
-		return docDefUrl + "&collectionName=uploadedFile&start=0&length=1000&exclude=md5";
+		return docDefUrl + "&collectionName=uploadedFile&start=0&length=1000";
 	};
 	var _getDocs = function (collectionName, filters, sortConfig, isCsv) {
 		var url = docDefUrl + "&collectionName=" + collectionName;
@@ -77,8 +77,8 @@ var urlService = function () {
 		getUploadedFiles: function () {
 			return encodeURI(_getUploadedFiles());
 		},
-		getDocs: function (collectionName) {
-			return  encodeURI(_getDocs(collectionName, null, null, false));
+		getDocs: function (collectionName,filters) {
+			return  encodeURI(_getDocs(collectionName, filters, null, false));
 		},
 		getDocsFilter: function (collectionName, filters, sortConfig) {
 			return encodeURI(_getDocs(collectionName, filters, sortConfig, false));
@@ -102,7 +102,7 @@ var filterService = function () {
 		var filter = {
 			field: field,
 			searchOperator: searchOperator,
-			searchVal: val
+			searchVal: searchVal
 		};
 
 		filters.forEach(function (value, i) {
