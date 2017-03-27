@@ -2,8 +2,9 @@
 var dataService = function () {
 	var dataArr = [];
 	var colArr = [];
+	var excludeAray = ['md5'];
 	return {
-		getRowsForDatatables: function (jsonData) {
+		getRowsForDatatables: function (jsonData, excludeConfigPar) {
 			/*il formato che abbiamo in ingresso è questo
 			 * {data:[{key1:value1,key2:value2,key2:value2},...],recordsTotal:x}
 			 * in uscita questo */
@@ -17,7 +18,7 @@ var dataService = function () {
 			});
 			return  dataArr;
 		},
-		getColumnsForDatatables: function (jsonData) {
+		getColumnsForDatatables: function (jsonData, excludeConfigPar) {
 			/*il formato che abbiamo in ingresso è questo
 			 * {data:[{key1:value1,key2:value2,key2:value2},...],recordsTotal:x}
 			 * in uscita questo */
@@ -36,24 +37,32 @@ var dataService = function () {
 		}
 	}
 }($);
-
 var urlService = function () {
 	var constats = {
 		getDocUrl: 'getDocuments',
-		uploadFileUrl: 'parseFile'
-	}
+		uploadFileUrl: 'parseFile',
+		defaultDocsNum: 1000
+	};
+	var docDefUrl = constats.getDocUrl + '?length=' + constats.defaultDocsNum;
 	var _uploadFile = function (fileType) {
 		return constats.uploadFileUrl + '?fileType=' + fileType;
 	}
 	var _getUploadedFiles = function () {
-		return constats.getDocUrl + "?collectionName=uploadedFile&start=0&length=1000&exclude=md5";
+		return docDefUrl + "&collectionName=uploadedFile&start=0&length=1000&exclude=md5";
 	};
-	var _getDocs = function (collectionName) {
-		return constats.getDocUrl + "?collectionName=" + collectionName + "&start=0&length=1000&exclude=md5";
-	};
-	var _getDocsFilter = function (collectionName, filters, sortConfig) {
-		var filterstr = JSON.stringify(filters);
-		return _getDocs(collectionName) + "&sortField=" + sortConfig.sortField + "&sortType=" + sortConfig.sortType + "&filters=" + filterstr;
+	var _getDocs = function (collectionName, filters, sortConfig, isCsv) {
+		var url = docDefUrl + "&collectionName=" + collectionName;
+		if (isCsv) {
+			url = constats.getDocUrl + "?getCsv=true&collectionName=" + collectionName;
+		}
+		if (filters) {
+			var filterstr = JSON.stringify(filters);
+			url += ("&filters=" + filterstr);
+		}
+		if (sortConfig) {
+			url += ("&sortField=" + sortConfig.sortField + "&sortType=" + sortConfig.sortType);
+		}
+		return url
 	};
 	return {
 		uploadFile: function (fileType) {
@@ -63,10 +72,74 @@ var urlService = function () {
 			return encodeURI(_getUploadedFiles());
 		},
 		getDocs: function (collectionName) {
-			return  encodeURI(_getDocs(collectionName));
+			return  encodeURI(_getDocs(collectionName, null, null, false));
 		},
 		getDocsFilter: function (collectionName, filters, sortConfig) {
-			return encodeURI(_getDocsFilter(collectionName, filters, sortConfig));
+			return encodeURI(_getDocs(collectionName, filters, sortConfig, false));
+		},
+		getCsv: function (collectionName, filters) {
+			return encodeURI(_getDocs(collectionName, filters, null, true));
 		}
 	}
 }($);
+
+
+
+var filterService = function () {
+	var filters = [];
+
+	var _addFilter = function (field, searchOperator, searchVal) {
+		if (!field || !searchOperator || !searchVal){
+			return;
+		}
+		var filter = {
+			field: field,
+			searchOperator: searchOperator,
+			searchVal: searchVal
+		};
+		
+		filters.forEach(function (value, i) {
+			if (value.field == field) {
+				return;
+			}
+		});
+			
+		filters.push(filter);
+	}
+
+	var _removeFilter = function (field) {
+		var tmp = [];
+		filters.forEach(function (value, i) {
+			if (value.field == field) {
+				tmp.push(value);
+			}
+		});
+		filters = tmp;
+	};
+	
+	var _reset = function(){
+		filters = [];
+	}
+	var _getFilters = function(){
+		var ret = [];
+		filters.forEach(function (value, i) {
+				ret.push(value);
+		});
+		return ret;
+	};
+	
+	return {
+		addFilter: function (field, searchOperator, searchVal) {
+			return _addFilter(field, searchOperator, searchVal);
+		},
+		removeFilter: function () {
+			return _removeFilter();
+		},
+		reset: function () {
+			return _reset();
+		},
+		getFilters: function () {
+			return _getFilters();
+		}
+	};
+}()

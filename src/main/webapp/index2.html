@@ -81,9 +81,13 @@
 						</form>
 					</div>
 					<div  class="col-md-2">
-						<div class="form-group">
-							<input id="execFilterBtn" class="btn btn-default form-control" type="button" value="Filter" onclick="tableController.doFilter()" />
-						</div>
+						<form class="form-inline">
+							<div class="form-group">
+								<input id="execFilterBtn" class="btn btn-default form-control" type="button" value="Filter" onclick="tableController.doFilter()" />
+								<input id="execFilterBtn" class="btn btn-default form-control" type="button" value="Reset Filter" onclick="tableController.resetFilter()" />
+								<input id="downldCsvBtn" class="btn btn-default form-control" type="button" value="CSV" onclick="tableController.downloadCsv()" />
+							</div>
+						</form>
 					</div>
 				</div>				
 

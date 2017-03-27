@@ -1,8 +1,6 @@
 package it.percassi.perparser.service.parsers;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +25,7 @@ public class JsonToCsv {
 		CSVFormat csvFileFormat = CSVFormat.RFC4180.withRecordSeparator(NEW_LINE_SEPARATOR);
 		CSVPrinter csvFilePrinter = new CSVPrinter(buf, csvFileFormat);
 
-		Document document = (Document) jsonArr.get(1);
+		Document document = (Document) jsonArr.get(0);
 
 		Set<String> keySet = new HashSet<String>();
 		keySet = document.keySet();

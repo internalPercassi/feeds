@@ -12,8 +12,8 @@ public class GLmodel extends BaseModel{
 	private String pertinencySiteDesc;
 	private String uniqueProductCode;
 	private String depositor;
-	private String stockedQty;
-	private String bookedQty;
+	private Integer stockedQty;
+	private Integer bookedQty;
 	private String accountingState;
 
 	public void setGL(String GL) {
@@ -40,11 +40,11 @@ public class GLmodel extends BaseModel{
 		this.depositor = depositor;
 	}
 
-	public void setStockedQty(String stockedQty) {
+	public void setStockedQty(Integer stockedQty) {
 		this.stockedQty = stockedQty;
 	}
 
-	public void setBookedQty(String bookedQty) {
+	public void setBookedQty(Integer bookedQty) {
 		this.bookedQty = bookedQty;
 	}
 
@@ -76,11 +76,11 @@ public class GLmodel extends BaseModel{
 		return depositor;
 	}
 
-	public String getStockedQty() {
+	public Integer getStockedQty() {
 		return stockedQty;
 	}
 
-	public String getBookedQty() {
+	public Integer getBookedQty() {
 		return bookedQty;
 	}
 

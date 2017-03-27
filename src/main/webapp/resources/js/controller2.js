@@ -8,9 +8,8 @@ var appConstants = {
 
 var tableController = function () {
 	var myTable;
-	var filters = [];
-
 	var collectionName;
+
 	var selectorId = '#myTable';
 	var sortFieldSel = '#sortField';
 	var sortFieldSel = '#sortField';
@@ -35,19 +34,13 @@ var tableController = function () {
 		var field = $(serverFiltersFieldsSel).val();
 		var searchOperator = $(serverFiltersSearchOperatorSel).val();
 		var searchVal = $(serverFilterSearchValSel).val();
-
-		var filter = {
-			field: field,
-			searchOperator: searchOperator,
-			searchVal: searchVal
-		};
-		if (searchVal) {
-			filters.push(filter);
-		}
-
-		var url = urlService.getDocsFilter(collectionName, filters, sortConfig);
-
+		filterService.addFilter(field, searchOperator, searchVal);
+		var url = urlService.getDocsFilter(collectionName, filterService.getFilters(), sortConfig);
 		_showDocs(collectionName, url);
+	};
+
+	var _resetFilter = function () {
+		filterService.reset();
 	};
 
 	var _buildFiltersSelect = function () {
@@ -101,6 +94,7 @@ var tableController = function () {
 	};
 
 	var _uploadFile = function () {
+		filterService.reset();
 		var form = $('#uploadForm')[0];
 		var formData = new FormData(form);
 		var fileType = $('#fileType').val();
@@ -135,7 +129,6 @@ var tableController = function () {
 
 
 	var _showUploadedFiles = function () {
-		filters = [];
 		var url = urlService.getUploadedFiles();
 		var callback = function (res) {
 			var tabOpt = jQuery.extend(true, {}, tableOptions);
@@ -157,8 +150,9 @@ var tableController = function () {
 	};
 
 	var _showDocs = function (collectionNamePar, url) {
-		filters = [];
-		collectionName = collectionNamePar;
+		if (collectionNamePar) {
+			collectionName = collectionNamePar;
+		}
 		if (!url) {
 			url = urlService.getDocs(collectionName);
 		}
@@ -176,7 +170,17 @@ var tableController = function () {
 			_showFilters();
 		}
 		_callAjax(url, callback);
-	}
+	};
+
+	var _downloadCsv = function () {
+		var url = urlService.getCsv(collectionName, filterService.getFilters());
+		var form$ = $('<form/>').attr("method", "post");
+		form$.attr('action', encodeURI(url));
+		$(document.body).append(form$);
+		form$.submit();
+		$(document.body).remove(form$);
+	};
+
 	return {
 		uploadFile: function () {
 			_uploadFile();
@@ -185,10 +189,18 @@ var tableController = function () {
 			_showUploadedFiles();
 		},
 		showDocs: function (collectionName) {
+			filterService.reset();
 			_showDocs(collectionName);
 		},
 		doFilter: function () {
 			_doFilter();
+		},
+		resetFilter: function () {
+			_resetFilter();
+			_showDocs();
+		},
+		downloadCsv: function () {
+			_downloadCsv();
 		}
 	}
 }($);

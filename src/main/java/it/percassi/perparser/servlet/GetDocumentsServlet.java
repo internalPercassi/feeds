@@ -5,7 +5,6 @@ import it.percassi.perparser.facade.QueryFacade;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,6 +42,7 @@ public class GetDocumentsServlet extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
+	private static final int DEFAULT_ROWSET_LENGTH = 100000;
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -56,7 +56,7 @@ public class GetDocumentsServlet extends HttpServlet {
 				try {
 					sortType = Integer.parseInt(request.getParameter("sortType"));
 				} catch (NumberFormatException nfe) {
-					LOG.warn("Param sortType is not numeric, is " + sortType);
+					LOG.debug("Param sortType is not numeric, is " + sortType);
 				}
 			}
 
@@ -64,10 +64,15 @@ public class GetDocumentsServlet extends HttpServlet {
 			if (StringUtils.isNumeric(request.getParameter("start"))) {
 				start = Integer.parseInt(request.getParameter("start"));
 			}
-			Integer length = 10;
-			if (StringUtils.isNumeric(request.getParameter("length"))) {
-				length = Integer.parseInt(request.getParameter("length"));
+			Integer length = DEFAULT_ROWSET_LENGTH;
+			if (request.getParameter("length") != null) {
+				try {
+					length = Integer.parseInt(request.getParameter("length"));
+				} catch (NumberFormatException nfe) {
+					LOG.warn("Param length is not numeric, is " + sortType+", set to default: "+DEFAULT_ROWSET_LENGTH);
+				}
 			}
+			
 			Boolean getCsv = Boolean.parseBoolean(request.getParameter("getCsv"));
 
 			JSONObject ret = new JSONObject();
