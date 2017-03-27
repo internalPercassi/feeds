@@ -29,8 +29,8 @@ public class GLParser extends BaseParser<GLmodel> {
 			tmp.setPertinencySiteDesc(line.substring(15, 18));
 			tmp.setUniqueProductCode(line.substring(28, 64));
 			tmp.setDepositor(line.substring(64, 67));
-			tmp.setStockedQty(line.substring(150, 160).replaceFirst("^0+(?!$)", ""));
-			tmp.setBookedQty(line.substring(163, 173).replaceFirst("^0+(?!$)", ""));
+			tmp.setStockedQty(Integer.parseInt(line.substring(150, 160).replaceFirst("^0+(?!$)", "")));
+			tmp.setBookedQty(Integer.parseInt(line.substring(163, 173).replaceFirst("^0+(?!$)", "")));
 			tmp.setAccountingState(line.substring(176, 191));
 			ret.add(tmp);
 		}

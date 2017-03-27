@@ -22,11 +22,17 @@ var dataService = function () {
 			/*il formato che abbiamo in ingresso è questo
 			 * {data:[{key1:value1,key2:value2,key2:value2},...],recordsTotal:x}
 			 * in uscita questo */
-			colArr = [];
+			var tmpArr = [];
 			var el = jsonData.data[0];
-			$.each(el, function (key, value) {
-				colArr.push({title: key});
-			});
+			if (jsonData && jsonData.data && jsonData.data.length > 0) {
+				$.each(el, function (key, value) {
+					tmpArr.push({title: key});
+				});
+				colArr = tmpArr;
+			}
+			if (!colArr || colArr.length==0){
+				return [{title:"no data found"}]; //todo: gestire un result set vuoto
+			}
 			return  colArr;
 		},
 		getData: function () {
@@ -89,21 +95,22 @@ var filterService = function () {
 	var filters = [];
 
 	var _addFilter = function (field, searchOperator, searchVal) {
-		if (!field || !searchOperator || !searchVal){
+		if (!field || !searchOperator || !searchVal) {
 			return;
 		}
+		
 		var filter = {
 			field: field,
 			searchOperator: searchOperator,
-			searchVal: searchVal
+			searchVal: val
 		};
-		
+
 		filters.forEach(function (value, i) {
 			if (value.field == field) {
 				return;
 			}
 		});
-			
+
 		filters.push(filter);
 	}
 
@@ -116,18 +123,18 @@ var filterService = function () {
 		});
 		filters = tmp;
 	};
-	
-	var _reset = function(){
+
+	var _reset = function () {
 		filters = [];
 	}
-	var _getFilters = function(){
+	var _getFilters = function () {
 		var ret = [];
 		filters.forEach(function (value, i) {
-				ret.push(value);
+			ret.push(value);
 		});
 		return ret;
 	};
-	
+
 	return {
 		addFilter: function (field, searchOperator, searchVal) {
 			return _addFilter(field, searchOperator, searchVal);

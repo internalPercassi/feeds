@@ -5,6 +5,7 @@ import it.percassi.perparser.facade.QueryFacade;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +47,10 @@ public class GetDocumentsServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String filters = request.getParameter("filters");
+			String filters = null;
+			if (StringUtils.isNotBlank(request.getParameter("filters"))){
+				filters = URLDecoder.decode(request.getParameter("filters"),"UTF-8");
+			}					
 			String[] excludes = request.getParameterValues("exclude");
 			String collectionName = request.getParameter("collectionName");
 
