@@ -1,18 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.percassi</groupId>
 	<artifactId>PerParserSPA</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>PerParserSPA Maven Webapp</name>
-	<url>http://maven.apache.org</url>	
-	
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<spring.version>4.3.7.RELEASE</spring.version>
+		<jackson.version>2.8.6</jackson.version>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
@@ -28,40 +35,47 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		<!--StringUtils-->
+		<!--StringUtils -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.0</version>
+			<version>3.5</version>
 		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>4.3.1.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>4.3.1.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.3.1.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>4.3.1.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
-		
-		<!--log4j-->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+
+		<!--log4j -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 			<version>2.8.1</version>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
@@ -71,17 +85,33 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jcl</artifactId>
 			<version>2.1</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongodb-driver</artifactId>
 			<version>3.4.2</version>
-		</dependency>		
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.13</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
@@ -91,14 +121,21 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.5</version>
-		</dependency>		    
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
-			<version>1.0</version>
-		</dependency>	
+			<version>1.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.6.1</version>
+		</dependency>
+
 	</dependencies>
-	
+
 	<profiles>
 		<profile>
 			<id>dev</id>
@@ -107,19 +144,19 @@
 			</activation>
 			<build>
 				<finalName>PerParserSPA</finalName>
-				<plugins>															
-					<plugin>  
-						<groupId>org.apache.tomcat.maven</groupId>  
-						<artifactId>tomcat7-maven-plugin</artifactId>  
+				<plugins>
+					<plugin>
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
 						<version>2.2</version>
-						<configuration>  
-							<url>http://localhost:8080/manager/text</url>  
+						<configuration>
+							<url>http://localhost:8080/manager/text</url>
 							<server>TomcatServer</server>
-							<username>tomcat</username>  
-							<password>tomcat</password>   
+							<username>tomcat</username>
+							<password>tomcat</password>
 							<path>/PerParserSPA</path>
 							<update>true</update>
-						</configuration> 
+						</configuration>
 						<executions>
 							<execution>
 								<id>tomcat-redeploy</id>
@@ -141,13 +178,13 @@
 									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>C:/apache-tomcat-8.5.11/webapps/PerParserSPA/resources</outputDirectory>									
-									<resources>          
+									<outputDirectory>C:/apache-tomcat-8.5.11/webapps/PerParserSPA/resources</outputDirectory>
+									<resources>
 										<resource>
 											<directory>src/main/webapp/resources</directory>
 											<filtering>true</filtering>
 										</resource>
-									</resources>     
+									</resources>
 									<overwrite>true</overwrite>
 								</configuration>
 							</execution>
@@ -158,13 +195,13 @@
 									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>C:/apache-tomcat-8.5.11/webapps/PerParserSPA/</outputDirectory>									
-									<resources>          
+									<outputDirectory>C:/apache-tomcat-8.5.11/webapps/PerParserSPA/</outputDirectory>
+									<resources>
 										<resource>
 											<directory>src/main/webapp</directory>
 											<filtering>*.html</filtering>
 										</resource>
-									</resources>     
+									</resources>
 									<overwrite>true</overwrite>
 								</configuration>
 							</execution>
@@ -181,6 +218,6 @@
 			<build>
 				<finalName>PerParserSPA</finalName>
 			</build>
-		</profile>		
+		</profile>
 	</profiles>
 </project>

@@ -1,12 +1,15 @@
 package it.percassi.perparser.repository;
 
+import java.io.IOException;
+
+import javax.annotation.PostConstruct;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
+
 import it.percassi.perparser.properties.PropertiesProvider;
-import java.io.IOException;
-import javax.annotation.PostConstruct;
-import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  *

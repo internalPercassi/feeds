@@ -1,9 +1,8 @@
 package it.percassi.perparser.servlet;
 
-import it.percassi.perparser.facade.ParserFacade;
-import it.percassi.perparser.model.AppEnum;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +19,8 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
+import it.percassi.perparser.facade.ParserFacade;
 
 /**
  *
@@ -28,6 +30,8 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 @MultipartConfig
 public class FileParserServlet extends HttpServlet {
 
+
+	private static final long serialVersionUID = 7206809751115899296L;
 	private final static Logger LOG = LogManager.getLogger(FileParserServlet.class);
 
 	public void init(ServletConfig config) throws ServletException {
