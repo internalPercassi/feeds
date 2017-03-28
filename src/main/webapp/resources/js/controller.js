@@ -32,7 +32,6 @@ var tableController = function () {
 		sortConfig.sortField = $(sortFieldSel).val();
 		sortConfig.sortType = $('input[name=sortType]:checked').val();
 
-
 		var url = urlService.getDocs(collectionName, filterService.getFilters(), sortConfig);
 		_showDocs(collectionName, url);
 	};

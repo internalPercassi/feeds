@@ -77,11 +77,8 @@ var urlService = function () {
 		getUploadedFiles: function () {
 			return encodeURI(_getUploadedFiles());
 		},
-		getDocs: function (collectionName,filters) {
-			return  encodeURI(_getDocs(collectionName, filters, null, false));
-		},
-		getDocsFilter: function (collectionName, filters, sortConfig) {
-			return encodeURI(_getDocs(collectionName, filters, sortConfig, false));
+		getDocs: function (collectionName,filters,sortConfig) {
+			return  encodeURI(_getDocs(collectionName, filters, sortConfig, false));
 		},
 		getCsv: function (collectionName, filters) {
 			return encodeURI(_getDocs(collectionName, filters, null, true));
