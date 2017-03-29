@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,6 +61,7 @@ public class NewRelicTest {
 	private static final String PROPER_URL = "https://api.newrelic.com/v2/applications/4179465/metrics/data.json?names=Agent/MetricsReported/count&from=2017-03-24T00:00&to=2017-03-24T12:00&summarize=true";
 
 	@Test
+	@Ignore
 	public void getAllNewRelicMetrics_success() {
 
 		assertNotNull(NR_URL);
@@ -103,13 +105,6 @@ public class NewRelicTest {
 
 		}
 
-	}
-
-	@Test
-	public void dateTimeTest() {
-		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		final LocalDateTime toDateAsDateTime = LocalDateTime.parse(toDate, formatter);
-		System.out.println("toDateAsDateTime " + toDateAsDateTime);
 	}
 
 }
