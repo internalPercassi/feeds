@@ -20,7 +20,7 @@ public class UploadedFileModel {
 	}
 	
 	public UploadedFileModel(String fileName,byte[] bytes,String type) throws IOException {
-		String md5 = this.getMD5(bytes);
+		String md5 = getMD5(bytes);
 		this.date = new Date();
 		this.md5 = md5;
 		this.rowCount = 0;

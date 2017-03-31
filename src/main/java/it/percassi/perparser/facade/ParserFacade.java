@@ -51,7 +51,7 @@ public class ParserFacade {
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 		UploadedFileModel fileModel = new UploadedFileModel(fileName,bytes, fileType);
 		if (!mongoService.isFileAlreadyUploaded(fileModel.getMd5())) {
-			List<BaseModel> feeds = getParser(fileType).parse(inputStream);
+			List<BaseModel> feeds =getParser(fileType).parse(inputStream);
 			for (BaseModel model : feeds) {
 				model.setMd5(fileModel.getMd5());
 			}

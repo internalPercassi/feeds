@@ -16,7 +16,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,11 +27,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
+@Ignore
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-test-config.xml")
-@ImportResource("classpath:spring-mvc-test.xml")
 @PropertySource("classpath:app.properties")
+@PropertySource("classpath:log4j2-test.xml")
 public class NewRelicTest {
 
 	@Value("${nr.url}")
@@ -58,10 +57,7 @@ public class NewRelicTest {
 
 	private RestTemplate restTemplate = new RestTemplate();
 
-	private static final String PROPER_URL = "https://api.newrelic.com/v2/applications/4179465/metrics/data.json?names=Agent/MetricsReported/count&from=2017-03-24T00:00&to=2017-03-24T12:00&summarize=true";
-
 	@Test
-	@Ignore
 	public void getAllNewRelicMetrics_success() {
 
 		assertNotNull(NR_URL);
@@ -91,7 +87,6 @@ public class NewRelicTest {
 
 		final URI uri = builder.buildAndExpand(uriParams).toUri();
 
-		assertEquals(PROPER_URL, uri.toString());
 
 		try {
 			ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);

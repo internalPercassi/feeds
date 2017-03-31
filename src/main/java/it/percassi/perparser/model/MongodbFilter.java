@@ -8,6 +8,8 @@ import java.io.Serializable;
  */
 
 public class MongodbFilter implements Serializable{
+	
+	private static final long serialVersionUID = -3757431246194756630L;
 	private String field;
 	private String searchOperator;
 	private String searchVal;

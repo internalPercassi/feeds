@@ -101,7 +101,7 @@ var tableController = function () {
 				if (res && res.data && res.data.length > 0) {
 					successCbk(res);
 				} else {
-					console.log("http resposonse is null");
+					console.log("http response is null");
 					successCbk(res);
 				}
 			},
@@ -132,7 +132,7 @@ var tableController = function () {
 			beforeSend: function () {
 				$("body").addClass("loading");
 			},
-			success: function (res) {
+			success: function () {
 				try {
 					_showUploadedFiles();
 				} catch (e) {

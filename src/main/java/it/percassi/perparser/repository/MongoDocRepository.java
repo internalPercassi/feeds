@@ -59,9 +59,22 @@ public class MongoDocRepository extends BaseRepository {
 		bexcludes.append("_id", false);
 		MongoCursor<Document> cursor = null;
 		if (sort != null) {
-			cursor = this.getDb().getCollection(collectionName).find(filters).sort(sort).skip(start).limit(length).projection(bexcludes).iterator();
+			cursor = this.getDb()
+					.getCollection(collectionName)
+					.find(filters)
+					.sort(sort)
+					.skip(start)
+					.limit(length)
+					.projection(bexcludes)
+					.iterator();
 		} else {
-			cursor = this.getDb().getCollection(collectionName).find(filters).skip(start).limit(length).projection(bexcludes).iterator();
+			cursor = this.getDb()
+					.getCollection(collectionName)
+					.find(filters)
+					.skip(start)
+					.limit(length)
+					.projection(bexcludes)
+					.iterator();
 		}
 		try {
 			while (cursor.hasNext()) {

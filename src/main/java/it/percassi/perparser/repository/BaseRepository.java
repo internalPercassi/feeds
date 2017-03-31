@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
-
-import it.percassi.perparser.properties.PropertiesProvider;
 
 /**
  *
@@ -19,16 +19,20 @@ public class BaseRepository {
 
 	ObjectMapper jsonMapper = new ObjectMapper();
 	MongoClient mongoClient;
+	
+	@Value("${mongoDB.DBname}")
+	private String mongoDBName;
+	@Value("${mongoDB.URI}")
+	private String mongoDBUri;
+	
 
 	protected MongoDatabase getDb() throws IOException {
-		String dbName = PropertiesProvider.getProperty("mongoDB.DBname");
-		return mongoClient.getDatabase(dbName);
+		return mongoClient.getDatabase(mongoDBName);
 	}
 
 	@PostConstruct
 	public void postConstruct() throws IOException {
-		String dbURI = PropertiesProvider.getProperty("mongoDB.URI");
-		MongoClientURI uri = new MongoClientURI(dbURI);
+		final MongoClientURI uri = new MongoClientURI(mongoDBUri);
 		mongoClient = new MongoClient(uri);
 	}
 		

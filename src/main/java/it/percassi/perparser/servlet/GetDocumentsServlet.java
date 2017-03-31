@@ -1,17 +1,16 @@
 package it.percassi.perparser.servlet;
 
-import it.percassi.perparser.facade.CsvFacade;
-import it.percassi.perparser.facade.QueryFacade;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,12 +20,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import it.percassi.perparser.facade.CsvFacade;
+import it.percassi.perparser.facade.QueryFacade;
+
 /**
  *
  * @author Daniele Sperto
  */
-@WebServlet("/getDocuments")
+//@WebServlet("/getDocuments")
 public class GetDocumentsServlet extends HttpServlet {
+
+
+	private static final long serialVersionUID = -3822679557857971497L;
 
 	private final static Logger LOG = LogManager.getLogger(GetDocumentsServlet.class);
 
