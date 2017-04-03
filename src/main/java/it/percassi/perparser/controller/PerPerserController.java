@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mongodb.util.JSON;
 
+import it.percassi.perparser.controller.request.UploadFileControllerRequest;
+import it.percassi.perparser.controller.response.BaseControllerResponse;
 import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
+
 
 @RestController
 public class PerPerserController {
@@ -45,19 +49,20 @@ public class PerPerserController {
 
 
 	@PostMapping(path = "/parseFile", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> uploadFile(@RequestParam("uploadedFile") MultipartFile file,
-			@RequestParam("fileType") String fileType) throws IOException {
+	public ResponseEntity<Void> uploadFile(UploadFileControllerRequest request,BindingResult bindResult) throws IOException {
 	
 
-//		if (bindResult.hasErrors()) {
-//			final String error = bindResult.getFieldError().getDefaultMessage();
-//			final BaseControllerResponse res = new BaseControllerResponse(error, HttpStatus.BAD_REQUEST);
-//			return new ResponseEntity<String>(res.getMessage(), res.getErrorCode());
-//		}
+		if (bindResult.hasErrors()) {
+			final String error = bindResult.getFieldError().getDefaultMessage();
+			final BaseControllerResponse res = new BaseControllerResponse(error, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Void>(res.getErrorCode());
+		}
+		final MultipartFile file = request.getMultipartFile();
 		final String fileName = file.getOriginalFilename();
 
 		byte[] bytes = IOUtils.toByteArray(file.getInputStream());
-		final String md5 = parserFacade.parseAndSave(fileName, fileType, bytes);
+		final String md5 = parserFacade.parseAndSave(fileName, request.getFileType(), bytes);
+		LOG.info("md5 of {}",fileName +"is: {}",md5);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
@@ -99,12 +104,6 @@ public class PerPerserController {
 			return new ResponseEntity<String>(JSON.serialize(jsonObj),HttpStatus.OK);
 		}
 	
-	}
-
-	@GetMapping("/version")
-	public ResponseEntity<String> getVersion() {
-		final String version = System.getProperty("version");
-		return new ResponseEntity<String>(version, HttpStatus.OK);
 	}
 
 }

@@ -16,6 +16,7 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<app.version>1.0.0</app.version>
 		<version>${app.version}</version>
+		<skipTests>true</skipTests>
 	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->

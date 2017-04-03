@@ -15,7 +15,7 @@
 	<!-- Properties placeholder bean  -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
-			<value>app.properties</value>
+			<value>/WEB-INF/app.propertie</value>
 		</property>
 	</bean>
 </beans>
