@@ -4,16 +4,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class UploadFileControllerRequest {
 
-	private MultipartFile multipartFile;
-	
+	private MultipartFile uploadedFile;
+
 	private String fileType;
 
-	public MultipartFile getMultipartFile() {
-		return multipartFile;
+	public MultipartFile getUploadedFile() {
+		return uploadedFile;
 	}
 
-	public void setMultipartFile(MultipartFile multipartFile) {
-		this.multipartFile = multipartFile;
+	public void setUploadedFile(MultipartFile uploadedFile) {
+		this.uploadedFile = uploadedFile;
 	}
 
 	public String getFileType() {
@@ -23,6 +23,5 @@ public class UploadFileControllerRequest {
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
-	
 
 }

@@ -37,8 +37,8 @@ public class ControllerHandlerAdvice {
 		LOG.error("Exception occured", ex);
 		final BaseControllerResponse res = new BaseControllerResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		return new ResponseEntity<String>(res.getMessage(), res.getErrorCode());
-		
-		
+				
 	}
+
 
 }
