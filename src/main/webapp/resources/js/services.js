@@ -2,9 +2,9 @@
 var dataService = function () {
 	var dataArr = [];
 	var colArr = [];
-	var excludeAray = ['md5'];
+	
 	return {
-		getRowsForDatatables: function (jsonData, excludeConfigPar) {
+		getRowsForDatatables: function (jsonData) {
 			/*il formato che abbiamo in ingresso è questo
 			 * {data:[{key1:value1,key2:value2,key2:value2},...],recordsTotal:x}
 			 * in uscita questo */
@@ -18,7 +18,7 @@ var dataService = function () {
 			});
 			return  dataArr;
 		},
-		getColumnsForDatatables: function (jsonData, excludeConfigPar) {
+		getColumnsForDatatables: function (jsonData) {
 			/*il formato che abbiamo in ingresso è questo
 			 * {data:[{key1:value1,key2:value2,key2:value2},...],recordsTotal:x}
 			 * in uscita questo */
@@ -54,7 +54,7 @@ var urlService = function () {
 		return constats.uploadFileUrl + '?fileType=' + fileType;
 	}
 	var _getUploadedFiles = function () {
-		return docDefUrl + "&collectionName=uploadedFile&start=0";
+		return docDefUrl + "&collectionName=uploadedFile&start=0&length=1000";
 	};
 	var _getDocs = function (collectionName, filters, sortConfig, isCsv) {
 		var url = docDefUrl + "&collectionName=" + collectionName;

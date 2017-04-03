@@ -1,12 +1,12 @@
 package it.percassi.perparser.facade;
 
-import it.percassi.perparser.model.AppEnum;
+import it.percassi.perparser.facade.model.AppEnum;
 import it.percassi.perparser.service.parsers.model.BaseModel;
 import it.percassi.perparser.service.mongo.MongoService;
 import it.percassi.perparser.service.parsers.model.FacebookFeed;
 import it.percassi.perparser.service.parsers.model.GLmodel;
 import it.percassi.perparser.service.parsers.model.OSmodel;
-import it.percassi.perparser.model.UploadedFileModel;
+import it.percassi.perparser.facade.model.UploadedFileModel;
 import it.percassi.perparser.service.parsers.model.WAFModel;
 import it.percassi.perparser.service.parsers.BaseParser;
 import java.io.ByteArrayInputStream;
@@ -51,7 +51,7 @@ public class ParserFacade {
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 		UploadedFileModel fileModel = new UploadedFileModel(fileName,bytes, fileType);
 		if (!mongoService.isFileAlreadyUploaded(fileModel.getMd5())) {
-			List<BaseModel> feeds =getParser(fileType).parse(inputStream);
+			List<BaseModel> feeds = getParser(fileType).parse(inputStream);
 			for (BaseModel model : feeds) {
 				model.setMd5(fileModel.getMd5());
 			}

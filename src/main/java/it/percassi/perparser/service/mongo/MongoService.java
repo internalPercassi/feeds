@@ -2,8 +2,8 @@ package it.percassi.perparser.service.mongo;
 
 import com.mongodb.BasicDBObject;
 import it.percassi.perparser.repository.MongoDocRepository;
-import it.percassi.perparser.model.MongodbFilter;
-import it.percassi.perparser.model.UploadedFileModel;
+import it.percassi.perparser.service.mongo.model.MongodbFilter;
+import it.percassi.perparser.facade.model.UploadedFileModel;
 import it.percassi.perparser.service.parsers.model.BaseModel;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,14 +26,17 @@ public class MongoService {
 
 	@Autowired
 	private MongoDocRepository mongoRepository;
+	@Autowired
+	private MongoFilterService mongoFilterService;
 
 	public void saveDocs(String collectionName,List<BaseModel> feedToSave,String fileType) throws IOException {
 		mongoRepository.saveDocs(collectionName,feedToSave,fileType);
 	}
 
-	public JSONObject getDocs(String collectionName,List<MongodbFilter> filters, String[] excludes, String sortField, Integer sortType, Integer start, Integer length) throws IOException {
-		BasicDBObject filter = buildFilter(filters);
-		BasicDBObject sort = buildSort(sortField, sortType);
+	//TODO: vincolare collection name ai valori della enum ApEnum.FileType
+	public JSONObject getDocs(String collectionName,List<MongodbFilter> filters, String[] excludes, String sortField, Integer sortType, Integer start, Integer length) throws IOException, NoSuchFieldException {
+		BasicDBObject filter = mongoFilterService.buildFilter(filters,collectionName);
+		BasicDBObject sort = mongoFilterService.buildSort(sortField, sortType);
 		JSONArray jarr = mongoRepository.getDocs(collectionName,filter,excludes,sort,start, length);
 		Long count = mongoRepository.getDocCount(collectionName,filter);
 		JSONObject ret = new JSONObject();
@@ -54,31 +57,5 @@ public class MongoService {
 		mongoRepository.updatetUploadedFileModel(uploadedFile);
 	}
 	
-	public static final BasicDBObject buildFilter(List<MongodbFilter> filters) {
-		BasicDBObject query = new BasicDBObject();
-		List<BasicDBObject> objList = new ArrayList<BasicDBObject>();
-		BasicDBObject subQ = null;
-		for (MongodbFilter filter : filters) {			
-			subQ = new BasicDBObject();
-			subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(),filter.getSearchVal()));
-			objList.add(subQ);
-		}
-		
-		if (objList.size()>1){			
-			query.put("$and", objList);
-			return query;
-		} else if (objList.size() == 1){
-			return subQ;
-		}
-		return new BasicDBObject();
-	}
 	
-	
-	public static final BasicDBObject buildSort(String sortField, Integer sortType) {
-		BasicDBObject sort = null;
-		if (sortType != null && sortField != null){
-			sort = new BasicDBObject(sortField,sortType);
-		}
-		return sort;
-	}
 }

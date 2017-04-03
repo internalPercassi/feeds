@@ -72,7 +72,7 @@ public class PerPerserController {
 			@RequestParam(value = "sortType", required = false) Integer sortType,
 			@RequestParam(value ="getCsv",required = false) boolean getCsv
 
-	) throws IOException, NumberFormatException {
+	) throws IOException, NumberFormatException, NoSuchFieldException {
 		
 		
 		LOG.info("length {}; collectionName {};start {};filters {};sortField {};sortType {} ", length, collectionName,

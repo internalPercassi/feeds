@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import it.percassi.perparser.model.MongodbFilter;
+import it.percassi.perparser.service.mongo.model.MongodbFilter;
 import it.percassi.perparser.service.mongo.MongoService;
 
 /**
@@ -29,7 +29,7 @@ public class QueryFacade {
 	@Autowired
 	MongoService mongoService;
 
-	public JSONObject getDocs(String collectionName, String jsonfilters, String[] excludes, String sortField, Integer sortType, Integer start, Integer length) throws IOException {
+	public JSONObject getDocs(String collectionName, String jsonfilters, String[] excludes, String sortField, Integer sortType, Integer start, Integer length) throws IOException, NoSuchFieldException {
 		List<MongodbFilter> filters = buildFilterList(jsonfilters);
 		return mongoService.getDocs(collectionName, filters, excludes, sortField, sortType, start, length);
 	}

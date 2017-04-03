@@ -15,7 +15,7 @@
 	<!-- Properties placeholder bean  -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
-			<value>classpath:app.properties</value>
+			<value>app.properties</value>
 		</property>
 	</bean>
 </beans>

@@ -3,7 +3,7 @@ package it.percassi.perparser.repository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCursor;
 import static com.mongodb.client.model.Filters.eq;
-import it.percassi.perparser.model.UploadedFileModel;
+import it.percassi.perparser.facade.model.UploadedFileModel;
 import it.percassi.perparser.service.parsers.model.BaseModel;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,22 +59,9 @@ public class MongoDocRepository extends BaseRepository {
 		bexcludes.append("_id", false);
 		MongoCursor<Document> cursor = null;
 		if (sort != null) {
-			cursor = this.getDb()
-					.getCollection(collectionName)
-					.find(filters)
-					.sort(sort)
-					.skip(start)
-					.limit(length)
-					.projection(bexcludes)
-					.iterator();
+			cursor = this.getDb().getCollection(collectionName).find(filters).sort(sort).skip(start).limit(length).projection(bexcludes).iterator();
 		} else {
-			cursor = this.getDb()
-					.getCollection(collectionName)
-					.find(filters)
-					.skip(start)
-					.limit(length)
-					.projection(bexcludes)
-					.iterator();
+			cursor = this.getDb().getCollection(collectionName).find(filters).skip(start).limit(length).projection(bexcludes).iterator();
 		}
 		try {
 			while (cursor.hasNext()) {

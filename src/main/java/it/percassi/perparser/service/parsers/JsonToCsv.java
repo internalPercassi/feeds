@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.bson.Document;
@@ -30,21 +29,20 @@ public class JsonToCsv {
 
 		Set<String> keySet = new HashSet<String>();
 		keySet = document.keySet();
-		List<String> values = new ArrayList<>(keySet.size());
+		List<String> values = new ArrayList(keySet.size());
 		for (String key : keySet) {			
 			values.add((String) key);
 		}
 		csvFilePrinter.printRecord(values);
 		
 		for (int i = 0; i < jsonArr.size(); i++) {
-			values = new ArrayList<>(keySet.size());
+			values = new ArrayList(keySet.size());
 			document = (Document) jsonArr.get(i);
 			for (String key : keySet) {
 				values.add((String) document.get(key));
 			}
 			csvFilePrinter.printRecord(values);
 		}
-		csvFilePrinter.close();
 		return buf;
 	}
 }

@@ -25,7 +25,10 @@ var tableController = function () {
 		scrollY: 400,
 		scrollCollapse: true,
 		scroller: true,
-		pageable: false};
+		pageable: false,
+		columnDefs: [
+			{"visible": false, "targets": 0}
+		]};
 
 	var _search = function () {
 		var sortConfig = {};
@@ -36,18 +39,17 @@ var tableController = function () {
 		_showDocs(collectionName, url);
 	};
 
-	var _drawFilterList = function () {		
+	var _drawFilterList = function () {
 		$(filtersActivesSel).empty();
 		var elementsToAppen = [];
-		filterService.getFilters().forEach(function (value, i) {			
-			var htmlStr = " "+value.field + " " + value.searchOperator + " " + value.searchVal+" ";			
+		filterService.getFilters().forEach(function (value, i) {
+			var htmlStr = " " + value.field + " " + value.searchOperator + " " + value.searchVal + " ";
 			elementsToAppen.push($('<span>').addClass('label label-primary').html(htmlStr));
 		});
 		$(filtersActivesSel).append(elementsToAppen);
 	};
 
 	var _addFilter = function () {
-
 		var field = $(serverFiltersFieldsSel).val();
 		var searchOperator = $(serverFiltersSearchOperatorSel).val();
 		var searchVal = $(serverFilterSearchValSel).val();
@@ -101,7 +103,7 @@ var tableController = function () {
 				if (res && res.data && res.data.length > 0) {
 					successCbk(res);
 				} else {
-					console.log("http response is null");
+					console.log("http resposonse is null");
 					successCbk(res);
 				}
 			},
@@ -132,7 +134,7 @@ var tableController = function () {
 			beforeSend: function () {
 				$("body").addClass("loading");
 			},
-			success: function () {
+			success: function (res) {
 				try {
 					_showUploadedFiles();
 				} catch (e) {
@@ -167,7 +169,7 @@ var tableController = function () {
 				var md5 = data[0];
 				var collectionName = data[2];
 				filterService.reset();
-				filterService.addFilter('md5','$eq',md5);
+				filterService.addFilter('md5', '$eq', md5);
 				_showDocs(collectionName);//data[1]=collectionName
 			});
 			_hideFilters();
@@ -180,7 +182,7 @@ var tableController = function () {
 			collectionName = collectionNamePar;
 		}
 		if (!url) {
-			url = urlService.getDocs(collectionName,filterService.getFilters());
+			url = urlService.getDocs(collectionName, filterService.getFilters());
 		}
 		var callback = function (res) {
 			var tabOpt = jQuery.extend(true, {}, tableOptions);
