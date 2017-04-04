@@ -1,6 +1,7 @@
 package it.percassi.perparser.controller.exception.handler;
 
 import it.percassi.perparser.controller.response.BaseControllerResponse;
+import it.percassi.perparser.service.parsers.exception.NotValidFileException;
 import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,8 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-
-@RestControllerAdvice("PerPerserController")
+@RestControllerAdvice("perPerserController")
 public class ControllerHandlerAdvice {
 
 	private final static Logger LOG = LogManager.getLogger(ControllerHandlerAdvice.class);
@@ -31,14 +31,20 @@ public class ControllerHandlerAdvice {
 		return new ResponseEntity<String>(res.getMessage(), res.getErrorCode());
 
 	}
-	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<String> genericExceptionHandler(Exception ex){
+
+	@ExceptionHandler(NotValidFileException.class)
+	public ResponseEntity<String> notValidFileExceptionHandler(Exception ex) {
 		LOG.error("Exception occured", ex);
-		final BaseControllerResponse res = new BaseControllerResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		final BaseControllerResponse res = new BaseControllerResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<String>(res.getMessage(), res.getErrorCode());
-				
+
 	}
 
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> genericExceptionHandler(Exception ex) {
+		LOG.error("Exception occured", ex);
+		final BaseControllerResponse res = new BaseControllerResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(res.getMessage(), res.getErrorCode());
 
+	}
 }
