@@ -30,6 +30,7 @@ import it.percassi.perparser.controller.validator.UploadFileValidator;
 import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
+import it.percassi.perparser.service.parsers.exception.NotValidFileException;
 import it.percassi.perparser.utils.Utils;
 
 @RestController
@@ -55,7 +56,7 @@ public class PerPerserController {
 	// MultipartFile file,
 	// @RequestParam("fileType") String fileType) throws IOException {
 	public ResponseEntity<?> uploadFile(UploadFileControllerRequest request,
-			BindingResult bindingResult) throws IOException {
+			BindingResult bindingResult) throws IOException, NotValidFileException {
 
 		final UploadFileValidator uploadValidator = new UploadFileValidator();
 		uploadValidator.validate(request, bindingResult);
@@ -69,7 +70,7 @@ public class PerPerserController {
 			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 		}
 
-		final MultipartFile file = request.getMultipartFile();
+		final MultipartFile file = request.getUploadedFile();
 		final String fileType = request.getFileType();
 		final String fileName = file.getOriginalFilename();
 

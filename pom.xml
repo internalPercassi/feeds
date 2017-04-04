@@ -174,47 +174,7 @@
 								</goals>
 							</execution>
 						</executions>
-					</plugin>
-					<plugin>
-						<artifactId>maven-resources-plugin</artifactId>
-						<version>2.5</version>
-						<executions>
-							<execution>
-								<id>copy-js-resources</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>C:/apache-tomcat-8.5.11/webapps/PerParserSPA/resources</outputDirectory>
-									<resources>
-										<resource>
-											<directory>src/main/webapp/resources</directory>
-											<filtering>true</filtering>
-										</resource>
-									</resources>
-									<overwrite>true</overwrite>
-								</configuration>
-							</execution>
-							<execution>
-								<id>copy-html-resources</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>C:/apache-tomcat-8.5.11/webapps/PerParserSPA/</outputDirectory>
-									<resources>
-										<resource>
-											<directory>src/main/webapp</directory>
-											<filtering>*.html</filtering>
-										</resource>
-									</resources>
-									<overwrite>true</overwrite>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
+					</plugin>					
 				</plugins>
 			</build>
 		</profile>

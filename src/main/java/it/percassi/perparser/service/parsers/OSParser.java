@@ -1,5 +1,6 @@
 package it.percassi.perparser.service.parsers;
 
+import it.percassi.perparser.service.parsers.exception.NotValidFileException;
 import it.percassi.perparser.service.parsers.model.OSmodel;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,6 +40,11 @@ public class OSParser extends BaseParser<OSmodel> {
 
 	@Override
 	public List<OSmodel> parse(InputStream stream) throws IOException {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void isLineValid(String fields) throws NotValidFileException {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
