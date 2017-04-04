@@ -23,5 +23,6 @@ public class UploadFileControllerRequest {
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
+	
 
 }
