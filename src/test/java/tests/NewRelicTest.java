@@ -6,11 +6,16 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+import org.apache.commons.io.FileUtils;
+import org.bson.Document;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +30,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoDatabase;
+
+import it.percassi.perparser.model.newrelic.Metrics;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-test-config.xml")
@@ -47,6 +60,11 @@ public class NewRelicTest {
 
 	@Value("${nr.api.key}")
 	private String apiKey;
+
+	@Value("${mongoDB.DBname}")
+	private String mongoDBName;
+	@Value("${mongoDB.URI}")
+	private String mongoDBUri;
 
 	private static final String FORWARD_SLASH = "/";
 	private static final String fromDate = "2017-03-24 00:00:00";
@@ -79,7 +97,7 @@ public class NewRelicTest {
 
 		assertTrue("Fail", uriParams.size() >= 2);
 
-		final URI uri = generateUriToCall(urlToCall, fromDateAsDateTime, toDateAsDateTime, uriParams, true);
+		final URI uri = generateUriToCall(urlToCall, fromDateAsDateTime, toDateAsDateTime, uriParams, true, 0);
 
 		try {
 			ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
@@ -97,7 +115,7 @@ public class NewRelicTest {
 
 	@Test
 	public void getWebFrontendAverageRespTime_call() {
-	
+
 		/**
 		 * public static LocalDateTime of(int year, int month, int dayOfMonth,
 		 * int hour, int minute)
@@ -120,7 +138,7 @@ public class NewRelicTest {
 		uriParams.add("values", "call_count");
 		uriParams.add("values", "average_response_time");
 
-		final URI uri = generateUriToCall(urlToCall, fromDate, toDate, uriParams, true);
+		final URI uri = generateUriToCall(urlToCall, fromDate, toDate, uriParams, false, 7200);
 
 		try {
 			ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
@@ -136,6 +154,54 @@ public class NewRelicTest {
 
 	}
 
+	@Test
+	public void saveJsonToMongoDB_success() {
+		final MongoClientURI mcu = new MongoClientURI(mongoDBUri);
+
+		final MongoClient mc = new MongoClient(mcu);
+		final MongoDatabase mdb = mc.getDatabase(mongoDBName);
+
+		String nrCollection = "new_relic";
+
+		try {
+
+			final File file = new File("src/test/resources/mock_new_relic.json");
+			final String jsonAsString = FileUtils.readFileToString(file, Charset.defaultCharset());
+
+			Document doc = Document.parse(jsonAsString);
+			mdb.getCollection(nrCollection).insertMany(Arrays.asList(doc));
+			Long rowCount = mdb.getCollection(nrCollection).count();
+
+			assertNotNull(rowCount);
+			assertTrue(rowCount > 0);
+
+		} catch (Exception e) {
+			fail("Exception... " + e.getMessage());
+		} finally {
+			mc.close();
+		}
+
+	}
+
+	@Test
+	public void jsonConvertion_success() {
+
+		final File file = new File("WebFrontend_queueTime_mock.json");
+		try {
+			final ObjectMapper om = new ObjectMapper();
+			final Metrics metrics = om.readValue(file, Metrics.class);
+			
+			assertNotNull(metrics);
+			assertEquals("WebFrontend/QueueTime", metrics.getName());
+			assertTrue(metrics.getTimeslices().size()>0);
+			
+			
+		} catch (IOException e) {
+			System.err.println("Stack "+e);
+			fail("Exception occured");
+		}
+	}
+
 	private String createNewRelicUrl() {
 		final StringBuilder urlToCall = new StringBuilder();
 		urlToCall.append(NR_URL).append(FORWARD_SLASH).append(feId).append(endUrl);
@@ -149,14 +215,28 @@ public class NewRelicTest {
 		return headers;
 	}
 
+	/**
+	 * Simple method to build the proper url to call nr
+	 * 
+	 * @param urlToCall
+	 * @param fromDate
+	 * @param toDate
+	 * @param uriParams
+	 * @param isSummarize
+	 * @param period
+	 * @return
+	 */
 	private URI generateUriToCall(String urlToCall, LocalDateTime fromDate, LocalDateTime toDate,
-			MultiValueMap<String, String> uriParams, boolean isSummarize) {
+			MultiValueMap<String, String> uriParams, boolean isSummarize, int period) {
 
 		final UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(urlToCall).queryParams(uriParams)
 				.queryParam("from", fromDate).queryParam("to", toDate);
 
-		if (isSummarize) {
+		if (!ObjectUtils.isEmpty(isSummarize) && isSummarize) {
 			builder.queryParam("summarize", isSummarize);
+		}
+		if (period != 0) {
+			builder.queryParam("period", period);
 		}
 
 		final URI uri = builder.buildAndExpand(uriParams).toUri();

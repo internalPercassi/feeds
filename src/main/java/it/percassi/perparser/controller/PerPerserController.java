@@ -137,8 +137,8 @@ public class PerPerserController {
 
 	}
 	@GetMapping("/getNewRelicData")
-	public ResponseEntity<?> getNewRelicApi(GetNewRelicControllerRequest request,BindingResult bindResult){
-		return null;
+	public ResponseEntity<Void> getNewRelicApi(GetNewRelicControllerRequest request,BindingResult bindResult){
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		
 		
 	}
