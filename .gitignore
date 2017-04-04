@@ -158,3 +158,4 @@ $RECYCLE.BIN/
 /nbactions.xml
 
 app.properties
+/src/main/webapp/WEB-INF/app.properties
