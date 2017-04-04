@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mongodb.util.JSON;
 
 import it.percassi.perparser.controller.request.GetDocumentsRequest;
+import it.percassi.perparser.controller.request.GetNewRelicControllerRequest;
 import it.percassi.perparser.controller.request.UploadFileControllerRequest;
 import it.percassi.perparser.controller.response.BaseControllerResponse;
 import it.percassi.perparser.controller.validator.GetDocumentsRequestValidator;
@@ -54,8 +56,8 @@ public class PerPerserController {
 	// public ResponseEntity<Void> uploadFile(@RequestParam("uploadedFile")
 	// MultipartFile file,
 	// @RequestParam("fileType") String fileType) throws IOException {
-	public ResponseEntity<?> uploadFile(UploadFileControllerRequest request,
-			BindingResult bindingResult) throws IOException {
+	public ResponseEntity<?> uploadFile(UploadFileControllerRequest request, BindingResult bindingResult)
+			throws IOException {
 
 		final UploadFileValidator uploadValidator = new UploadFileValidator();
 		uploadValidator.validate(request, bindingResult);
@@ -97,16 +99,17 @@ public class PerPerserController {
 			// sortType,
 			// @RequestParam(value ="getCsv",required = false) boolean getCsv
 
-			GetDocumentsRequest request,BindingResult bindingResult) throws IOException, NumberFormatException, NoSuchFieldException {
+			GetDocumentsRequest request, BindingResult bindingResult)
+			throws IOException, NumberFormatException, NoSuchFieldException {
 
 		LOG.info("Request is ", request.toString());
-		
+
 		final GetDocumentsRequestValidator getDocumentsRequestValidator = new GetDocumentsRequestValidator();
-		
+
 		getDocumentsRequestValidator.validate(request, bindingResult);
-		
-		if(bindingResult.hasErrors()){
-			
+
+		if (bindingResult.hasErrors()) {
+
 			List<ObjectError> errors = bindingResult.getAllErrors();
 			final String errorMessage = Utils.generateErrorMessage(errors);
 			final BaseControllerResponse response = new BaseControllerResponse(errorMessage, HttpStatus.BAD_REQUEST);
@@ -133,5 +136,13 @@ public class PerPerserController {
 		}
 
 	}
+	@GetMapping("/getNewRelicData")
+	public ResponseEntity<?> getNewRelicApi(GetNewRelicControllerRequest request,BindingResult bindResult){
+		return null;
+		
+		
+	}
+	
+	
 
 }

@@ -16,7 +16,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -31,7 +30,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-test-config.xml")
 @ImportResource("classpath:log4j2-test.xml")
-//@PropertySource("classpath:**/app.properties")
 public class NewRelicTest {
 
 	@Value("${nr.url}")

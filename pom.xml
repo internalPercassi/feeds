@@ -15,7 +15,6 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<app.version>1.0.0</app.version>
-		<version>${app.version}</version>
 		<skipTests>true</skipTests>
 	</properties>
 	<dependencies>
@@ -224,6 +223,11 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
+				<testResources>
+					<testResource>
+						<directory>src/main/webapp/WEB-INF</directory>
+					</testResource>
+				</testResources>
 				<finalName>PerParserSPA</finalName>
 			</build>
 		</profile>

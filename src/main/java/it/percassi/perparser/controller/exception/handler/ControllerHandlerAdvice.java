@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
-@RestControllerAdvice("PerPerserController")
+@RestControllerAdvice(value="PerPerserController")
 public class ControllerHandlerAdvice {
 
 	private final static Logger LOG = LogManager.getLogger(ControllerHandlerAdvice.class);
