@@ -69,7 +69,7 @@ public class PerPerserController {
 			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 		}
 
-		final MultipartFile file = request.getUploadedFile();
+		final MultipartFile file = request.getMultipartFile();
 		final String fileType = request.getFileType();
 		final String fileName = file.getOriginalFilename();
 

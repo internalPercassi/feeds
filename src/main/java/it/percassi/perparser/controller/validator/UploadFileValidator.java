@@ -21,7 +21,7 @@ public class UploadFileValidator implements Validator {
 
 		final UploadFileControllerRequest req = (UploadFileControllerRequest) target;
 
-		final MultipartFile uploadFile = req.getUploadedFile();
+		final MultipartFile uploadFile = req.getMultipartFile();
 		final String fileType = req.getFileType();
 
 		if (Objects.isNull(uploadFile)) {
