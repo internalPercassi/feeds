@@ -12,15 +12,25 @@
     http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	http://www.springframework.org/schema/data/mongo
     http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd ">
-    
+
 	<mvc:annotation-driven />
 	<context:component-scan base-package="it.percassi" />
-	
-	<!--Spring beans  -->
+
+	<!--Spring beans -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
 			<value>/app.properties</value>
+		</property>
+	</bean>
+	<bean name="timeZone" class="java.util.TimeZone" factory-method="getDefault"></bean>
+	<bean
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="objectMapper">
+			<bean
+				class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+				<property name="timeZone" ref="timeZone"></property>
+			</bean>
 		</property>
 	</bean>
 </beans>

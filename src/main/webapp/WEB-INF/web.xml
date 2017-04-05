@@ -2,9 +2,9 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
           http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	<display-name>PerParserSPA app</display-name>
+	<display-name>PerPortal</display-name>
 	<welcome-file-list>
-	<welcome-file>/resources/pages/index.html</welcome-file>
+	<welcome-file>/resources/views/index.html</welcome-file>
 	</welcome-file-list>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
