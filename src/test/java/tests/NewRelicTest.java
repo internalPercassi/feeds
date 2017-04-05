@@ -18,8 +18,11 @@ import org.apache.commons.io.FileUtils;
 import org.bson.Document;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -39,11 +42,15 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 
-import it.percassi.perparser.model.newrelic.NewRelicMapperObject;
+import it.percassi.perparser.model.newrelic.NewRelicResponse;
+import it.percassi.perparser.service.newrelic.NewRelicServiceRequest;
+import it.percassi.perparser.service.newrelic.NewRelicServiceResponse;
+import it.percassi.perparser.service.newrelic.NrMetricService;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-test-config.xml")
 @ImportResource("classpath:log4j2-test.xml")
+@PropertySource("classpath:app.properties")
 public class NewRelicTest {
 
 	@Value("${nr.url}")
@@ -65,6 +72,10 @@ public class NewRelicTest {
 	private String mongoDBName;
 	@Value("${mongoDB.URI}")
 	private String mongoDBUri;
+
+	@Autowired
+	@Qualifier("nrMetricService")
+	private NrMetricService nrMetricService;
 
 	private static final String FORWARD_SLASH = "/";
 	private static final String fromDate = "2017-03-24 00:00:00";
@@ -117,39 +128,31 @@ public class NewRelicTest {
 	public void getWebFrontendAverageRespTime_call() {
 
 		/**
-		 * public static LocalDateTime of(int year, int month, int dayOfMonth,
-		 * int hour, int minute)
-		 *
-		 * year - the year to represent, from MIN_YEAR to MAX_YEAR month - the
+		 * public static LocalDateTime of(int year, int month, int dayOfMonth,int hour, int minute)
+		 * 
+		 * year - the year to represent,from MIN_YEAR to MAX_YEAR 
+		 * month - the
 		 * month-of-year to represent, from 1 (January) to 12 (December)
-		 * dayOfMonth - the day-of-month to represent, from 1 to 31 hour - the
-		 * hour-of-day to represent, from 0 to 23 minute - the minute-of-hour to
-		 * represent, from 0 to 59 second - the second-of-minute to represent,
-		 * from 0 to 59
+		 * dayOfMonth - the day-of-month to represent, from 1 to 31 
+		 * hour - the hour-of-day to represent, from 0 to 23 minute - the minute-of-hour to represent, from 0 to 59 
+		 * second - the second-of-minute to represent, from 0 to 59
 		 */
 		final LocalDateTime fromDate = LocalDateTime.of(2017, 4, 3, 00, 00, 00);
 		final LocalDateTime toDate = LocalDateTime.of(2017, 4, 3, 23, 59, 00);
-		final HttpHeaders headers = createHttpHeaders(apiKey);
-		final MultiValueMap<String, String> uriParams = new LinkedMultiValueMap<String, String>();
-		final String urlToCall = createNewRelicUrl();
-		final HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-		String metrics = "WebFrontend/QueueTime";
-		uriParams.add("names", metrics);
-		uriParams.add("values", "call_count");
-		uriParams.add("values", "average_response_time");
+		String metricName = "WebFrontend/QueueTime";
+		int samplePeriod = 7200;
+		final String[] valuesParam = { "average_response_time", "call_count" };
 
-		final URI uri = generateUriToCall(urlToCall, fromDate, toDate, uriParams, false, 7200);
-
+		NewRelicServiceRequest request = new NewRelicServiceRequest(fromDate, toDate, metricName, false, samplePeriod,
+				valuesParam);
 		try {
-			ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
-			assertEquals(HttpStatus.OK, response.getStatusCode());
-			assertNotNull(response.getBody());
-			assertNotEquals(0, response.getBody().length());
+			NewRelicServiceResponse serviceResponse = nrMetricService.getNrMetric(request);
+			assertNotNull(serviceResponse);
+			assertEquals(200, serviceResponse.getStatusCode());
+			assertNotNull(serviceResponse.getNewRelicResponse());
 
 		} catch (Exception e) {
-			System.err.println("Exception occured " + e.getMessage());
-			fail("argh");
-
+			fail(e.getMessage());
 		}
 
 	}
@@ -183,6 +186,9 @@ public class NewRelicTest {
 
 	}
 
+	/**
+	 * Dummy test to convert properly a json
+	 */
 	@Test
 	public void jsonConvertion_success() {
 
@@ -190,7 +196,7 @@ public class NewRelicTest {
 		try {
 			final ObjectMapper om = new ObjectMapper();
 
-			final NewRelicMapperObject nrObj = om.readValue(file, NewRelicMapperObject.class);
+			final NewRelicResponse nrObj = om.readValue(file, NewRelicResponse.class);
 
 			assertNotNull(nrObj);
 			assertTrue(nrObj.getMetrics().size() > 0);

@@ -3,21 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans.xsd ">
-
-<!-- 	<bean name="timeZone" class="java.util.TimeZone" factory-method="getDefault"></bean>
-	<bean
-		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-		<property name="objectMapper">
-			<bean
-				class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-				<property name="timeZone" ref="timeZone"></property>
-			</bean>
-		</property>
-	</bean> -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
-			<value>/app.properties</value>
+			<value>/WEB-INF/app.properties</value>
 		</property>
 	</bean>
 	<bean id="multipartResolver"

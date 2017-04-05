@@ -33,7 +33,7 @@ import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
 import it.percassi.perparser.service.parsers.exception.NotValidFileException;
-import it.percassi.perparser.utils.Utils;
+import it.percassi.perparser.utils.PerPortalUtils;
 
 @RestController
 public class PerPerserController {
@@ -66,7 +66,7 @@ public class PerPerserController {
 
 			List<ObjectError> errors = bindingResult.getAllErrors();
 
-			final String errorMessage = Utils.generateErrorMessage(errors);
+			final String errorMessage = PerPortalUtils.generateErrorMessage(errors);
 			final BaseControllerResponse response = new BaseControllerResponse(errorMessage, HttpStatus.BAD_REQUEST);
 			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 		}
@@ -111,7 +111,7 @@ public class PerPerserController {
 		if (bindingResult.hasErrors()) {
 
 			List<ObjectError> errors = bindingResult.getAllErrors();
-			final String errorMessage = Utils.generateErrorMessage(errors);
+			final String errorMessage = PerPortalUtils.generateErrorMessage(errors);
 			final BaseControllerResponse response = new BaseControllerResponse(errorMessage, HttpStatus.BAD_REQUEST);
 			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 		}
