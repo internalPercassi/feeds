@@ -12,6 +12,4 @@ import java.util.List;
 public abstract class BaseParser<T> {
 
 	public abstract List<T> parse(InputStream stream)  throws IOException,NotValidFileException;
-	
-	public abstract  void isLineValid(String fields)  throws NotValidFileException;	
 }

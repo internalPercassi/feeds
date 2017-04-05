@@ -177,8 +177,7 @@ public class WAFParser extends BaseParser<WAFModel> {
 		}
 		return ret;
 	}
-
-	@Override
+	
 	public void isLineValid(String line) throws NotValidFileException {
 		String[] tokens = StringUtils.splitPreserveAllTokens(line, FacebookFeed.FIELD_SEPARATOR);
 		if (tokens.length != ROW_LENGTH) {

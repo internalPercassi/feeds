@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
@@ -34,12 +33,10 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 
-import it.percassi.perparser.model.newrelic.Metrics;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-test-config.xml")

@@ -42,8 +42,7 @@ public class OSParser extends BaseParser<OSmodel> {
 	public List<OSmodel> parse(InputStream stream) throws IOException {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
-
-	@Override
+	
 	public void isLineValid(String fields) throws NotValidFileException {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
