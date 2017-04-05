@@ -159,4 +159,3 @@ $RECYCLE.BIN/
 
 app.properties
 /src/main/webapp/WEB-INF/app.properties
-/src/test/resources/*.json

@@ -9,6 +9,7 @@ import it.percassi.perparser.service.parsers.model.OSmodel;
 import it.percassi.perparser.facade.model.UploadedFileModel;
 import it.percassi.perparser.service.parsers.model.WAFModel;
 import it.percassi.perparser.service.parsers.BaseParser;
+import it.percassi.perparser.service.parsers.exception.NotValidFileException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +48,7 @@ public class ParserFacade {
 	@Autowired
 	MongoService mongoService;
 
-	public String parseAndSave(String fileName, String fileType, byte[] bytes) throws IOException {
+	public String parseAndSave(String fileName, String fileType, byte[] bytes) throws IOException, NotValidFileException {
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 		UploadedFileModel fileModel = new UploadedFileModel(fileName,bytes, fileType);
 		if (!mongoService.isFileAlreadyUploaded(fileModel.getMd5())) {
