@@ -34,12 +34,15 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 
-import it.percassi.perparser.model.newrelic.Metrics;
+import it.percassi.perparser.model.newrelic.NewRelicMapperObject;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-test-config.xml")
@@ -186,14 +189,16 @@ public class NewRelicTest {
 	@Test
 	public void jsonConvertion_success() {
 
-		final File file = new File("WebFrontend_queueTime_mock.json");
+		final File file = new File("src/test/resources/WebFrontend_queueTime_mock.json");
 		try {
 			final ObjectMapper om = new ObjectMapper();
-			final Metrics metrics = om.readValue(file, Metrics.class);
+			om.registerModule(new JavaTimeModule());		
+			final NewRelicMapperObject nrObj = om.readValue(file, NewRelicMapperObject.class);
 			
-			assertNotNull(metrics);
-			assertEquals("WebFrontend/QueueTime", metrics.getName());
-			assertTrue(metrics.getTimeslices().size()>0);
+			assertNotNull(nrObj);
+			assertTrue(nrObj.getMetrics().size()>0);
+			assertEquals("WebFrontend/QueueTime", nrObj.getMetrics().get(0).getName());
+			assertTrue(nrObj.getMetrics().get(0).getTimeslices().size()>0);
 			
 			
 		} catch (IOException e) {
@@ -202,6 +207,24 @@ public class NewRelicTest {
 		}
 	}
 
+	@Test
+	public void deserializeDate() {
+		final String dateToParse ="2017-04-01T00:09:00+00:00";
+		final ObjectMapper om = new ObjectMapper();
+		try {
+		 LocalDateTime a = om.readValue(dateToParse, LocalDateTime.class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	private String createNewRelicUrl() {
 		final StringBuilder urlToCall = new StringBuilder();
 		urlToCall.append(NR_URL).append(FORWARD_SLASH).append(feId).append(endUrl);
@@ -243,4 +266,6 @@ public class NewRelicTest {
 		return uri;
 
 	}
+	
+	
 }
