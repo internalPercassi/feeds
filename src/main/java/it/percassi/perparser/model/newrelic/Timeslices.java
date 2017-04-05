@@ -2,15 +2,22 @@ package it.percassi.perparser.model.newrelic;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+import it.percassi.perparser.utils.ParseDeserializer;
 
 public class Timeslices {
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss a z")
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = ParseDeserializer.class)
 	private LocalDateTime from;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss a z")
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = ParseDeserializer.class)
 	private LocalDateTime to;
+
 	private Values values;
 
 	public LocalDateTime getFrom() {
