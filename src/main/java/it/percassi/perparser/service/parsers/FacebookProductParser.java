@@ -34,8 +34,8 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
 		String line = null;
 		int c = 0;
-		while ((line = bufferedReader.readLine()) != null) {
-			if (c % 10 == 0 || true) {
+		while ((line = bufferedReader.readLine()) != null) {			
+			if (c == 0 ) {
 				 isLineValid(line) ; 
 			}
 			c++;

@@ -21,7 +21,8 @@ import org.springframework.stereotype.Service;
 public class GLParser extends BaseParser<GLmodel> {
 	
 	private final static Logger LOG = LogManager.getLogger(GLParser.class);
-	private static final int ROW_LENGTH = 237;
+	private static final int ROW_LENGTH_A = 237;
+	private static final int ROW_LENGTH_B = 224;
 	
 	@Override
 	public List<GLmodel> parse(InputStream stream) throws IOException, NotValidFileException {
@@ -31,14 +32,8 @@ public class GLParser extends BaseParser<GLmodel> {
 		int c = 0;
 		boolean skipInsering = false;
 		while ((line = bufferedReader.readLine()) != null) {
-			LOG.trace("Line length : {} ",line.length());
-			if (c % 10 == 0 || true) {
-				try {
-					isLineValid(line);
-				} catch (NotValidFileException e) {
-					LOG.warn("Line is not valid: {} ", e.getMessage());
-					skipInsering = true;
-				}
+			if (c == 0 ) {
+				isLineValid(line);
 			}
 			c++;
 			GLmodel tmp = new GLmodel();
@@ -60,9 +55,9 @@ public class GLParser extends BaseParser<GLmodel> {
 	}
 	
 	public void isLineValid(String line) throws NotValidFileException {
-		if (line.length() < ROW_LENGTH - 10 || line.length() > ROW_LENGTH + 10) {
+		if ( line.length() != ROW_LENGTH_A &&  line.length() != ROW_LENGTH_B ) {
 			LOG.trace(line);
-			throw new NotValidFileException("Length expected:" + ROW_LENGTH + ", get: " + line.length());
+			throw new NotValidFileException("Length expected:" + ROW_LENGTH_A + " or " + ROW_LENGTH_B+" , get: " + line.length());
 		}
 		
 		String tmp = line.substring(150, 160).replaceFirst("^0+(?!$)", "").trim();
