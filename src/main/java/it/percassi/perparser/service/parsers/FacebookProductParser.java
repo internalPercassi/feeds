@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -111,17 +112,22 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
 		String[] tokens = StringUtils.splitPreserveAllTokens(line, FacebookFeed.FIELD_SEPARATOR);
 		int linkIdx = 7;
 		int imgLinkIdx = 16;
-		int availabilityIdx = 19;
+		int availabilityIdx = 19;	
+		Matcher matcher;
 		
 		if (tokens.length != ROW_LENGTH) {
 			LOG.trace(line);
 			throw new NotValidFileException("Length expeted " + ROW_LENGTH + ", get " + tokens.length);
 		}
-		if (!tokens[linkIdx].matches(RegexPatterns.URL_PATTERN)){
+		
+		matcher = RegexPatterns.URL_PATTERN.matcher(tokens[linkIdx]);
+		if (!matcher.matches()){
 			LOG.trace(line);
 			throw new NotValidFileException("Invalid link URL found: "+tokens[linkIdx]);
 		}
-		if (!tokens[imgLinkIdx].matches(RegexPatterns.URL_PATTERN)){
+		
+		matcher = RegexPatterns.URL_PATTERN.matcher(tokens[imgLinkIdx]);
+		if (!matcher.matches()){
 			LOG.trace(line);
 			throw new NotValidFileException("Invalid img URL found: "+tokens[imgLinkIdx]);
 		}

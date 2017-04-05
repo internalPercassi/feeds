@@ -183,24 +183,24 @@ public class NewRelicTest {
 
 	}
 
-	@Test
-	public void jsonConvertion_success() {
-
-		final File file = new File("WebFrontend_queueTime_mock.json");
-		try {
-			final ObjectMapper om = new ObjectMapper();
-			final Metrics metrics = om.readValue(file, Metrics.class);
-			
-			assertNotNull(metrics);
-			assertEquals("WebFrontend/QueueTime", metrics.getName());
-			assertTrue(metrics.getTimeslices().size()>0);
-			
-			
-		} catch (IOException e) {
-			System.err.println("Stack "+e);
-			fail("Exception occured");
-		}
-	}
+//	@Test
+//	public void jsonConvertion_success() {
+//
+//		final File file = new File("WebFrontend_queueTime_mock.json");
+//		try {
+//			final ObjectMapper om = new ObjectMapper();
+//			final Metrics metrics = om.readValue(file, Metrics.class);
+//			
+//			assertNotNull(metrics);
+//			assertEquals("WebFrontend/QueueTime", metrics.getName());
+//			assertTrue(metrics.getTimeslices().size()>0);
+//			
+//			
+//		} catch (IOException e) {
+//			System.err.println("Stack "+e);
+//			fail("Exception occured");
+//		}
+//	}
 
 	private String createNewRelicUrl() {
 		final StringBuilder urlToCall = new StringBuilder();

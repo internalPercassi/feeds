@@ -184,11 +184,11 @@ public class WAFParser extends BaseParser<WAFModel> {
 		if (tokens.length != ROW_LENGTH) {
 			throw new NotValidFileException("Length expeted " + ROW_LENGTH + ", get " + tokens.length);
 		}
-		if (!tokens[0].matches(RegexPatterns.IPADDRESS_PATTERN)) {
-			throw new NotValidFileException("Invalid URL found: " + tokens[0]);
-		}
-		if (!StringUtils.isNumeric(tokens[3])) {
-			throw new NotValidFileException("Invalid HTTP Status Code found: " + tokens[3]);
-		}
+//		if (!tokens[0].matches(RegexPatterns.IPADDRESS_PATTERN)) {
+//			throw new NotValidFileException("Invalid URL found: " + tokens[0]);
+//		}
+//		if (!StringUtils.isNumeric(tokens[3])) {
+//			throw new NotValidFileException("Invalid HTTP Status Code found: " + tokens[3]);
+//		}
 	}
 }
