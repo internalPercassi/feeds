@@ -1,4 +1,5 @@
 <div class="row">
+<form id="uploadForm">
 	<h1 class="page-header">Upload</h1>
 	<div class="col-md-2">
   			<select name="fileType" id="fileType" class="btn btn-default selectpicker form-control">
@@ -14,7 +15,7 @@
                 <input type="text" class="form-control" readonly>
                 <label class="input-group-btn">
                     <span class="btn btn-default">Browse&hellip; 
-                		<input type="file" style="display: none;" name="upload" multiple>
+                		<input type="file" style="display: none;" name="uploadedFile" multiple>
                     </span>
                  </label>
             	</div>
@@ -23,6 +24,7 @@
 	<div class="col-md-2 pull-right">
 	 <input id="uploadBtn" class="btn btn-default form-control" type="button" value="Upload File" onclick="tableController.uploadFile()"/>
 	</div>
+</form>
 </div>	
 <div class="row" id="serverFilters" style="display: none">
 	<div  class="col-md-5">
