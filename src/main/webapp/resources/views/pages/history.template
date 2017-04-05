@@ -71,7 +71,29 @@
 			</div>
 		</form>
 	</div>
-</div>				
+</div>
+</br>
+<div class="row">
+	<h1 class="page-header">Filters</h1>
+	<div class="col-md-4">
+		<label class="control-label">
+			File Name
+		</label>
+		<input type="text" class="form-control">
+	</div>
+	<div class="col-md-4">
+		<label class="control-label">
+			Type
+		</label>
+		<input type="text" class="form-control">
+	</div>
+	<div class="col-md-4">
+		<label class="control-label">
+			Date
+		</label>
+		<input type="text" class="form-control">
+	</div>	
+</div>			
 <div class="row">
 	<div  class="col-md-12">
 		<p id="filtersActivesP"></p>

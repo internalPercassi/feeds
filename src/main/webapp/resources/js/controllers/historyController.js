@@ -211,9 +211,39 @@ var tableController = function () {
 		form$.remove();
 	};
 	
-	
+	var _init = function () {
+		 $(document).on('change', ':file', function () {
+   		  var input = $(this),
+   		    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+   		    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+   		  input.trigger('fileselect', [numFiles, label]);
+   		 });
+
+   		 // We can watch for our custom `fileselect` event like this
+   		 
+   		  var input = $(this).parents('.input-group').find(':text');
+
+   		  if (!input.val())
+   		   $('#uploadBtn').attr('disabled', true);
+
+   		  $(':file').on('fileselect', function (event, numFiles, label) {
+
+   		   var input = $(this).parents('.input-group').find(':text'),
+   		     log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+   		   if (input.length) {
+   		    input.val(log);
+   		    $('#uploadBtn').attr('disabled', label.length ? false : true);
+   		   } else
+   		   if (log)
+   		    alert(log);
+   		  });
+	};
 
 	return {
+		init: function () {
+			_init();
+		},
 		uploadFile: function () {
 			_uploadFile();
 		},
@@ -241,12 +271,7 @@ var tableController = function () {
 }($);
 
 
-
-
-
 (function($) {
-
-
 
   app.get('#/history/', function(context) {
 
@@ -255,15 +280,27 @@ var tableController = function () {
 	    context.load('/PerParserSPA/resources/views/pages/history.template')
 	    .appendTo(context.$element())
 	    .then(function(){
+	    	
+	    	tableController.init();
 	    	tableController.showUploadedFiles();
+	    	
+	    	
+
+
+
+
+	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
 	    });      
 	    
-        app.bind('test', function(e, data) {
-        
-    		this.redirect('#/' + data[2], data[0]);
-      
+        app.bind('test', function(e, data) {        
+        	this.redirect('#/' + data[2], data[0]);      
           });
-     
   });
 
 })(jQuery);
