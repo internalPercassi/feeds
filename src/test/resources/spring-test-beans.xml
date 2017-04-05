@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd ">
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>/app.properties</value>
+		</property>
+	</bean>
+	<bean name="timeZone" class="java.util.TimeZone" factory-method="getDefault"></bean>
+	<bean
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="objectMapper">
+			<bean
+				class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+				<property name="timeZone" ref="timeZone"></property>
+			</bean>
+		</property>
+	</bean>
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>/WEB-INF/app.properties</value>
+		</property>
+	</bean>
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000000" />
+	</bean>
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+
+</beans>

@@ -2,7 +2,7 @@ package it.percassi.perparser.model.newrelic;
 
 import java.util.List;
 
-public class NewRelicMapperObject {
+public class NewRelicResponse {
 
 	private List<Metrics> metrics;
 
