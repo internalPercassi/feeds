@@ -1,7 +1,5 @@
 package it.percassi.perparser.facade.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import it.percassi.perparser.utils.IsoDateSerializer;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
@@ -78,13 +76,14 @@ public class UploadedFileModel implements Serializable {
 		return md5;
 	}
 
+	
 	public Document toBSONDoc() {
-		Document ret = new Document();
-		ret.append("date", this.date);
-		ret.append("md5", this.md5);
-		ret.append("rowCount", this.rowCount);
-		ret.append("type", this.type);
+		Document ret = new Document();		
+		ret.append("md5", this.md5);			
 		ret.append("fileName", this.fileName);
+		ret.append("type", this.type);
+		ret.append("date", this.date);
+		ret.append("rowCount", this.rowCount);
 		return ret;
 	}
 }

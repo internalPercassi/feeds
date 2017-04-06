@@ -68,6 +68,7 @@ public class MongoService {
 		List<BasicDBObject> objList = new ArrayList<BasicDBObject>();
 		BasicDBObject subQ = null;
 		Class modelClass = getModelClass(fileType);
+		//TODO mettere il formato data in una classe di costante (o nel properties)
 		DateFormat  formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		for (MongodbFilter filter : filters) {
 			subQ = new BasicDBObject();
@@ -79,7 +80,7 @@ public class MongoService {
 				subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(), filter.getSearchVal()));
 			}else if (fieldType.equals(Date.class)) {
 				 Date qDate= formatter.parse(filter.getSearchVal());
-				subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(), qDate.getTime()));
+				subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(), qDate));
 			}
 
 			objList.add(subQ);

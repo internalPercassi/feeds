@@ -3,6 +3,9 @@ package tests.mongo;
 import it.percassi.perparser.controller.request.GetDocumentsRequest;
 import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.facade.QueryFacade;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import static org.junit.Assert.assertEquals;
@@ -125,10 +128,11 @@ public class MongoDbTest {
 	
 	
 	
-	private String dateVal = "2017-04-06 16:48";
+	private String dateVal = "2017-04-06 18:31";
+	private DateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 	@Test
 	public void testMongoFilterDateGT() throws Exception {
-		Integer val = Integer.parseInt(stockedQtyVal);
+		Date dateFilter = df.parse(dateVal);
 		GetDocumentsRequest req = new GetDocumentsRequest();
 		req.setCollectionName("uploadedFile");
 		String filter = buildFilterString("date", "$gt", dateVal);		
@@ -137,8 +141,8 @@ public class MongoDbTest {
 		JSONArray data = (JSONArray)ret.get("data");		
 		for (int i = 0 ; i < data.size(); i++) {
 			org.bson.Document otmp = (org.bson.Document)data.get(i);			
-			Long dateDb = (Long)otmp.get("date");
-			assertTrue(dateDb > val);
+			Date dateDb = (Date)otmp.get("date");
+			assertTrue(dateDb.getTime() > dateFilter.getTime());
 		}
 	}
 }
