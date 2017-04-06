@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +27,7 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
 	private final static Logger LOG = LogManager.getLogger(FacebookProductParser.class);
 
 	private static final int ROW_LENGTH = 27;
-	
+
 	@Override
 	public List<FacebookFeed> parse(InputStream stream) throws IOException, NotValidFileException {
 		List<FacebookFeed> ret = new ArrayList<FacebookFeed>();
@@ -34,14 +35,14 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
 		String line = null;
 		int c = 0;
 		while ((line = bufferedReader.readLine()) != null) {			
-			if (c%10==0){
-				isLineValid(line);
+			if (c == 0 ) {
+				 isLineValid(line) ; 
 			}
 			c++;
 			FacebookFeed fbp = this.build(line);
 			if (fbp != null) {
 				ret.add(fbp);
-			}
+			}			
 		}
 		return ret;
 	}
@@ -51,9 +52,9 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
 		String[] tokens = StringUtils.splitPreserveAllTokens(line, FacebookFeed.FIELD_SEPARATOR);
 		String priceTmp = "";
 		String idTmp = "";
-		String currencyCodeTmp = "";		
+		String currencyCodeTmp = "";
 		for (int c = 0; c < tokens.length; c++) {
-			String tmp = tokens[c];
+			String tmp = tokens[c].trim();
 			switch (c + 1) {
 				case 1:
 					idTmp = tmp;
@@ -87,7 +88,7 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
 					break;
 				case 20:
 					FacebookAvailability availabityTmp = AppEnum.FacebookAvailability.fromString(tmp);
-					if (availabityTmp == null){
+					if (availabityTmp == null) {
 						LOG.info("Availability is null, set OUT_OF_STOCK");
 						availabityTmp = FacebookAvailability.OUTOFSTOCK;
 					}
@@ -106,30 +107,29 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
 		return ret;
 	}
 
-	@Override
 	public void isLineValid(String line) throws NotValidFileException {
 		String[] tokens = StringUtils.splitPreserveAllTokens(line, FacebookFeed.FIELD_SEPARATOR);
 		int linkIdx = 7;
 		int imgLinkIdx = 16;
 		int availabilityIdx = 19;
-		
+		Matcher matcher;
 		if (tokens.length != ROW_LENGTH) {
-			LOG.trace(line);
 			throw new NotValidFileException("Length expeted " + ROW_LENGTH + ", get " + tokens.length);
 		}
-		if (!tokens[linkIdx].matches(RegexPatterns.URL_PATTERN)){
-			LOG.trace(line);
-			throw new NotValidFileException("Invalid link URL found: "+tokens[linkIdx]);
+
+		matcher = RegexPatterns.URL_PATTERN.matcher(tokens[linkIdx].trim());
+		if (!matcher.matches()) {
+			throw new NotValidFileException("Invalid link URL found: ***" + tokens[linkIdx] + "***");
 		}
-		if (!tokens[imgLinkIdx].matches(RegexPatterns.URL_PATTERN)){
-			LOG.trace(line);
-			throw new NotValidFileException("Invalid img URL found: "+tokens[imgLinkIdx]);
+
+		matcher = RegexPatterns.URL_PATTERN.matcher(tokens[imgLinkIdx].trim());
+		if (!matcher.matches()) {
+			throw new NotValidFileException("Invalid img URL found: ***" + tokens[imgLinkIdx] + "***");
 		}
-		
-		String availability = AppEnum.FacebookAvailability.fromString(tokens[availabilityIdx]).getFbCode();
-		if (availability == null){
-			LOG.trace(line);
-			throw new NotValidFileException("Invalid availabity format: "+tokens[availabilityIdx]);
+
+		String availability = AppEnum.FacebookAvailability.fromString(tokens[availabilityIdx].trim()).getFbCode();
+		if (availability == null) {
+			throw new NotValidFileException("Invalid availabity format: ***" + tokens[availabilityIdx] + "***");
 		}
 	}
 

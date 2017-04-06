@@ -1,5 +1,5 @@
 'use strict';
-
+var app = $.sammy.apps['#app'];
 var appConstants = {
 	getDocUrl: 'getDocuments',
 	uploadFileUrl: 'parseFile'
@@ -91,6 +91,7 @@ var tableController = function () {
 	var _callAjax = function (url, successCbk) {
 		$.ajax({
 			url: url,
+			async:true,
 			dataType: 'json',
 			cache: false,
 			contentType: false,
@@ -171,6 +172,7 @@ var tableController = function () {
 				filterService.reset();
 				filterService.addFilter('md5', '$eq', md5);
 				_showDocs(collectionName);//data[1]=collectionName
+				app.trigger('test',data);
 			});
 			_hideFilters();
 		};
@@ -209,9 +211,39 @@ var tableController = function () {
 		form$.remove();
 	};
 	
-	
+	var _init = function () {
+		 $(document).on('change', ':file', function () {
+   		  var input = $(this),
+   		    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+   		    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+   		  input.trigger('fileselect', [numFiles, label]);
+   		 });
+
+   		 // We can watch for our custom `fileselect` event like this
+   		 
+   		  var input = $(this).parents('.input-group').find(':text');
+
+   		  if (!input.val())
+   		   $('#uploadBtn').attr('disabled', true);
+
+   		  $(':file').on('fileselect', function (event, numFiles, label) {
+
+   		   var input = $(this).parents('.input-group').find(':text'),
+   		     log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+   		   if (input.length) {
+   		    input.val(log);
+   		    $('#uploadBtn').attr('disabled', label.length ? false : true);
+   		   } else
+   		   if (log)
+   		    alert(log);
+   		  });
+	};
 
 	return {
+		init: function () {
+			_init();
+		},
 		uploadFile: function () {
 			_uploadFile();
 		},
@@ -238,37 +270,37 @@ var tableController = function () {
 	}
 }($);
 
-$(function () {
 
-	 // We can attach the `fileselect` event to all file inputs on the page
-	 $(document).on('change', ':file', function () {
-	  var input = $(this),
-	    numFiles = input.get(0).files ? input.get(0).files.length : 1,
-	    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-	  input.trigger('fileselect', [numFiles, label]);
-	 });
+(function($) {
 
-	 // We can watch for our custom `fileselect` event like this
-	 $(document).ready(function () {
-		 tableController.showUploadedFiles();
-	  var input = $(this).parents('.input-group').find(':text');
+  app.get('#/history/', function(context) {
 
-	  if (!input.val())
-	   $('#uploadBtn').attr('disabled', true);
+	    var str=location.href.toLowerCase();
+	    context.app.swap('');
+	    context.load('/PerParserSPA/resources/views/pages/history.template')
+	    .appendTo(context.$element())
+	    .then(function(){
+	    	
+	    	tableController.init();
+	    	tableController.showUploadedFiles();
+	    	
+	    	
 
-	  $(':file').on('fileselect', function (event, numFiles, label) {
 
-	   var input = $(this).parents('.input-group').find(':text'),
-	     log = numFiles > 1 ? numFiles + ' files selected' : label;
 
-	   if (input.length) {
-	    input.val(log);
-	    $('#uploadBtn').attr('disabled', label.length ? false : true);
-	   } else
-	   if (log)
-	    alert(log);
-	  });
 
-	 });
+	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    });      
+	    
+        app.bind('test', function(e, data) {        
+        	this.redirect('#/' + data[2], data[0]);      
+          });
+  });
 
-	});
+})(jQuery);

@@ -6,15 +6,17 @@ package it.percassi.perparser.service.parsers.exception;
  */
 public class NotValidFileException extends Exception{
 
+	public final static String MSG_PREABLE = "Not valid file: ";
+	
 	public NotValidFileException() {
 	}
 
 	public NotValidFileException(String message) {
-		super(message);
+		super(MSG_PREABLE+message);
 	}
 
 	public NotValidFileException(String message, Throwable cause) {
-		super(message, cause);
+		super(MSG_PREABLE+message, cause);
 	}
 
 	public NotValidFileException(Throwable cause) {
@@ -22,7 +24,7 @@ public class NotValidFileException extends Exception{
 	}
 
 	public NotValidFileException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
+		super(MSG_PREABLE+message, cause, enableSuppression, writableStackTrace);
 	}
 
 }

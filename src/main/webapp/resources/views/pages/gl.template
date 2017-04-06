@@ -1,30 +1,5 @@
 <div class="row">
-<form id="uploadForm">
-	<h1 class="page-header">Upload</h1>
-	<div class="col-md-2">
-  			<select name="fileType" id="fileType" class="btn btn-default selectpicker form-control">
-	       <option value="GL">GL File</option>
-	       <option value="OS">OverSelling</option>
-		    <option value="FacebookProduct">Facebook Product</option>
-		    <option value="Amazon">Amazon</option>
-    		</select>
- 		</div>
- 		<div class="col-md-3">
-  			<div class="input-group">
-      			<div class="input-group">
-                <input type="text" class="form-control" readonly>
-                <label class="input-group-btn">
-                    <span class="btn btn-default">Browse&hellip; 
-                		<input type="file" style="display: none;" name="uploadedFile" multiple>
-                    </span>
-                 </label>
-            	</div>
-  			</div>
- 		</div>
-	<div class="col-md-2 pull-right">
-	 <input id="uploadBtn" class="btn btn-default form-control" type="button" value="Upload File" onclick="tableController.uploadFile()"/>
-	</div>
-</form>
+	<h1 class="page-header">Filters</h1>
 </div>	
 <div class="row" id="serverFilters" style="display: none">
 	<div  class="col-md-5">
@@ -71,35 +46,13 @@
 			</div>
 		</form>
 	</div>
-</div>
-</br>
-<div class="row">
-	<h1 class="page-header">Filters</h1>
-	<div class="col-md-4">
-		<label class="control-label">
-			File Name
-		</label>
-		<input type="text" class="form-control">
-	</div>
-	<div class="col-md-4">
-		<label class="control-label">
-			Type
-		</label>
-		<input type="text" class="form-control">
-	</div>
-	<div class="col-md-4">
-		<label class="control-label">
-			Date
-		</label>
-		<input type="text" class="form-control">
-	</div>	
-</div>			
+</div>				
 <div class="row">
 	<div  class="col-md-12">
 		<p id="filtersActivesP"></p>
 	</div>
 	</br>
-	<h1 class="page-header">History</h1>
+	<h1 class="page-header">Results</h1>
 
 	<div class="row">
 		<div class="col-md-12" id="tableContainer">

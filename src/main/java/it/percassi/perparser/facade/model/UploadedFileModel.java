@@ -1,5 +1,6 @@
 package it.percassi.perparser.facade.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.IOException;
 import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,6 +14,7 @@ public class UploadedFileModel {
 	private String md5;
 	private String fileName;
 	private String type;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm a z")
 	private Date date;
 	private Integer rowCount;
 

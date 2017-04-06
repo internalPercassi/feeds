@@ -19,18 +19,20 @@ import org.springframework.stereotype.Service;
  */
 @Service("GLParser")
 public class GLParser extends BaseParser<GLmodel> {
-
+	
 	private final static Logger LOG = LogManager.getLogger(GLParser.class);
-	private static final int ROW_LENGTH = 225;
-
+	private static final int ROW_LENGTH_A = 237;
+	private static final int ROW_LENGTH_B = 224;
+	
 	@Override
 	public List<GLmodel> parse(InputStream stream) throws IOException, NotValidFileException {
 		List<GLmodel> ret = new ArrayList<GLmodel>();
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
 		String line = null;
 		int c = 0;
+		boolean skipInsering = false;
 		while ((line = bufferedReader.readLine()) != null) {
-			if (c%10==0){
+			if (c == 0 ) {
 				isLineValid(line);
 			}
 			c++;
@@ -46,25 +48,26 @@ public class GLParser extends BaseParser<GLmodel> {
 			tmp.setAccountingState(line.substring(176, 191).trim());
 			ret.add(tmp);
 		}
+		if (skipInsering){
+			return new ArrayList<GLmodel>(); 
+		}
 		return ret;
 	}
-
-	@Override
+	
 	public void isLineValid(String line) throws NotValidFileException {
-		if (line.length() < ROW_LENGTH-10 || line.length() > ROW_LENGTH+10) {
+		if ( line.length() != ROW_LENGTH_A &&  line.length() != ROW_LENGTH_B ) {
 			LOG.trace(line);
-			throw new NotValidFileException("Length expected:" + ROW_LENGTH + ", get: " + line.length());
+			throw new NotValidFileException("Length expected:" + ROW_LENGTH_A + " or " + ROW_LENGTH_B+" , get: " + line.length());
 		}
 		
-		if (!StringUtils.isNumeric(line.substring(150, 160).replaceFirst("^0+(?!$)", "").trim())){
-			LOG.trace(line);
-			throw new NotValidFileException("StockedQty: expected number, get: " + line.length());
+		String tmp = line.substring(150, 160).replaceFirst("^0+(?!$)", "").trim();
+		if (!StringUtils.isNumeric(tmp)) {
+			throw new NotValidFileException("StockedQty: expected number, get: " + tmp);
 		}
-		
-		if (!StringUtils.isNumeric(line.substring(163, 173).replaceFirst("^0+(?!$)", "").trim())){
-			LOG.trace(line);
-			throw new NotValidFileException("BookedQty: expected number, get: " + line.length());
+		tmp = line.substring(163, 173).replaceFirst("^0+(?!$)", "").trim();
+		if (!StringUtils.isNumeric(tmp)) {
+			throw new NotValidFileException("BookedQty: expected number, get: " + tmp);
 		}
 	}
-
+	
 }

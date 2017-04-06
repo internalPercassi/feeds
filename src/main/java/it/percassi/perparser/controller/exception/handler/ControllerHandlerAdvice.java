@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice("perPerserController")
+@RestControllerAdvice(basePackages="it.percassi.perparser.controller")
 public class ControllerHandlerAdvice {
 
 	private final static Logger LOG = LogManager.getLogger(ControllerHandlerAdvice.class);

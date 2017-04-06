@@ -77,7 +77,7 @@ public class PerPerserController {
 
 		byte[] bytes = IOUtils.toByteArray(file.getInputStream());
 		final String md5 = parserFacade.parseAndSave(fileName, fileType, bytes);
-		LOG.info("md5 of {}", fileName + "is: {}", md5);
+		LOG.info("md5 of {}  is: {} ",fileName, md5);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
@@ -102,7 +102,7 @@ public class PerPerserController {
 			GetDocumentsRequest request, BindingResult bindingResult)
 			throws IOException, NumberFormatException, NoSuchFieldException {
 
-		LOG.info("Request is ", request.toString());
+		LOG.info("Request is {}", request.toString());
 
 		final GetDocumentsRequestValidator getDocumentsRequestValidator = new GetDocumentsRequestValidator();
 
