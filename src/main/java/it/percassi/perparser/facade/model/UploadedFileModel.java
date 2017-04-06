@@ -3,12 +3,10 @@ package it.percassi.perparser.facade.model;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import it.percassi.perparser.facade.model.jackson.IsoDateSerializer;
-import it.percassi.perparser.utils.ParseDeserializer;
+import it.percassi.perparser.utils.CustomeLocalDateTimeDeserializer;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -21,7 +19,7 @@ public class UploadedFileModel  implements Serializable{
 	private String fileName;
 	private String type;
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	@JsonDeserialize(using = ParseDeserializer.class)
+	@JsonDeserialize(using = CustomeLocalDateTimeDeserializer.class)
 	private LocalDateTime date;
 	private Integer rowCount;
 
