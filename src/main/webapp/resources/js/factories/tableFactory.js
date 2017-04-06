@@ -1,12 +1,13 @@
 'use strict';
-var app = $.sammy.apps['#app'];
+
 var appConstants = {
 	getDocUrl: 'getDocuments',
-	uploadFileUrl: 'parseFile'
+	uploadFileUrl: 'parseFile',
+	app: $.sammy.apps['#app']
 };
 
 
-var historyController = function () {
+var tableFactory = function () {
 	var myTable;
 	var collectionName;
 
@@ -36,7 +37,7 @@ var historyController = function () {
 		sortConfig.sortType = $('input[name=sortType]:checked').val();
 
 		var url = urlService.getDocs(collectionName, filterService.getFilters(), sortConfig);
-		tableFactory.showDocs(collectionName, url);
+		_showDocs(collectionName, url);
 	};
 
 	var _drawFilterList = function () {
@@ -49,6 +50,13 @@ var historyController = function () {
 		$(filtersActivesSel).append(elementsToAppen);
 	};
 
+	var _addFilter = function () {
+		var field = $(serverFiltersFieldsSel).val();
+		var searchOperator = $(serverFiltersSearchOperatorSel).val();
+		var searchVal = $(serverFilterSearchValSel).val();
+		filterService.addFilter(field, searchOperator, searchVal);
+		_drawFilterList();
+	};
 
 	var _resetFilter = function () {
 		filterService.reset();
@@ -130,7 +138,7 @@ var historyController = function () {
 			},
 			success: function (res) {
 				try {
-					tableFactory.showUploadedFiles();
+					_showUploadedFiles();
 				} catch (e) {
 					$("body").removeClass("loading");
 					console.error(e);
@@ -145,6 +153,64 @@ var historyController = function () {
 		});
 	};
 
+
+	var _showUploadedFiles = function () {
+		var url = urlService.getUploadedFiles();
+		var callback = function (res) {
+			var tabOpt = jQuery.extend(true, {}, tableOptions);
+			tabOpt.data = dataService.getRowsForDatatables(res);
+			tabOpt.columns = dataService.getColumnsForDatatables(res);
+			if (myTable) {
+				myTable.destroy();
+				myTable = undefined;
+				$(selectorId).empty();
+			}
+			myTable = $(selectorId).DataTable(tabOpt);
+			$(selectorId + ' tbody').on('click', 'tr', function () {
+				var data = myTable.row(this).data();
+				var md5 = data[0];
+				var collectionName = data[2];
+				filterService.reset();
+				filterService.addFilter('md5', '$eq', md5);
+				_showDocs(collectionName);//data[1]=collectionName
+				app.trigger('test',data);
+			});
+			_hideFilters();
+		};
+		_callAjax(url, callback);
+	};
+
+	var _showDocs = function (collectionNamePar, url) {
+		if (collectionNamePar) {
+			collectionName = collectionNamePar;
+		}
+		if (!url) {
+			url = urlService.getDocs(collectionName, filterService.getFilters());
+		}
+		var callback = function (res) {
+			var tabOpt = jQuery.extend(true, {}, tableOptions);
+			tabOpt.data = dataService.getRowsForDatatables(res);
+			tabOpt.columns = dataService.getColumnsForDatatables(res);
+			if (myTable) {
+				myTable.destroy();
+				myTable = undefined;
+				$(selectorId).empty();
+			}
+			myTable = $(selectorId).DataTable(tabOpt);
+			_buildFiltersSelect();
+			_showFilters();
+		}
+		_callAjax(url, callback);
+	};
+
+	var _downloadCsv = function () {
+		var url = urlService.getCsv(collectionName, filterService.getFilters());
+		var form$ = $('<form/>').attr("method", "post");
+		form$.attr('action', encodeURI(url));
+		$(document.body).append(form$);
+		form$.submit();
+		form$.remove();
+	};
 	
 	var _init = function () {
 		
@@ -183,13 +249,13 @@ var historyController = function () {
 		uploadFile: function () {
 			_uploadFile();
 		},
-//		showUploadedFiles: function () {
-//			_showUploadedFiles();
-//		},
-//		showDocs: function (collectionName) {
-//			filterService.reset();
-//			_showDocs(collectionName);
-//		},
+		showUploadedFiles: function () {
+			_showUploadedFiles();
+		},
+		showDocs: function (collectionName) {
+			filterService.reset();
+			_showDocs(collectionName);
+		},
 		search: function () {
 			_search();
 		},
@@ -197,34 +263,11 @@ var historyController = function () {
 			_resetFilter();
 			_showDocs();
 		},
-//		downloadCsv: function () {
-//			_downloadCsv();
-//		},
-//		addFilter: function () {
-//			_addFilter();
-//		}
+		downloadCsv: function () {
+			_downloadCsv();
+		},
+		addFilter: function () {
+			_addFilter();
+		}
 	}
 }($);
-
-
-(function($) {
-
-  app.get('#/history/', function(context) {
-
-	    var str=location.href.toLowerCase();
-	    context.app.swap('');
-	    context.load('/PerParserSPA/resources/views/pages/history.template')
-	    .appendTo(context.$element())
-	    .then(function(){
-	    	
-	    	historyController.init();
-	    	tableFactory.showUploadedFiles();
-	    
-	    });      
-	    
-        app.bind('test', function(e, data) {        
-        	this.redirect('#/' + data[2], data[0]);      
-          });
-  });
-
-})(jQuery);

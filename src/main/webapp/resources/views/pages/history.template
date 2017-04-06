@@ -22,7 +22,7 @@
   			</div>
  		</div>
 	<div class="col-md-2 pull-right">
-	 <input id="uploadBtn" class="btn btn-default form-control" type="button" value="Upload File" onclick="tableController.uploadFile()"/>
+	 <input id="uploadBtn" class="btn btn-default form-control" type="button" value="Upload File" onclick="historyController.uploadFile()"/>
 	</div>
 </form>
 </div>	
@@ -62,7 +62,6 @@
 		</form>
 	</div>
 	<div  class="col-md-2">
-		<form class="form-inline">
 			<div class="form-group">
 				<input id="addFilterBtn" class="btn btn-default form-control" type="button" value="Add Filter" onclick="tableController.addFilter()" />
 				<input id="execFilterBtn" class="btn btn-default form-control" type="button" value="Reset Filter" onclick="tableController.resetFilter()" />
@@ -87,12 +86,6 @@
 		</label>
 		<input type="text" class="form-control">
 	</div>
-	<div class="col-md-4">
-		<label class="control-label">
-			Date
-		</label>
-		<input type="text" class="form-control">
-	</div>	
 </div>			
 <div class="row">
 	<div  class="col-md-12">
