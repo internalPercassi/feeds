@@ -171,7 +171,7 @@ var tableController = function () {
 				var collectionName = data[2];
 				filterService.reset();
 				filterService.addFilter('md5', '$eq', md5);
-				_showDocs(collectionName);//data[1]=collectionName
+				//_showDocs(collectionName);//data[1]=collectionName
 				app.trigger('test',data);
 			});
 			_hideFilters();
@@ -180,6 +180,7 @@ var tableController = function () {
 	};
 
 	var _showDocs = function (collectionNamePar, url) {
+		console.log("_showDocs called whit param "+collectionNamePar);
 		if (collectionNamePar) {
 			collectionName = collectionNamePar;
 		}

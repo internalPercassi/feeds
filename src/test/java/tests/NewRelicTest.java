@@ -48,6 +48,7 @@ import it.percassi.perparser.model.newrelic.NewRelicResponse;
 import it.percassi.perparser.service.newrelic.NewRelicServiceRequest;
 import it.percassi.perparser.service.newrelic.NewRelicServiceResponse;
 import it.percassi.perparser.service.newrelic.NrMetricService;
+import org.junit.Ignore;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-test-config.xml")
@@ -76,7 +77,7 @@ public class NewRelicTest {
 	private String mongoDBUri;
 
 	@Autowired
-	@Qualifier("nrMetricService")
+	@Qualifier("nrMetricService")	
 	private NrMetricService nrMetricService;
 
 	private static final String FORWARD_SLASH = "/";
@@ -87,8 +88,9 @@ public class NewRelicTest {
 	
 	private final static Logger LOG = LogManager.getLogger(NewRelicTest.class);
 
-
+	
 	@Test
+	@Ignore
 	public void getAllNewRelicMetrics_success() {
 
 		assertNotNull(NR_URL);
@@ -130,6 +132,7 @@ public class NewRelicTest {
 	}
 
 	@Test
+	@Ignore
 	public void getWebFrontendAverageRespTime_call() {
 
 		/**
@@ -164,6 +167,7 @@ public class NewRelicTest {
 	}
 
 	@Test
+	@Ignore
 	public void saveJsonToMongoDB_success() {
 		final MongoClientURI mcu = new MongoClientURI(mongoDBUri);
 
@@ -196,6 +200,7 @@ public class NewRelicTest {
 	 * Dummy test to convert properly a json
 	 */
 	@Test
+	@Ignore
 	public void jsonConvertion_success() {
 
 		final File file = new File("src/test/resources/WebFrontend_queueTime_mock.json");
