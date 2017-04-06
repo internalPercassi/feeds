@@ -9,11 +9,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
-public class ParseDeserializer extends StdDeserializer<LocalDateTime> {
+public class CustomeLocalDateTimeDeserializer extends StdDeserializer<LocalDateTime> {
 
 	private static final long serialVersionUID = -1974158366758184212L;
 
-	public ParseDeserializer() {
+	public CustomeLocalDateTimeDeserializer() {
 		super(LocalDateTime.class);
 	}
 
