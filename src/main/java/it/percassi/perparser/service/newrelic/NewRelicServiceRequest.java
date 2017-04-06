@@ -2,9 +2,6 @@ package it.percassi.perparser.service.newrelic;
 
 import java.time.LocalDateTime;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import it.percassi.perparser.nr_orchestrator.BaseRequest;
 
 public class NewRelicServiceRequest extends BaseRequest {
