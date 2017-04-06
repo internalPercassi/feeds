@@ -122,4 +122,23 @@ public class MongoDbTest {
 			assertTrue(qty < val);
 		}
 	}
+	
+	
+	
+	private String dateVal = "2017-04-06 16:48";
+	@Test
+	public void testMongoFilterDateGT() throws Exception {
+		Integer val = Integer.parseInt(stockedQtyVal);
+		GetDocumentsRequest req = new GetDocumentsRequest();
+		req.setCollectionName("uploadedFile");
+		String filter = buildFilterString("date", "$gt", dateVal);		
+		req.setFilters(buildFilterArrayString(filter));
+		JSONObject ret = queryFacade.getDocs(req);
+		JSONArray data = (JSONArray)ret.get("data");		
+		for (int i = 0 ; i < data.size(); i++) {
+			org.bson.Document otmp = (org.bson.Document)data.get(i);			
+			Long dateDb = (Long)otmp.get("date");
+			assertTrue(dateDb > val);
+		}
+	}
 }

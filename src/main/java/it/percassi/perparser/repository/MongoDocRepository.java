@@ -91,21 +91,12 @@ public class MongoDocRepository extends BaseRepository {
 
 	
 	public void saveUploadedFileModel(UploadedFileModel uploadedFile) throws IOException {
-		List<Document> jsonToInsert = new ArrayList<Document>();		
-			String jsonStr = jsonMapper.writeValueAsString(uploadedFile);
-			if (jsonStr != null) {
-				Document doc = Document.parse(jsonStr);
-				jsonToInsert.add(doc);
-			}		
-		this.getDb().getCollection(UPLOAD_FILE_COLLECTION).insertMany(jsonToInsert);
+		Document jsonToInsert = uploadedFile.toBSONDoc();
+		this.getDb().getCollection(UPLOAD_FILE_COLLECTION).insertOne(jsonToInsert);
 	}
 	
 	public void updatetUploadedFileModel(UploadedFileModel uploadedFile) throws IOException {
-		Document jsonToInsert = new Document();		
-			String jsonStr = jsonMapper.writeValueAsString(uploadedFile);
-			if (jsonStr != null) {
-				jsonToInsert = Document.parse(jsonStr);
-			}		
+		Document jsonToInsert = uploadedFile.toBSONDoc();
 		this.getDb().getCollection(UPLOAD_FILE_COLLECTION).replaceOne(eq("md5", uploadedFile.getMd5()), jsonToInsert);
 	}
 	

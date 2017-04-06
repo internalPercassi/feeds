@@ -35,6 +35,7 @@ import it.percassi.perparser.facade.QueryFacade;
 import it.percassi.perparser.exception.NotValidFileException;
 import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.utils.PerPortalUtils;
+import java.text.ParseException;
 
 @RestController
 public class PerPerserController {
@@ -84,7 +85,7 @@ public class PerPerserController {
 
 	@PostMapping("/getDocuments")
 	public ResponseEntity<String> getDocuments(GetDocumentsRequest request, BindingResult bindingResult)
-			throws IOException, NumberFormatException, NoSuchFieldException, NotValidFilterException {
+			throws IOException, NumberFormatException, NoSuchFieldException, NotValidFilterException, ParseException {
 
 		LOG.info("Request is {}", request.toString());
 

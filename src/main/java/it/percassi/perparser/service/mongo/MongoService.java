@@ -10,7 +10,11 @@ import it.percassi.perparser.facade.model.MongoSortConfig;
 import it.percassi.perparser.service.parsers.model.BaseModel;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,23 +33,23 @@ public class MongoService {
 	private final static Logger LOG = LogManager.getLogger(MongoService.class);
 
 	@Autowired
-	private MongoDocRepository mongoRepository;	
+	private MongoDocRepository mongoRepository;
 
-	public void saveDocs(String collectionName,List<BaseModel> feedToSave,String fileType) throws IOException {
-		mongoRepository.saveDocs(collectionName,feedToSave,fileType);
+	public void saveDocs(String collectionName, List<BaseModel> feedToSave, String fileType) throws IOException {
+		mongoRepository.saveDocs(collectionName, feedToSave, fileType);
 	}
 
 	//TODO: vincolare collection name ai valori della enum ApEnum.FileType
-	public JSONObject getDocs(String collectionName,List<MongodbFilter> filters, String[] excludes, MongoSortConfig sortConfig, MongoPaginationConfig pagConfig) throws IOException, NoSuchFieldException {
-		BasicDBObject filter = buildFilter(filters,collectionName);
+	public JSONObject getDocs(String collectionName, List<MongodbFilter> filters, String[] excludes, MongoSortConfig sortConfig, MongoPaginationConfig pagConfig) throws IOException, NoSuchFieldException, ParseException {
+		BasicDBObject filter = buildFilter(filters, collectionName);
 		BasicDBObject sort = buildSort(sortConfig);
-		JSONArray jarr = mongoRepository.getDocs(collectionName,filter,excludes,sort,pagConfig);
-		Long count = mongoRepository.getDocCount(collectionName,filter);
+		JSONArray jarr = mongoRepository.getDocs(collectionName, filter, excludes, sort, pagConfig);
+		Long count = mongoRepository.getDocCount(collectionName, filter);
 		JSONObject ret = new JSONObject();
-		ret.put("data",jarr);
-		ret.put("recordsTotal",count);
+		ret.put("data", jarr);
+		ret.put("recordsTotal", count);
 		return ret;
-	}		
+	}
 
 	public boolean isFileAlreadyUploaded(String md5) throws IOException {
 		return mongoRepository.isFileAlreadyUploaded(md5);
@@ -54,24 +58,28 @@ public class MongoService {
 	public void saveUploadedFileModel(UploadedFileModel uploadedFile) throws IOException {
 		mongoRepository.saveUploadedFileModel(uploadedFile);
 	}
-	
+
 	public void updatetUploadedFileModel(UploadedFileModel uploadedFile) throws IOException {
 		mongoRepository.updatetUploadedFileModel(uploadedFile);
 	}
-	
-	private final static BasicDBObject buildFilter(List<MongodbFilter> filters, String fileType) throws NoSuchFieldException {
+
+	private final static BasicDBObject buildFilter(List<MongodbFilter> filters, String fileType) throws NoSuchFieldException, ParseException {
 		BasicDBObject query = new BasicDBObject();
 		List<BasicDBObject> objList = new ArrayList<BasicDBObject>();
 		BasicDBObject subQ = null;
 		Class modelClass = getModelClass(fileType);
+		DateFormat  formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		for (MongodbFilter filter : filters) {
 			subQ = new BasicDBObject();
 			Class fieldType = getFieldType(filter.getField(), modelClass);
-			if (fieldType.equals(Integer.class)){
+			if (fieldType.equals(Integer.class)) {
 				Integer searchValInt = Integer.parseInt(filter.getSearchVal());
 				subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(), searchValInt));
-			} else if (fieldType.equals(String.class)){
+			} else if (fieldType.equals(String.class)) {
 				subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(), filter.getSearchVal()));
+			}else if (fieldType.equals(Date.class)) {
+				 Date qDate= formatter.parse(filter.getSearchVal());
+				subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(), qDate.getTime()));
 			}
 
 			objList.add(subQ);
@@ -98,18 +106,18 @@ public class MongoService {
 		Class ret = null;
 		AppEnum.FileType e = AppEnum.FileType.getByCode(fileType);
 		ret = e.getModelClass();
-		return ret;				
+		return ret;
 	}
-	
-	private static Class getFieldType(String fieldName,Class type) throws NoSuchFieldException{
-		Class ret = null;	
+
+	private static Class getFieldType(String fieldName, Class type) throws NoSuchFieldException {
+		Class ret = null;
 		Field field = null;
-		try{
-		field = type.getDeclaredField(fieldName);	
-		} catch(Exception e){
+		try {
+			field = type.getDeclaredField(fieldName);
+		} catch (Exception e) {
 			field = type.getSuperclass().getDeclaredField(fieldName);
 		}
 		ret = field.getType();
-		return ret;	
+		return ret;
 	}
 }

@@ -1,34 +1,32 @@
 package it.percassi.perparser.facade.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import it.percassi.perparser.utils.CustomeLocalDateTimeDeserializer;
+import it.percassi.perparser.utils.IsoDateSerializer;
 import java.io.IOException;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.bson.Document;
 
 /**
  *
  * @author Daniele Sperto
  */
-public class UploadedFileModel  implements Serializable{
+public class UploadedFileModel implements Serializable {
 
 	private String md5;
 	private String fileName;
 	private String type;
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	@JsonDeserialize(using = CustomeLocalDateTimeDeserializer.class)
-	private LocalDateTime date;
+//	@JsonSerialize(using = IsoDateSerializer.class)
+	private Date date;
 	private Integer rowCount;
 
 	public UploadedFileModel() {
 	}
-	
-	public UploadedFileModel(String fileName,byte[] bytes,String type) throws IOException {
+
+	public UploadedFileModel(String fileName, byte[] bytes, String type) throws IOException {
 		String md5 = this.getMD5(bytes);
-		this.date = LocalDateTime.now();
+		this.date = new Date();
 		this.md5 = md5;
 		this.rowCount = 0;
 		this.type = type;
@@ -42,7 +40,7 @@ public class UploadedFileModel  implements Serializable{
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	
+
 	public String getMd5() {
 		return md5;
 	}
@@ -59,11 +57,11 @@ public class UploadedFileModel  implements Serializable{
 		this.type = type;
 	}
 
-	public LocalDateTime getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -74,9 +72,19 @@ public class UploadedFileModel  implements Serializable{
 	public void setRowCount(Integer rowCount) {
 		this.rowCount = rowCount;
 	}
-		
-	private static String getMD5(byte[] bytes) throws IOException {												
-		String md5 = DigestUtils.md5Hex(bytes);				
+
+	private static String getMD5(byte[] bytes) throws IOException {
+		String md5 = DigestUtils.md5Hex(bytes);
 		return md5;
+	}
+
+	public Document toBSONDoc() {
+		Document ret = new Document();
+		ret.append("date", this.date);
+		ret.append("md5", this.md5);
+		ret.append("rowCount", this.rowCount);
+		ret.append("type", this.type);
+		ret.append("fileName", this.fileName);
+		return ret;
 	}
 }

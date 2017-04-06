@@ -21,6 +21,7 @@ import it.percassi.perparser.facade.model.MongoSortConfig;
 
 import it.percassi.perparser.facade.model.MongodbFilter;
 import it.percassi.perparser.service.mongo.MongoService;
+import java.text.ParseException;
 
 /**
  *
@@ -34,7 +35,7 @@ public class QueryFacade {
 	@Autowired
 	MongoService mongoService;
 
-	public JSONObject getDocs(GetDocumentsRequest request) throws IOException, NoSuchFieldException, NotValidFilterException {
+	public JSONObject getDocs(GetDocumentsRequest request) throws IOException, NoSuchFieldException, NotValidFilterException, ParseException {
 		List<MongodbFilter> filters = buildFilterList(request.getFilters());
 		MongoSortConfig sortConfig = new MongoSortConfig(request.getSortField(), request.getLength());
 		MongoPaginationConfig pagConfig = new MongoPaginationConfig(request.getStart(), request.getLength());
