@@ -220,6 +220,31 @@ var historyController = function () {
 	    	historyController.init();
 	    	tableFactory.showUploadedFiles();
 	    
+	    	var historyViewModel = function() {
+	    		
+	    		var _that = this;
+	    		
+	    		this.types = [
+	    			{name:"GL"},
+	    			{name:"OS"},
+	    			{name:"Facebook"}	    			
+	    		];
+	    		
+	    		this.filters = {
+		    	    name: ko.observable(''),
+		    	    type: ko.observable('')
+	    		};
+	    		
+	    		this.resetFilters = function(){
+	    			_that.filters.name('');
+	    			_that.filters.type(null);
+	    		}
+	    		
+	    		this.filteredSearch = function(){
+	    			
+	    		}
+	    	};
+	    	ko.applyBindings(new historyViewModel());    	
 	    });      
 	    
         app.bind('test', function(e, data) {        
