@@ -1,24 +1,22 @@
 package it.percassi.perparser.service.parsers;
 
-import it.percassi.perparser.facade.model.AppEnum;
-import it.percassi.perparser.service.parsers.exception.NotValidFileException;
-import it.percassi.perparser.service.parsers.model.FacebookFeed;
-import it.percassi.perparser.service.parsers.model.RegexPatterns;
-import it.percassi.perparser.service.parsers.model.WAFModel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.ws.spi.http.HttpExchange;
-import jdk.nashorn.internal.runtime.regexp.RegExp;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+
+import it.percassi.perparser.service.parsers.exception.NotValidFileException;
+import it.percassi.perparser.service.parsers.model.FacebookFeed;
+import it.percassi.perparser.service.parsers.model.WAFModel;
 
 /**
  *

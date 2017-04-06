@@ -1,19 +1,21 @@
 package it.percassi.perparser.service.mongo;
 
-import com.mongodb.BasicDBObject;
-import it.percassi.perparser.repository.MongoDocRepository;
-import it.percassi.perparser.service.mongo.model.MongodbFilter;
-import it.percassi.perparser.facade.model.UploadedFileModel;
-import it.percassi.perparser.service.parsers.model.BaseModel;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.mongodb.BasicDBObject;
+
+import it.percassi.perparser.facade.model.UploadedFileModel;
+import it.percassi.perparser.repository.MongoDocRepository;
+import it.percassi.perparser.service.mongo.model.MongodbFilter;
+import it.percassi.perparser.service.parsers.model.BaseModel;
 
 /**
  *
