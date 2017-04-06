@@ -1,9 +1,13 @@
 package it.percassi.perparser.facade.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import it.percassi.perparser.facade.model.jackson.IsoDateSerializer;
+import it.percassi.perparser.utils.ParseDeserializer;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -16,8 +20,9 @@ public class UploadedFileModel  implements Serializable{
 	private String md5;
 	private String fileName;
 	private String type;
-	@JsonSerialize(using = IsoDateSerializer.class)
-	private Date date;
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = ParseDeserializer.class)
+	private LocalDateTime date;
 	private Integer rowCount;
 
 	public UploadedFileModel() {
@@ -25,7 +30,7 @@ public class UploadedFileModel  implements Serializable{
 	
 	public UploadedFileModel(String fileName,byte[] bytes,String type) throws IOException {
 		String md5 = this.getMD5(bytes);
-		this.date = new Date();
+		this.date = LocalDateTime.now();
 		this.md5 = md5;
 		this.rowCount = 0;
 		this.type = type;
@@ -56,11 +61,11 @@ public class UploadedFileModel  implements Serializable{
 		this.type = type;
 	}
 
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
