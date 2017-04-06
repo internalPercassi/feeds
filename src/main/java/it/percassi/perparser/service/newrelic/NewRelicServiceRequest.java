@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class NewRelicServiceRequest {
+import it.percassi.perparser.nr_orchestrator.BaseRequest;
+
+public class NewRelicServiceRequest extends BaseRequest {
 
 	private LocalDateTime fromDate;
 	private LocalDateTime toDate;
@@ -44,10 +46,7 @@ public class NewRelicServiceRequest {
 	public String[] getValueParameter() {
 		return valueParameter;
 	}
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
-	}
+
 	public int getMachineId() {
 		return machineId;
 	}

@@ -6,16 +6,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
-import it.percassi.perparser.utils.ParseDeserializer;
+import it.percassi.perparser.utils.CustomeLocalDateTimeDeserializer;
 
 public class Timeslices {
 
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	@JsonDeserialize(using = ParseDeserializer.class)
+	@JsonDeserialize(using = CustomeLocalDateTimeDeserializer.class)
 	private LocalDateTime from;
 
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	@JsonDeserialize(using = ParseDeserializer.class)
+	@JsonDeserialize(using = CustomeLocalDateTimeDeserializer.class)
 	private LocalDateTime to;
 
 	private Values values;

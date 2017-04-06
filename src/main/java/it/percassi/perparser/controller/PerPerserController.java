@@ -84,21 +84,6 @@ public class PerPerserController {
 	@PostMapping("/getDocuments")
 	public ResponseEntity<String> getDocuments(
 
-			// @RequestParam(value = "length", defaultValue="100000",required =
-			// false) Integer length,
-			// @RequestParam("collectionName") String collectionName,
-			// @RequestParam(value ="exclude",required = false) String[]
-			// excludes,
-			// @RequestParam(value = "start",defaultValue="0" ,required = false)
-			// Integer start,
-			// @RequestParam(value = "filters", required = false) String
-			// filters,
-			// @RequestParam(value = "sortField", required = false) String
-			// sortField,
-			// @RequestParam(value = "sortType", required = false) Integer
-			// sortType,
-			// @RequestParam(value ="getCsv",required = false) boolean getCsv
-
 			GetDocumentsRequest request, BindingResult bindingResult)
 			throws IOException, NumberFormatException, NoSuchFieldException {
 
@@ -138,6 +123,8 @@ public class PerPerserController {
 	}
 	@GetMapping("/getNewRelicData")
 	public ResponseEntity<Void> getNewRelicApi(GetNewRelicControllerRequest request,BindingResult bindResult){
+		
+		
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		
 		

@@ -54,8 +54,8 @@ public class NrMetricServiceImpl implements NrMetricService {
 
 		final String newRelicUrl = PerPortalUtils.createNewRelicUrl(nrUrl, request.getMachineId(), endUrl);
 		final HttpEntity<String> newRelicEntity = PerPortalUtils.builHttpEntityNewRelicApi(apiKey);
-		final URI uri = PerPortalUtils.generateUriToCall(newRelicUrl,
-
+		final URI uri = PerPortalUtils.generateUriToCall(
+				newRelicUrl,
 				request.getFromDate(), request.getToDate(), uriParams, request.isToSummarize(),
 				request.getSamplePeriod());
 
@@ -64,10 +64,11 @@ public class NrMetricServiceImpl implements NrMetricService {
 		if (res != null && HttpStatus.OK.equals(res.getStatusCode())) {
 
 			NewRelicResponse nrObj = om.readValue(res.getBody(), NewRelicResponse.class);
-			response = new NewRelicServiceResponse("Data retrieved successfully", res.getStatusCodeValue(), nrObj);
+			response = new NewRelicServiceResponse(nrObj);
+			
 			return response;
 		}
-		response = new NewRelicServiceResponse("Service data failed", res.getStatusCodeValue(), new NewRelicResponse());
+		response = new NewRelicServiceResponse(new NewRelicResponse());
 		return response;
 	}
 
