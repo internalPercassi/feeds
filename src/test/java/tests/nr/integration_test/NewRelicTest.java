@@ -55,7 +55,7 @@ public class NewRelicTest {
 	private final static Logger LOG = LogManager.getLogger(NewRelicTest.class);
 	
 	@Test
-	public void getWebFrontendAverageRespTime_call() {
+	public void getWebFrontendAverageRespTime_success() {
 
 		/**
 		 * public static LocalDateTime of(int year, int month, int dayOfMonth,int hour, int minute)
