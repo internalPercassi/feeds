@@ -10,7 +10,7 @@
 	context.load('/PerParserSPA/resources/views/pages/gl.template')
 	.appendTo(context.$element())
 	.then(function(){
-		tableController.showDocs('GL');
+		tableFactory.showDocs('GL');
 	});      
 	   
   });

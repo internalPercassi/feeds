@@ -1,8 +1,8 @@
 <div class="row">
 <form id="uploadForm">
 	<h1 class="page-header">Upload</h1>
-	<div class="col-md-2">
-  			<select name="fileType" id="fileType" class="btn btn-default selectpicker form-control">
+	<div class="col-md-3">
+  			<select name="fileType" id="fileType" class="selectpicker form-control">
 	       <option value="GL">GL File</option>
 	       <option value="OS">OverSelling</option>
 		    <option value="FacebookProduct">Facebook Product</option>
@@ -22,7 +22,7 @@
   			</div>
  		</div>
 	<div class="col-md-2 pull-right">
-	 <input id="uploadBtn" class="btn btn-default form-control" type="button" value="Upload File" onclick="tableController.uploadFile()"/>
+	 <input id="uploadBtn" class="btn btn-default form-control" type="button" value="Upload File" onclick="historyController.uploadFile()"/>
 	</div>
 </form>
 </div>	
@@ -62,7 +62,6 @@
 		</form>
 	</div>
 	<div  class="col-md-2">
-		<form class="form-inline">
 			<div class="form-group">
 				<input id="addFilterBtn" class="btn btn-default form-control" type="button" value="Add Filter" onclick="tableController.addFilter()" />
 				<input id="execFilterBtn" class="btn btn-default form-control" type="button" value="Reset Filter" onclick="tableController.resetFilter()" />
@@ -75,25 +74,29 @@
 </br>
 <div class="row">
 	<h1 class="page-header">Filters</h1>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<label class="control-label">
 			File Name
 		</label>
-		<input type="text" class="form-control">
+		<input type="text" class="form-control" data-bind="textInput: filters.name">
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<label class="control-label">
-			Type
+			 Type
 		</label>
-		<input type="text" class="form-control">
+		<select  class="form-control" data-bind="options:types, optionsCaption:'All', optionsText: 'name', value: filters.type">
+		</select>
 	</div>
-	<div class="col-md-4">
-		<label class="control-label">
-			Date
-		</label>
-		<input type="text" class="form-control">
-	</div>	
-</div>			
+	<div class="col-md-12">
+		<div class="col-md-1 pull-right">
+			<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
+		</div>
+		<div class="col-md-1 pull-right">
+			<div class="btn btn-default form-control" data-bind="click: filteredSearch">Search</div>
+		</div>
+	</div>		
+</div>
+	
 <div class="row">
 	<div  class="col-md-12">
 		<p id="filtersActivesP"></p>
