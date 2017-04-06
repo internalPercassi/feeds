@@ -30,12 +30,6 @@ public class NrMetricServiceImpl implements NrMetricService {
 	@Value("${nr.url}")
 	private String nrUrl;
 
-	@Value("${nr.be.id}")
-	private String beId;
-
-	@Value("${nr.fe.id}")
-	private String feId;
-
 	@Value("${nr.end.url}")
 	private String endUrl;
 

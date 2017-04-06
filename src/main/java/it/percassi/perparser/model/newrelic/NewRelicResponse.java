@@ -1,28 +1,26 @@
 package it.percassi.perparser.model.newrelic;
 
-import java.util.List;
-
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class NewRelicResponse {
 
-	private List<MetricsData> metrics_data;
+	@JsonProperty("metric_data")
+	private MetricsData metricData;
 
-	public List<MetricsData> getMetrics_data() {
-		return metrics_data;
+	public MetricsData getMetricData() {
+		return metricData;
 	}
 
-	public void setMetrics_data(List<MetricsData> metrics_data) {
-		this.metrics_data = metrics_data;
+	public void setMetricData(MetricsData metricData) {
+		this.metricData = metricData;
 	}
 
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
 	}
-	
-	
-
 
 }

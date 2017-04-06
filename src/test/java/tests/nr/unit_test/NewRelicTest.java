@@ -1,4 +1,4 @@
-package tests;
+package tests.nr.unit_test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -44,9 +44,6 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 
-import it.percassi.perparser.model.newrelic.NewRelicResponse;
-import it.percassi.perparser.service.newrelic.NewRelicServiceRequest;
-import it.percassi.perparser.service.newrelic.NewRelicServiceResponse;
 import it.percassi.perparser.service.newrelic.NrMetricService;
 
 @RunWith(SpringRunner.class)
@@ -125,40 +122,6 @@ public class NewRelicTest {
 			System.err.println("Exception occured " + e.getMessage());
 			fail("argh");
 
-		}
-
-	}
-
-	@Test
-	public void getWebFrontendAverageRespTime_call() {
-
-		/**
-		 * public static LocalDateTime of(int year, int month, int dayOfMonth,int hour, int minute)
-		 * 
-		 * year - the year to represent,from MIN_YEAR to MAX_YEAR 
-		 * month - the
-		 * month-of-year to represent, from 1 (January) to 12 (December)
-		 * dayOfMonth - the day-of-month to represent, from 1 to 31 
-		 * hour - the hour-of-day to represent, from 0 to 23 minute - the minute-of-hour to represent, from 0 to 59 
-		 * second - the second-of-minute to represent, from 0 to 59
-		 */
-		final LocalDateTime fromDate = LocalDateTime.of(2017, 4, 3, 00, 00, 00);
-		final LocalDateTime toDate = LocalDateTime.of(2017, 4, 3, 23, 59, 00);
-		String metricName = "WebFrontend/QueueTime";
-		int samplePeriod = 7200;
-		final String[] valuesParam = { "average_response_time", "call_count" };
-
-		NewRelicServiceRequest request = new NewRelicServiceRequest(fromDate, toDate, metricName, false, samplePeriod,
-				valuesParam,feId);
-		try {
-			NewRelicServiceResponse serviceResponse = nrMetricService.getNrMetric(request);
-			assertNotNull(serviceResponse);
-			assertEquals(200, serviceResponse.getStatusCode());
-			assertNotNull(serviceResponse.getNewRelicResponse());
-
-		} catch (Exception e) {
-			LOG.error("Exception: "+e);
-			fail(e.getMessage());
 		}
 
 	}

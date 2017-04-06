@@ -3,14 +3,24 @@ package it.percassi.perparser.model.newrelic;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+import it.percassi.perparser.utils.ParseDeserializer;
+
 public class MetricsData {
 
 	private List<String> metrics_not_found;
 
 	private List<String> metrics_found;
 
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = ParseDeserializer.class)
 	private LocalDateTime from;
 
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = ParseDeserializer.class)
 	private LocalDateTime to;
 
 	private List<Metrics> metrics;
