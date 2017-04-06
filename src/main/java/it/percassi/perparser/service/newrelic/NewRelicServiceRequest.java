@@ -13,9 +13,10 @@ public class NewRelicServiceRequest {
 	private boolean isToSummarize;
 	private int samplePeriod;
 	private String[] valueParameter;
+	private int machineId;
 	
 	public NewRelicServiceRequest(LocalDateTime fromDate, LocalDateTime toDate, String metricName,
-			boolean isToSummarize, int samplePeriod, String[] valueParameter) {
+			boolean isToSummarize, int samplePeriod, String[] valueParameter,int machineId) {
 		super();
 		this.fromDate = fromDate;
 		this.toDate = toDate;
@@ -23,6 +24,7 @@ public class NewRelicServiceRequest {
 		this.isToSummarize = isToSummarize;
 		this.samplePeriod = samplePeriod;
 		this.valueParameter = valueParameter;
+		this.machineId = machineId;
 	}
 	public LocalDateTime getFromDate() {
 		return fromDate;
@@ -45,5 +47,11 @@ public class NewRelicServiceRequest {
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
+	public int getMachineId() {
+		return machineId;
+	}
+	public void setMachineId(int machineId) {
+		this.machineId = machineId;
 	}
 }

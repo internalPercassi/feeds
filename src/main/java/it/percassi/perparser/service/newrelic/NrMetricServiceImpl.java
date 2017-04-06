@@ -54,16 +54,11 @@ public class NrMetricServiceImpl implements NrMetricService {
 		final ObjectMapper om = new ObjectMapper();
 		NewRelicServiceResponse response = null;
 
-		if (request.getValueParameter().length == 0
-				|| (!PerPortalUtils.NEW_RELIC_AVG_RESP_TIME_VALUE.equals(request.getValueParameter())
-						&& (!PerPortalUtils.NEW_RELIC_CALL_COUNT_VALUE.equals(request.getValueParameter())))) {
-			throw new ServiceException("Invalid parameters : " + request);
-		}
 
 		uriParams.add(PerPortalUtils.NEW_RELIC_NAMES, request.getMetricName());
 		uriParams.put(PerPortalUtils.NEW_RELIC_VALUES, Arrays.asList(request.getValueParameter()));
 
-		final String newRelicUrl = PerPortalUtils.createNewRelicUrl(nrUrl, feId, endUrl);
+		final String newRelicUrl = PerPortalUtils.createNewRelicUrl(nrUrl, request.getMachineId(), endUrl);
 		final HttpEntity<String> newRelicEntity = PerPortalUtils.builHttpEntityNewRelicApi(apiKey);
 		final URI uri = PerPortalUtils.generateUriToCall(newRelicUrl,
 

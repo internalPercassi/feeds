@@ -83,7 +83,7 @@ public class PerPortalUtils {
 		return entity;
 	}
 
-	public static String createNewRelicUrl(String url, String machineId, String newRelicEndUrl) {
+	public static String createNewRelicUrl(String url, int machineId, String newRelicEndUrl) {
 		final StringBuilder urlToCall = new StringBuilder();
 		urlToCall.append(url).append(SLASH).append(machineId).append(newRelicEndUrl);
 		return urlToCall.toString();
