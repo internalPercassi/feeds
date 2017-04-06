@@ -1,6 +1,6 @@
 package it.percassi.perparser.service.parsers;
 
-import it.percassi.perparser.service.parsers.exception.NotValidFileException;
+import it.percassi.perparser.exception.NotValidFileException;
 import it.percassi.perparser.service.parsers.model.OSmodel;
 import java.io.IOException;
 import java.io.InputStream;

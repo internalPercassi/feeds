@@ -4,9 +4,11 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCursor;
 import static com.mongodb.client.model.Filters.eq;
 import it.percassi.perparser.facade.model.UploadedFileModel;
+import it.percassi.perparser.facade.model.MongoPaginationConfig;
 import it.percassi.perparser.service.parsers.model.BaseModel;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PreDestroy;
 import org.apache.logging.log4j.LogManager;
@@ -43,7 +45,7 @@ public class MongoDocRepository extends BaseRepository {
 		return ret;
 	}
 
-	public JSONArray getDocs(String collectionName, BasicDBObject filters, String[] excludes, BasicDBObject sort, Integer start, Integer length) throws IOException {
+	public JSONArray getDocs(String collectionName, BasicDBObject filters, String[] excludes, BasicDBObject sort, MongoPaginationConfig pagConfig) throws IOException {
 		int c = 0;
 		JSONArray ret = new JSONArray();//Filters.eq("fileMd5", md5)	
 		int excludesLength = 1;
@@ -57,6 +59,17 @@ public class MongoDocRepository extends BaseRepository {
 			}
 		}
 		bexcludes.append("_id", false);
+		
+		int start = 0;
+		int length = 10000;
+		if (pagConfig != null){
+			if (pagConfig.getStart() != null){
+				start = pagConfig.getStart();
+			}
+			if (pagConfig.getLength() != null){
+				length = pagConfig.getLength();
+			}
+		}
 		MongoCursor<Document> cursor = null;
 		if (sort != null) {
 			cursor = this.getDb().getCollection(collectionName).find(filters).sort(sort).skip(start).limit(length).projection(bexcludes).iterator();
@@ -65,13 +78,14 @@ public class MongoDocRepository extends BaseRepository {
 		}
 		try {
 			while (cursor.hasNext()) {
-				ret.add(cursor.next());
+				ret.add(cursor.next());					
 				c++;
 			}
 		} finally {
 			cursor.close();
 		}
 		LOG.trace("get " + c + " rows, skip(" + start + ").limit(" + length + ")");
+		//LOG.trace("Result: "+Arrays.toString(ret.toArray()));
 		return ret;
 	}
 

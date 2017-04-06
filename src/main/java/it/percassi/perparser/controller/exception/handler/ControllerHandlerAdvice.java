@@ -1,7 +1,7 @@
 package it.percassi.perparser.controller.exception.handler;
 
 import it.percassi.perparser.controller.response.BaseControllerResponse;
-import it.percassi.perparser.service.parsers.exception.NotValidFileException;
+import it.percassi.perparser.exception.NotValidFileException;
 import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;

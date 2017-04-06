@@ -5,6 +5,7 @@
  */
 package it.percassi.perparser.facade.model;
 
+import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.facade.model.UploadedFileModel;
 import it.percassi.perparser.service.parsers.model.FacebookFeed;
 import it.percassi.perparser.service.parsers.model.GLmodel;
@@ -71,6 +72,32 @@ public class AppEnum {
 				}
 			}
 			return null;
+		}
+	}
+
+	public static enum MongoFilterOperator {
+		EQUALS("$eq"),
+		NOT_EQUALS("$ne"),
+		GREATER("$gt"),
+		LESSER("$lt");
+
+		private String mongoCode;
+
+		private MongoFilterOperator(String mongoCode) {
+			this.mongoCode = mongoCode;
+		}
+
+		public String getMongoCode() {
+			return mongoCode;
+		}
+
+		public static MongoFilterOperator fromString(String mongoCode) throws NotValidFilterException {
+			for (MongoFilterOperator b : MongoFilterOperator.values()) {
+				if (b.getMongoCode().equalsIgnoreCase(mongoCode)) {
+					return b;
+				}
+			}
+			throw new NotValidFilterException(mongoCode);
 		}
 	}
 }

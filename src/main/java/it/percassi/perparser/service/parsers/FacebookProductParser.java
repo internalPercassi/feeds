@@ -2,7 +2,7 @@ package it.percassi.perparser.service.parsers;
 
 import it.percassi.perparser.facade.model.AppEnum;
 import it.percassi.perparser.facade.model.AppEnum.FacebookAvailability;
-import it.percassi.perparser.service.parsers.exception.NotValidFileException;
+import it.percassi.perparser.exception.NotValidFileException;
 import it.percassi.perparser.service.parsers.model.FacebookFeed;
 import it.percassi.perparser.service.parsers.model.RegexPatterns;
 import java.io.BufferedReader;

@@ -1,6 +1,6 @@
 package it.percassi.perparser.service.parsers;
 
-import it.percassi.perparser.service.parsers.exception.NotValidFileException;
+import it.percassi.perparser.exception.NotValidFileException;
 import it.percassi.perparser.service.parsers.model.GLmodel;
 import java.io.BufferedReader;
 import java.io.IOException;

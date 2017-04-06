@@ -32,7 +32,8 @@ import it.percassi.perparser.controller.validator.UploadFileValidator;
 import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
-import it.percassi.perparser.service.parsers.exception.NotValidFileException;
+import it.percassi.perparser.exception.NotValidFileException;
+import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.utils.PerPortalUtils;
 
 @RestController
@@ -77,30 +78,13 @@ public class PerPerserController {
 
 		byte[] bytes = IOUtils.toByteArray(file.getInputStream());
 		final String md5 = parserFacade.parseAndSave(fileName, fileType, bytes);
-		LOG.info("md5 of {}  is: {} ",fileName, md5);
+		LOG.info("md5 of {}  is: {} ", fileName, md5);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	@PostMapping("/getDocuments")
-	public ResponseEntity<String> getDocuments(
-
-			// @RequestParam(value = "length", defaultValue="100000",required =
-			// false) Integer length,
-			// @RequestParam("collectionName") String collectionName,
-			// @RequestParam(value ="exclude",required = false) String[]
-			// excludes,
-			// @RequestParam(value = "start",defaultValue="0" ,required = false)
-			// Integer start,
-			// @RequestParam(value = "filters", required = false) String
-			// filters,
-			// @RequestParam(value = "sortField", required = false) String
-			// sortField,
-			// @RequestParam(value = "sortType", required = false) Integer
-			// sortType,
-			// @RequestParam(value ="getCsv",required = false) boolean getCsv
-
-			GetDocumentsRequest request, BindingResult bindingResult)
-			throws IOException, NumberFormatException, NoSuchFieldException {
+	public ResponseEntity<String> getDocuments(GetDocumentsRequest request, BindingResult bindingResult)
+			throws IOException, NumberFormatException, NoSuchFieldException, NotValidFilterException {
 
 		LOG.info("Request is {}", request.toString());
 
@@ -116,9 +100,7 @@ public class PerPerserController {
 			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 		}
 
-		final JSONObject jsonObj = queryFacade.getDocs(request.getCollectionName(), request.getFilters(),
-				request.getExclude(), request.getSortField(), request.getSortType(), request.getStart(),
-				request.getLength());
+		final JSONObject jsonObj = queryFacade.getDocs(request);
 
 		if (request.isGetCsv()) {
 
@@ -136,13 +118,11 @@ public class PerPerserController {
 		}
 
 	}
+
 	@GetMapping("/getNewRelicData")
-	public ResponseEntity<Void> getNewRelicApi(GetNewRelicControllerRequest request,BindingResult bindResult){
+	public ResponseEntity<Void> getNewRelicApi(GetNewRelicControllerRequest request, BindingResult bindResult) {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		
-		
+
 	}
-	
-	
 
 }

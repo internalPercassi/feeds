@@ -1,7 +1,9 @@
 package it.percassi.perparser.facade.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.percassi.perparser.facade.model.jackson.IsoDateSerializer;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -9,12 +11,12 @@ import org.apache.commons.codec.digest.DigestUtils;
  *
  * @author Daniele Sperto
  */
-public class UploadedFileModel {
+public class UploadedFileModel  implements Serializable{
 
 	private String md5;
 	private String fileName;
 	private String type;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm a z")
+	@JsonSerialize(using = IsoDateSerializer.class)
 	private Date date;
 	private Integer rowCount;
 
