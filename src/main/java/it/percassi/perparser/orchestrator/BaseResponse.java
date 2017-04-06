@@ -1,4 +1,4 @@
-package it.percassi.perparser.nr_orchestrator;
+package it.percassi.perparser.orchestrator;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -7,7 +7,7 @@ public class BaseResponse {
 
 	private String message;
 
-	private String statusCode;
+	private int statusCode;
 
 	public String getMessage() {
 		return message;
@@ -17,11 +17,11 @@ public class BaseResponse {
 		this.message = message;
 	}
 
-	public String getStatusCode() {
+	public int getStatusCode() {
 		return statusCode;
 	}
 
-	public void setStatusCode(String statusCode) {
+	public void setStatusCode(int statusCode) {
 		this.statusCode = statusCode;
 	}
 

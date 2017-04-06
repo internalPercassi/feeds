@@ -44,6 +44,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 
+import it.percassi.perparser.model.newrelic.NewRelicResponse;
 import it.percassi.perparser.service.newrelic.NrMetricService;
 
 @RunWith(SpringRunner.class)
@@ -161,18 +162,18 @@ public class NewRelicTest {
 	@Test
 	public void jsonConvertion_success() {
 
-		final File file = new File("src/test/resources/WebFrontend_queueTime_mock.json");
+		final File file = new File("src/test/resources/json_mocks/WebFrontend_queueTime_mock.json");
 		try {
 			final ObjectMapper om = new ObjectMapper();
 
-			final Object nrObj = om.readValue(file, Object.class);
+			final NewRelicResponse nrObj = om.readValue(file, NewRelicResponse.class);
 
 			LOG.info("NewRelicResponse "+nrObj.toString());
 			LOG.info("Test end");
-//			assertNotNull(nrObj);
-//			assertTrue(nrObj.getMetrics_data().size() > 0);
-//			assertTrue(nrObj.getMetrics_data().get(0).getMetrics_found().contains("WebFrontend/QueueTime"));
-//			assertTrue(nrObj.getMetrics_data().get(0).getMetrics().size() > 0);
+			assertNotNull(nrObj);
+			assertTrue(nrObj.getMetricData().getMetrics_found().size() > 0);
+			assertTrue(nrObj.getMetricData().getMetrics_not_found().size()==0);
+			assertTrue(nrObj.getMetricData().getMetrics_found().get(0).contains("WebFrontend/QueueTime"));
 
 		} catch (IOException e) {
 			LOG.error("Exception: "+e);

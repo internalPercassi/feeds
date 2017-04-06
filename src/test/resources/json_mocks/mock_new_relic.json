@@ -1,0 +1,25 @@
+{
+  "metric_data": {
+    "from": "2017-04-01T00:00:00+00:00",
+    "to": "2017-04-01T23:59:00+00:00",
+    "metrics_not_found": [],
+    "metrics_found": [
+      "WebFrontend/QueueTime"
+    ],
+    "metrics": [
+      {
+        "name": "WebFrontend/QueueTime",
+        "timeslices": [
+          {
+            "from": "2017-04-01T00:09:00+00:00",
+            "to": "2017-04-01T23:59:00+00:00",
+            "values": {
+              "call_count": 3234,
+              "average_response_time": 4.98
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

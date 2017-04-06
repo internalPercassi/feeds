@@ -10,7 +10,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.ObjectUtils;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -62,14 +61,11 @@ public class PerPortalUtils {
 	 * @return The uri {@link URI}
 	 */
 	public static URI generateUriToCall(String urlToCall, LocalDateTime fromDate, LocalDateTime toDate,
-			MultiValueMap<String, String> uriParams, boolean isSummarize, int period) {
+			MultiValueMap<String, String> uriParams, int period) {
 
 		final UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(urlToCall).queryParams(uriParams)
 				.queryParam("from", fromDate).queryParam("to", toDate);
 
-		if (!ObjectUtils.isEmpty(isSummarize) && isSummarize) {
-			builder.queryParam("summarize", isSummarize);
-		}
 		if (period != 0) {
 			builder.queryParam("period", period);
 		}

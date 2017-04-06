@@ -1,4 +1,4 @@
-package it.percassi.perparser.nr_orchestrator;
+package it.percassi.perparser.orchestrator;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

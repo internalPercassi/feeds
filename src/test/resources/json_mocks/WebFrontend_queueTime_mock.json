@@ -1,0 +1,94 @@
+{
+  "metric_data": {
+    "from": "2017-04-03T00:00:00+00:00",
+    "to": "2017-04-03T23:59:00+00:00",
+    "metrics_not_found": [],
+    "metrics_found": [
+      "WebFrontend/QueueTime"
+    ],
+    "metrics": [
+      {
+        "name": "WebFrontend/QueueTime",
+        "timeslices": [
+          {
+            "from": "2017-04-03T01:59:00+00:00",
+            "to": "2017-04-03T03:59:00+00:00",
+            "values": {
+              "average_response_time": 7.25
+            }
+          },
+          {
+            "from": "2017-04-03T03:59:00+00:00",
+            "to": "2017-04-03T05:59:00+00:00",
+            "values": {
+              "average_response_time": 0.402
+            }
+          },
+          {
+            "from": "2017-04-03T05:59:00+00:00",
+            "to": "2017-04-03T07:59:00+00:00",
+            "values": {
+              "average_response_time": 6.04
+            }
+          },
+          {
+            "from": "2017-04-03T07:59:00+00:00",
+            "to": "2017-04-03T09:59:00+00:00",
+            "values": {
+              "average_response_time": 3.29
+            }
+          },
+          {
+            "from": "2017-04-03T09:59:00+00:00",
+            "to": "2017-04-03T11:59:00+00:00",
+            "values": {
+              "average_response_time": 8.05
+            }
+          },
+          {
+            "from": "2017-04-03T11:59:00+00:00",
+            "to": "2017-04-03T13:59:00+00:00",
+            "values": {
+              "average_response_time": 11
+            }
+          },
+          {
+            "from": "2017-04-03T13:59:00+00:00",
+            "to": "2017-04-03T15:59:00+00:00",
+            "values": {
+              "average_response_time": 18.5
+            }
+          },
+          {
+            "from": "2017-04-03T15:59:00+00:00",
+            "to": "2017-04-03T17:59:00+00:00",
+            "values": {
+              "average_response_time": 15.1
+            }
+          },
+          {
+            "from": "2017-04-03T17:59:00+00:00",
+            "to": "2017-04-03T19:59:00+00:00",
+            "values": {
+              "average_response_time": 19.5
+            }
+          },
+          {
+            "from": "2017-04-03T19:59:00+00:00",
+            "to": "2017-04-03T21:59:00+00:00",
+            "values": {
+              "average_response_time": 11.3
+            }
+          },
+          {
+            "from": "2017-04-03T21:59:00+00:00",
+            "to": "2017-04-03T23:59:00+00:00",
+            "values": {
+              "average_response_time": 39.2
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

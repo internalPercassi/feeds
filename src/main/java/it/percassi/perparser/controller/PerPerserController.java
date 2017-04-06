@@ -54,9 +54,6 @@ public class PerPerserController {
 	private final static MediaType TEXT_CSV_TYPE = new MediaType("text", "csv");
 
 	@PostMapping(path = "/parseFile", produces = MediaType.APPLICATION_JSON_VALUE)
-	// public ResponseEntity<Void> uploadFile(@RequestParam("uploadedFile")
-	// MultipartFile file,
-	// @RequestParam("fileType") String fileType) throws IOException {
 	public ResponseEntity<?> uploadFile(UploadFileControllerRequest request, BindingResult bindingResult)
 			throws IOException, NotValidFileException {
 		final UploadFileValidator uploadValidator = new UploadFileValidator();
@@ -77,7 +74,7 @@ public class PerPerserController {
 
 		byte[] bytes = IOUtils.toByteArray(file.getInputStream());
 		final String md5 = parserFacade.parseAndSave(fileName, fileType, bytes);
-		LOG.info("md5 of {}  is: {} ",fileName, md5);
+		LOG.info("md5 of {}  is: {} ", fileName, md5);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
@@ -121,15 +118,12 @@ public class PerPerserController {
 		}
 
 	}
+
 	@GetMapping("/getNewRelicData")
-	public ResponseEntity<Void> getNewRelicApi(GetNewRelicControllerRequest request,BindingResult bindResult){
-		
-		
+	public ResponseEntity<Void> getNewRelicApi(GetNewRelicControllerRequest request, BindingResult bindResult) {
+
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		
-		
+
 	}
-	
-	
 
 }

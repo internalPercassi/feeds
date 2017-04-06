@@ -1,7 +1,7 @@
 package it.percassi.perparser.service.newrelic;
 
 import it.percassi.perparser.model.newrelic.NewRelicResponse;
-import it.percassi.perparser.nr_orchestrator.BaseResponse;
+import it.percassi.perparser.orchestrator.BaseResponse;
 
 public class NewRelicServiceResponse extends BaseResponse {
 
