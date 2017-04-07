@@ -252,8 +252,7 @@ var tableFactory = function () {
 		showUploadedFiles: function () {
 			_showUploadedFiles();
 		},
-		showDocs: function (collectionName) {
-			filterService.reset();
+		showDocs: function (collectionName) {			
 			_showDocs(collectionName);
 		},
 		search: function () {
