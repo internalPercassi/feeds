@@ -173,7 +173,7 @@ var tableFactory = function () {
 				filterService.reset();
 				filterService.addFilter('md5', '$eq', md5);
 				_showDocs(collectionName);//data[1]=collectionName
-				app.trigger('test',data);
+				appConstants.app.trigger('test',data);
 			});
 			_hideFilters();
 		};

@@ -9,26 +9,19 @@
 
     });
     
-/*    this.get('#/history/', function(context) {
-    	
-    	var script = document.createElement('script');
-    	script.type = 'application/javascript';
-    	script.src = '/PerParserSPA/resources/js/controllers/historyController.js';
-    	document.head.appendChild(script);
-    	
-        var str=location.href.toLowerCase();
-        context.app.swap('');
-        context.render('/PerParserSPA/resources/views/pages/history.template', {})
-               .appendTo(context.$element());
-    });
+    
+    this.get('#/GL/:id', function(context) {
+  	  
+    	context.app.swap('');
+    	context.load('/PerParserSPA/resources/views/pages/gl.template')
+    	.appendTo(context.$element())
+    	.then(function(){
+    		tableFactory.showDocs('GL');
+    	});      
+    	   
+      });
 
-   /* this.get('#/article/:id', function(context) {
-      this.item = this.items[this.params['id']];
-      if (!this.item) { return this.notFound(); }
-      this.partial('templates/article-detail.template');
-    });
-
-
+/*
     this.before('.*', function() {
 
         var hash = document.location.hash;

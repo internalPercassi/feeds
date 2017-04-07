@@ -26,51 +26,7 @@
 	</div>
 </form>
 </div>	
-<div class="row" id="serverFilters" style="display: none">
-	<div  class="col-md-5">
-		<form class="form-inline">
-			<div class="form-group">
-				<label class="control-label">Order:</label>
-				<select class="form-control" id="sortField" name="sortField">									
-				</select>
-			</div>
-			<div class="form-group">
-				<label class="radio-inline"> <input type="radio" name="sortType" id="asc" value="1" checked> Asc </label>
-				<label class="radio-inline"> <input type="radio" name="sortType" id="desc" value="-1"> Desc </label>	
-			</div>							
-		</form>
-	</div>
 
-	<div  class="col-md-5">
-		<form class="form-inline">
-			<div class="form-group">
-				<label class="control-label">Filter:</label>
-				<select class="form-control" id="serverFiltersFields" name="serverFiltersFields">									
-				</select>
-			</div>
-			<div class="form-group">
-				<select name="searchOperator" id="serverFiltersSearchOperator" class="btn btn-default selectpicker form-control">
-					<option value="$eq">&#61;</option>
-					<option value="$ne">&#33;&#61;</option>
-					<option value="$gt">gt</option>	
-					<option value="$lt">lt</option>
-				</select>	
-			</div>
-			<div class="form-group">
-				<input type="text" class="form-control" name="searchVal" id="serverFilterSearchVal">
-			</div>							
-		</form>
-	</div>
-	<div  class="col-md-2">
-			<div class="form-group">
-				<input id="addFilterBtn" class="btn btn-default form-control" type="button" value="Add Filter" onclick="tableController.addFilter()" />
-				<input id="execFilterBtn" class="btn btn-default form-control" type="button" value="Reset Filter" onclick="tableController.resetFilter()" />
-				<input id="execFilterBtn" class="btn btn-default form-control" type="button" value="Filter" onclick="tableController.search()" />
-				<input id="downldCsvBtn" class="btn btn-default form-control" type="button" value="CSV" onclick="tableController.downloadCsv()" />
-			</div>
-		</form>
-	</div>
-</div>
 </br>
 <div class="row">
 	<h1 class="page-header">Filters</h1>
