@@ -32,8 +32,10 @@ import it.percassi.perparser.controller.validator.UploadFileValidator;
 import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
-import it.percassi.perparser.service.parsers.exception.NotValidFileException;
+import it.percassi.perparser.exception.NotValidFileException;
+import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.utils.PerPortalUtils;
+import java.text.ParseException;
 
 @RestController
 public class PerPerserController {
@@ -79,10 +81,8 @@ public class PerPerserController {
 	}
 
 	@PostMapping("/getDocuments")
-	public ResponseEntity<String> getDocuments(
-
-			GetDocumentsRequest request, BindingResult bindingResult)
-			throws IOException, NumberFormatException, NoSuchFieldException {
+	public ResponseEntity<String> getDocuments(GetDocumentsRequest request, BindingResult bindingResult)
+			throws IOException, NumberFormatException, NoSuchFieldException, NotValidFilterException, ParseException {
 
 		LOG.info("Request is {}", request.toString());
 
@@ -98,9 +98,7 @@ public class PerPerserController {
 			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 		}
 
-		final JSONObject jsonObj = queryFacade.getDocs(request.getCollectionName(), request.getFilters(),
-				request.getExclude(), request.getSortField(), request.getSortType(), request.getStart(),
-				request.getLength());
+		final JSONObject jsonObj = queryFacade.getDocs(request);
 
 		if (request.isGetCsv()) {
 
@@ -121,7 +119,6 @@ public class PerPerserController {
 
 	@GetMapping("/getNewRelicData")
 	public ResponseEntity<Void> getNewRelicApi(GetNewRelicControllerRequest request, BindingResult bindResult) {
-
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 
 	}

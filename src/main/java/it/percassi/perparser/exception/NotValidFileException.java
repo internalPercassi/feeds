@@ -1,4 +1,4 @@
-package it.percassi.perparser.service.parsers.exception;
+package it.percassi.perparser.exception;
 
 /**
  *

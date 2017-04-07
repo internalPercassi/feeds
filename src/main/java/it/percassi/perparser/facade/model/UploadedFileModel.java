@@ -1,27 +1,28 @@
 package it.percassi.perparser.facade.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.bson.Document;
 
 /**
  *
  * @author Daniele Sperto
  */
-public class UploadedFileModel {
+public class UploadedFileModel implements Serializable {
 
 	private String md5;
 	private String fileName;
 	private String type;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm a z")
+//	@JsonSerialize(using = IsoDateSerializer.class)
 	private Date date;
 	private Integer rowCount;
 
 	public UploadedFileModel() {
 	}
-	
-	public UploadedFileModel(String fileName,byte[] bytes,String type) throws IOException {
+
+	public UploadedFileModel(String fileName, byte[] bytes, String type) throws IOException {
 		String md5 = this.getMD5(bytes);
 		this.date = new Date();
 		this.md5 = md5;
@@ -37,7 +38,7 @@ public class UploadedFileModel {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	
+
 	public String getMd5() {
 		return md5;
 	}
@@ -69,9 +70,20 @@ public class UploadedFileModel {
 	public void setRowCount(Integer rowCount) {
 		this.rowCount = rowCount;
 	}
-		
-	private static String getMD5(byte[] bytes) throws IOException {												
-		String md5 = DigestUtils.md5Hex(bytes);				
+
+	private static String getMD5(byte[] bytes) throws IOException {
+		String md5 = DigestUtils.md5Hex(bytes);
 		return md5;
+	}
+
+	
+	public Document toBSONDoc() {
+		Document ret = new Document();		
+		ret.append("md5", this.md5);			
+		ret.append("fileName", this.fileName);
+		ret.append("type", this.type);
+		ret.append("date", this.date);
+		ret.append("rowCount", this.rowCount);
+		return ret;
 	}
 }

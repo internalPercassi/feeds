@@ -92,6 +92,7 @@ var filterService = function () {
 	var filters = [];
 
 	var _addFilter = function (field, searchOperator, searchVal) {
+		console.log("filterService _addFilter "+field+" "+searchOperator+" "+searchVal);
 		if (!field || !searchOperator || !searchVal) {
 			return;
 		}
@@ -122,6 +123,7 @@ var filterService = function () {
 	};
 
 	var _reset = function () {
+		console.log("filterService _reset ");
 		filters = [];
 	}
 	var _getFilters = function () {

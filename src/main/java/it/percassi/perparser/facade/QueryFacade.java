@@ -13,9 +13,15 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.percassi.perparser.controller.request.GetDocumentsRequest;
+import it.percassi.perparser.exception.NotValidFilterException;
+import it.percassi.perparser.facade.model.AppEnum;
+import it.percassi.perparser.facade.model.MongoPaginationConfig;
+import it.percassi.perparser.facade.model.MongoSortConfig;
 
-import it.percassi.perparser.service.mongo.model.MongodbFilter;
+import it.percassi.perparser.facade.model.MongodbFilter;
 import it.percassi.perparser.service.mongo.MongoService;
+import java.text.ParseException;
 
 /**
  *
@@ -29,24 +35,25 @@ public class QueryFacade {
 	@Autowired
 	MongoService mongoService;
 
-	public JSONObject getDocs(String collectionName, String jsonfilters, String[] excludes, String sortField, Integer sortType, Integer start, Integer length) throws IOException, NoSuchFieldException {
-		List<MongodbFilter> filters = buildFilterList(jsonfilters);
-		return mongoService.getDocs(collectionName, filters, excludes, sortField, sortType, start, length);
+	public JSONObject getDocs(GetDocumentsRequest request) throws IOException, NoSuchFieldException, NotValidFilterException, ParseException {
+		List<MongodbFilter> filters = buildFilterList(request.getFilters());
+		MongoSortConfig sortConfig = new MongoSortConfig(request.getSortField(), request.getLength());
+		MongoPaginationConfig pagConfig = new MongoPaginationConfig(request.getStart(), request.getLength());
+		return mongoService.getDocs(request.getCollectionName(), filters, request.getExclude(), sortConfig, pagConfig);
 	}
 
-	private static List<MongodbFilter> buildFilterList(String jsonfilters) throws IOException {
+	private static List<MongodbFilter> buildFilterList(String jsonfilters) throws IOException, NotValidFilterException {
 		List<MongodbFilter> ret = new ArrayList<MongodbFilter>();
-		if (StringUtils.isBlank(jsonfilters)) {
+		if (StringUtils.isBlank(jsonfilters) || StringUtils.equals(jsonfilters, "{}")) {
 			return ret;
 		}
 		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			ret = objectMapper.readValue(jsonfilters, new TypeReference<List<MongodbFilter>>() {
-			});
-		} catch (Exception e) {
-			LOG.warn("", e);
-			return new ArrayList<MongodbFilter>();
+		ret = objectMapper.readValue(jsonfilters, new TypeReference<List<MongodbFilter>>() {
+		});
+		for (MongodbFilter filter : ret) {
+			AppEnum.MongoFilterOperator.fromString(filter.getSearchOperator());//throw an exception if the operator is not valid
 		}
 		return ret;
 	}
+
 }

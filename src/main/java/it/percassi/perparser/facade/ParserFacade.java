@@ -9,7 +9,7 @@ import it.percassi.perparser.service.parsers.model.OSmodel;
 import it.percassi.perparser.facade.model.UploadedFileModel;
 import it.percassi.perparser.service.parsers.model.WAFModel;
 import it.percassi.perparser.service.parsers.BaseParser;
-import it.percassi.perparser.service.parsers.exception.NotValidFileException;
+import it.percassi.perparser.exception.NotValidFileException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
