@@ -16,7 +16,7 @@ var facebookViewModel = function () {
 		var id = _that.filters.id();		
 		console.log("_that.filters.id=" + id);
 		filterService.reset();
-		if (fileName) {
+		if (id) {
 			filterService.addFilter("id", "$eq", id);
 		}
 		facebookController.search();

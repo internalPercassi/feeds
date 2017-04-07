@@ -1,10 +1,4 @@
 'use strict';
-var app = $.sammy.apps['#app'];
-var appConstants = {
-	getDocUrl: 'getDocuments',
-	uploadFileUrl: 'parseFile'
-};
-
 
 var historyController = function () {
 	var collectionName = 'uploadedFile';
@@ -59,7 +53,7 @@ var historyController = function () {
 
 
 	var _init = function () {
-		app.bind('test', function (e, data) {
+		appConstants.app.bind(collectionName, function (e, data) {
 			this.redirect('#/' + data[2], data[0]);
 		});		
 		$(document).on('change', ':file', function () {
@@ -106,3 +100,9 @@ var historyController = function () {
 		},
 	}
 }($);
+
+
+
+$(document).ready(function () {
+	historyController.init();
+});
