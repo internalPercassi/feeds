@@ -56,7 +56,31 @@
     	   
       });
 
-    
+	this.get('#/history/', function (context) {
+		context.app.swap('');
+		context.load('/PerParserSPA/resources/views/pages/history.template')
+		.then(function (response) {
+
+					historyController.init();
+					tableFactory.showUploadedFiles();
+
+			        var $container = $('#app'),
+		            $view = $container.find('.view'),
+		            $newView = $('<div>').addClass('view').html(response);
+			        
+			        
+			        if ($view.length) {
+			            ko.removeNode($view[0]); // Clean up previous view
+			        }
+			        $container.append($newView);
+			        
+			        
+
+					 ko.applyBindings(new historyViewModel(), $newView[0]);
+				});
+
+
+	});   
     
 
     this.before('.*', function() {
