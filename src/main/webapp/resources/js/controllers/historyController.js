@@ -9,7 +9,6 @@ var appConstants = {
 var historyController = function () {
 	var collectionName = 'uploadedFile';
 	var sortFieldSel = '#sortField';
-	var filtersActivesSel = '#filtersActivesP';
 
 	var _search = function () {
 		var sortConfig = {};
@@ -20,12 +19,8 @@ var historyController = function () {
 		tableFactory.showDocs(collectionName, url);
 	};
 
-
-
-
 	var _resetFilter = function () {
-		filterService.reset();
-	
+		filterService.reset();	
 	};
 
 	var _uploadFile = function () {
@@ -64,11 +59,9 @@ var historyController = function () {
 
 
 	var _init = function () {
-
 		app.bind('test', function (e, data) {
 			this.redirect('#/' + data[2], data[0]);
-		});
-		
+		});		
 		$(document).on('change', ':file', function () {
 			var input = $(this),
 					numFiles = input.get(0).files ? input.get(0).files.length : 1,
@@ -113,10 +106,3 @@ var historyController = function () {
 		},
 	}
 }($);
-
-
-(function ($) {
-
-
-
-})(jQuery);

@@ -35,7 +35,6 @@ var tableFactory = function () {
 		var sortConfig = {};
 		sortConfig.sortField = $(sortFieldSel).val();
 		sortConfig.sortType = $('input[name=sortType]:checked').val();
-
 		var url = urlService.getDocs(collectionName, filterService.getFilters(), sortConfig);
 		_showDocs(collectionName, url);
 	};
@@ -171,9 +170,8 @@ var tableFactory = function () {
 				var md5 = data[0];
 				var collectionName = data[2];
 				filterService.reset();
-				filterService.addFilter('md5', '$eq', md5);
-				_showDocs(collectionName);//data[1]=collectionName
-				appConstants.app.trigger('test',data);
+				filterService.addFilter('md5', '$eq', md5);			
+				app.trigger("#/"+collectionName+"/"+md5,data);
 			});
 			_hideFilters();
 		};
@@ -212,8 +210,7 @@ var tableFactory = function () {
 		form$.remove();
 	};
 	
-	var _init = function () {
-		
+	var _init = function () {		
 		 $(document).on('change', ':file', function () {
 		  var input = $(this),
 		    numFiles = input.get(0).files ? input.get(0).files.length : 1,

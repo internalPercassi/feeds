@@ -42,6 +42,7 @@ public class AppEnum {
 		}
 	}
 
+	
 	public static enum FileType {
 		FACEBOOK("FacebookProduct", FacebookFeed.class),
 		GL("GL", GLmodel.class),
