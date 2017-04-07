@@ -3,4 +3,7 @@
 <extension point="org.eclipse.emf.ecp.view.template">
 <viewTemplate xmi="src/main/webapp/resources/views/pages/os.template"/>
 </extension>
+<extension point="org.eclipse.emf.ecp.view.template">
+<viewTemplate xmi="src/main/webapp/resources/views/pages/newRelic.template"/>
+</extension>
 </plugin>

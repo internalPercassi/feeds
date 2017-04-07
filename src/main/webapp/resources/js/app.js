@@ -31,14 +31,25 @@
     	});      
     	   
       });
+    
+    this.get('#/newRelic', function(context) {
+  	  
+    	context.app.swap('');
+    	context.load('/PerParserSPA/resources/views/pages/newRelic.template')
+    	.appendTo(context.$element())
+    	.then(function(){
+    		
+    	});      
+    	   
+      });
 
-/*
+
     this.before('.*', function() {
 
         var hash = document.location.hash;
         $("nav").find("a").removeClass("current");
         $("nav").find("a[href='"+hash+"']").addClass("current");
-   });*/
+   });
 
   });
 
