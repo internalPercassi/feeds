@@ -1,10 +1,6 @@
 'use strict';
 
-var appConstants = {
-	getDocUrl: 'getDocuments',
-	uploadFileUrl: 'parseFile',
-	app: $.sammy.apps['#app']
-};
+
 
 
 var tableFactory = function () {
@@ -172,8 +168,9 @@ var tableFactory = function () {
 				var collectionName = data[2];
 				filterService.reset();
 				filterService.addFilter('md5', '$eq', md5);
-				_showDocs(collectionName);//data[1]=collectionName
+//				_showDocs(collectionName);//data[1]=collectionName
 				appConstants.app.trigger('test',data);
+//				appConstants.app.redirect('#/' + data[2], data[0]);
 			});
 			_hideFilters();
 		};

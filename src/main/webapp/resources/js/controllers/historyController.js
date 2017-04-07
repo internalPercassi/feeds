@@ -1,9 +1,6 @@
 'use strict';
 var app = $.sammy.apps['#app'];
-var appConstants = {
-	getDocUrl: 'getDocuments',
-	uploadFileUrl: 'parseFile'
-};
+
 
 
 var historyController = function () {
