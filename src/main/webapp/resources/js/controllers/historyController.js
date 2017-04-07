@@ -20,20 +20,12 @@ var historyController = function () {
 		tableFactory.showDocs(collectionName, url);
 	};
 
-	var _drawFilterList = function () {
-		$(filtersActivesSel).empty();
-		var elementsToAppen = [];
-		filterService.getFilters().forEach(function (value, i) {
-			var htmlStr = " " + value.field + " " + value.searchOperator + " " + value.searchVal + " ";
-			elementsToAppen.push($('<span>').addClass('label label-primary').html(htmlStr));
-		});
-		$(filtersActivesSel).append(elementsToAppen);
-	};
+
 
 
 	var _resetFilter = function () {
 		filterService.reset();
-		_drawFilterList();
+	
 	};
 
 	var _uploadFile = function () {
@@ -124,12 +116,23 @@ var historyController = function () {
 	app.get('#/history/', function (context) {
 		context.app.swap('');
 		context.load('/PerParserSPA/resources/views/pages/history.template')
-				.appendTo(context.$element())
-				.then(function () {
+				.then(function (response) {
 
 					historyController.init();
 					tableFactory.showUploadedFiles();
 
+			        var $container = $('#app'),
+		            $view = $container.find('.view'),
+		            $newView = $('<div>').addClass('view').html(response);
+			        
+			        
+			        if ($view.length) {
+			            ko.removeNode($view[0]); // Clean up previous view
+			        }
+			        $container.append($newView);
+			        
+			        
+			        
 					var historyViewModel = function () {
 
 						var _that = this;
@@ -167,7 +170,7 @@ var historyController = function () {
 							historyController.search();
 						}
 					};
-					ko.applyBindings(new historyViewModel());
+					 ko.applyBindings(new historyViewModel(), $newView[0]);
 				});
 
 		app.bind('test', function (e, data) {

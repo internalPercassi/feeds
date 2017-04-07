@@ -14,9 +14,22 @@
   	  
     	context.app.swap('');
     	context.load('/PerParserSPA/resources/views/pages/gl.template')
-    	.appendTo(context.$element())
-    	.then(function(){
-    		tableFactory.showDocs('GL');
+    	
+    	.then(function(response){
+    		
+    		
+	        var $container = $('#app'),
+            $view = $container.find('.view'),
+            $newView = $('<div>').addClass('view').html(response);
+	        
+	        
+	        if ($view.length) {
+	            ko.removeNode($view[0]); // Clean up previous view
+	        }
+	      
+	        $container.append($newView);
+	        tableFactory.showDocs('GL');
+	        ko.applyBindings(null, $newView[0]);
     	});      
     	   
       });
@@ -43,6 +56,8 @@
     	   
       });
 
+    
+    
 
     this.before('.*', function() {
 
