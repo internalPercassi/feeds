@@ -20,20 +20,12 @@ var historyController = function () {
 		tableFactory.showDocs(collectionName, url);
 	};
 
-	var _drawFilterList = function () {
-		$(filtersActivesSel).empty();
-		var elementsToAppen = [];
-		filterService.getFilters().forEach(function (value, i) {
-			var htmlStr = " " + value.field + " " + value.searchOperator + " " + value.searchVal + " ";
-			elementsToAppen.push($('<span>').addClass('label label-primary').html(htmlStr));
-		});
-		$(filtersActivesSel).append(elementsToAppen);
-	};
+
 
 
 	var _resetFilter = function () {
 		filterService.reset();
-		_drawFilterList();
+	
 	};
 
 	var _uploadFile = function () {
@@ -73,6 +65,10 @@ var historyController = function () {
 
 	var _init = function () {
 
+		app.bind('test', function (e, data) {
+			this.redirect('#/' + data[2], data[0]);
+		});
+		
 		$(document).on('change', ':file', function () {
 			var input = $(this),
 					numFiles = input.get(0).files ? input.get(0).files.length : 1,
@@ -121,58 +117,6 @@ var historyController = function () {
 
 (function ($) {
 
-	app.get('#/history/', function (context) {
-		context.app.swap('');
-		context.load('/PerParserSPA/resources/views/pages/history.template')
-				.appendTo(context.$element())
-				.then(function () {
 
-					historyController.init();
-					tableFactory.showUploadedFiles();
-
-					var historyViewModel = function () {
-
-						var _that = this;
-
-						this.types = [
-							{name: "GL"},
-							{name: "OS"},
-							{name: "FacebookProduct"}
-						];
-
-						this.filters = {
-							name: ko.observable(''),
-							type: ko.observable('')
-						};
-
-						this.resetFilters = function () {
-							_that.filters.name('');
-							_that.filters.type(null);
-						}
-
-						this.filteredSearch = function () {
-							var fileName = _that.filters.name();
-							var fileType;
-							if (_that.filters.type()) {
-								fileType = _that.filters.type().name;
-							}
-							console.log("_that.filters.name=" + fileName + ", _that.filters.type=" + fileType);
-							filterService.reset();
-							if (fileName) {
-								filterService.addFilter("fileName", "$eq", fileName);
-							}
-							if (fileType){
-								filterService.addFilter("type", "$eq", fileType);
-							}
-							historyController.search();
-						}
-					};
-					ko.applyBindings(new historyViewModel());
-				});
-
-		app.bind('test', function (e, data) {
-			this.redirect('#/' + data[2], data[0]);
-		});
-	});
 
 })(jQuery);
