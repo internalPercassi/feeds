@@ -1,0 +1,13 @@
+<div class="row">
+	<h1 class="page-header">Filters</h1>
+</div>			
+<div class="row">
+	</br>
+	<h1 class="page-header">Results</h1>
+
+	<div class="row">
+		<div class="col-md-12" id="tableContainer">
+			<table id="myTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
+		</div>
+	</div>
+</div>				
