@@ -49,7 +49,7 @@
   	  
     	context.app.swap('');
     	context.load('/PerParserSPA/resources/views/pages/newRelic.template')
-    	.appendTo(context.$element())
+    	.replace(context.$element())
     	.then(function(){
     		
     	});      
@@ -73,21 +73,16 @@
 			            ko.removeNode($view[0]); // Clean up previous view
 			        }
 			        $container.append($newView);
-			        
-			        
-
-					 ko.applyBindings(new historyViewModel(), $newView[0]);
+					ko.applyBindings(new historyViewModel(), $newView[0]);
 				});
-
-
 	});   
     
 
     this.before('.*', function() {
 
         var hash = document.location.hash;
-        $("nav").find("a").removeClass("current");
-        $("nav").find("a[href='"+hash+"']").addClass("current");
+        $(".nav.nav-sidebar").find("li").removeClass("active");
+        $(".nav.nav-sidebar").find("a[href='"+hash+"']").parent().addClass("active");
    });
 
   });
