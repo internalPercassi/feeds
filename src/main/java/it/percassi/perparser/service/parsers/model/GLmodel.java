@@ -16,13 +16,13 @@ public class GLmodel extends BaseModel{
 	private Integer bookedQty;
 	private String accountingState;
 
-	public void setGL(String GL) {
-		this.GL = GL;
-	}
-
-	public void setINS(String INS) {
-		this.INS = INS;
-	}
+//	public void setGL(String GL) {
+//		this.GL = GL;
+//	}
+//
+//	public void setINS(String INS) {
+//		this.INS = INS;
+//	}
 
 	public void setPertinencySite(String pertinencySite) {
 		this.pertinencySite = pertinencySite;
@@ -52,13 +52,13 @@ public class GLmodel extends BaseModel{
 		this.accountingState = accountingState;
 	}
 
-	public String getGL() {
-		return GL;
-	}
-
-	public String getINS() {
-		return INS;
-	}
+//	public String getGL() {
+//		return GL;
+//	}
+//
+//	public String getINS() {
+//		return INS;
+//	}
 
 	public String getPertinencySite() {
 		return pertinencySite;
