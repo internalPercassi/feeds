@@ -35,27 +35,18 @@ var tableFactory = function () {
 		_showDocs(collectionName, url);
 	};
 
-	var _drawFilterList = function () {
-		$(filtersActivesSel).empty();
-		var elementsToAppen = [];
-		filterService.getFilters().forEach(function (value, i) {
-			var htmlStr = " " + value.field + " " + value.searchOperator + " " + value.searchVal + " ";
-			elementsToAppen.push($('<span>').addClass('label label-primary').html(htmlStr));
-		});
-		$(filtersActivesSel).append(elementsToAppen);
-	};
 
 	var _addFilter = function () {
 		var field = $(serverFiltersFieldsSel).val();
 		var searchOperator = $(serverFiltersSearchOperatorSel).val();
 		var searchVal = $(serverFilterSearchValSel).val();
 		filterService.addFilter(field, searchOperator, searchVal);
-		_drawFilterList();
+
 	};
 
 	var _resetFilter = function () {
 		filterService.reset();
-		_drawFilterList();
+
 	};
 
 	var _buildFiltersSelect = function () {
