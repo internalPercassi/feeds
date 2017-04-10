@@ -76,6 +76,7 @@ var app = $.sammy('#app', function () {
 		context.app.swap('');
 		context.load('/PerParserSPA/resources/views/pages/history.template')
 				.then(function (response) {
+					
 					var $container = $('#app'),
 							$view = $container.find('.view'),
 							$newView = $('<div>').addClass('view').html(response);
@@ -84,6 +85,7 @@ var app = $.sammy('#app', function () {
 					if ($view.length) {
 						ko.removeNode($view[0]); // Clean up previous view
 					}
+					historyController.init();
 					tableFactory.showUploadedFiles();
 					$container.append($newView);
 					ko.applyBindings(new historyViewModel(), $newView[0]);

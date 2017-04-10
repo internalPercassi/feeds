@@ -21,7 +21,7 @@
   			</div>
  		</div>
 	<div class="col-md-2 pull-right">
-	 <input id="uploadBtn" class="btn btn-default form-control" type="button" value="Upload File" onclick="historyController.uploadFile()"/>
+	 <input id="uploadBtn" class="btn btn-default form-control" type="button" value="Upload File" onclick="historyController.uploadFile()" disabled/>
 	</div>
 </form>
 </div>	
@@ -42,11 +42,11 @@
 		<select  class="form-control" data-bind="options:types, optionsCaption:'All', optionsText: 'name', value: filters.type">
 		</select>
 	</div>
-	<div class="col-md-12">
-		<div class="col-md-1 pull-right">
+	<div class="col-md-7 pull-right">
+		<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
 			<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
 		</div>
-		<div class="col-md-1 pull-right">
+		<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
 			<div class="btn btn-default form-control" data-bind="click: filteredSearch">Search</div>
 		</div>
 	</div>		
