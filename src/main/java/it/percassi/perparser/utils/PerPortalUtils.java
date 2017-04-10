@@ -15,11 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 public class PerPortalUtils {
 
-	public static final String NEW_RELIC_API_KEY_HEADER = "X-Api-Key";
-	public static final String NEW_RELIC_NAMES="names";
-	public static final String NEW_RELIC_VALUES="values";
-	public static final String NEW_RELIC_CALL_COUNT_VALUE="call_count";
-	public static final String NEW_RELIC_AVG_RESP_TIME_VALUE="average_response_time";
+	
 
 	private static final String SLASH = "/";
 
@@ -88,7 +84,7 @@ public class PerPortalUtils {
 	private static HttpHeaders createNewRelicHttpHeaders(String apiKey) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
-		headers.set(NEW_RELIC_API_KEY_HEADER, apiKey);
+		headers.set(PerPortalConstants.NEW_RELIC_API_KEY_HEADER, apiKey);
 		return headers;
 	}
 }

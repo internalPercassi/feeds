@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import it.percassi.perparser.exception.ServiceException;
 import it.percassi.perparser.model.newrelic.NewRelicResponse;
+import it.percassi.perparser.utils.PerPortalConstants;
 import it.percassi.perparser.utils.PerPortalUtils;
 
 @Service
@@ -57,8 +58,8 @@ public class NrMetricServiceImpl implements NrMetricService {
 		final ObjectMapper om = new ObjectMapper();
 		NewRelicServiceResponse response = null;
 
-		uriParams.put(PerPortalUtils.NEW_RELIC_NAMES, Arrays.asList(request.getMetricName()));
-		uriParams.put(PerPortalUtils.NEW_RELIC_VALUES, Arrays.asList(request.getValueParameter()));
+		uriParams.put(PerPortalConstants.NEW_RELIC_NAMES, Arrays.asList(request.getMetricName()));
+		uriParams.put(PerPortalConstants.NEW_RELIC_VALUES, Arrays.asList(request.getValueParameter()));
 
 		final String newRelicUrl = PerPortalUtils.createNewRelicUrl(nrUrl, request.getMachineId(), endUrl);
 		final HttpEntity<String> newRelicEntity = PerPortalUtils.builHttpEntityNewRelicApi(apiKey);

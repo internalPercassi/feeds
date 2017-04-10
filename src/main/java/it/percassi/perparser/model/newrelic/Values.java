@@ -1,5 +1,7 @@
 package it.percassi.perparser.model.newrelic;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * 
  * @author Sigolotto
@@ -7,23 +9,27 @@ package it.percassi.perparser.model.newrelic;
  */
 public class Values {
 
-	private int call_count;
+	@JsonProperty("call_count")
+	private int callCount;
 
-	private float average_response_time;
+	@JsonProperty("average_response_time")
+	private float averageResponseTime;
 
-	public int getCall_count() {
-		return call_count;
+	public int getCallCount() {
+		return callCount;
 	}
 
-	public void setCall_count(int call_count) {
-		this.call_count = call_count;
+	public void setCallCount(int callCount) {
+		this.callCount = callCount;
 	}
 
-	public float getAverage_response_time() {
-		return average_response_time;
+	public float getAverageResponseTime() {
+		return averageResponseTime;
 	}
 
-	public void setAverage_response_time(float average_response_time) {
-		this.average_response_time = average_response_time;
+	public void setAverageResponseTime(float averageResponseTime) {
+		this.averageResponseTime = averageResponseTime;
 	}
+
+
 }

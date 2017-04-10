@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import it.percassi.perparser.service.newrelic.NewRelicServiceRequest;
 import it.percassi.perparser.service.newrelic.NewRelicServiceResponse;
 import it.percassi.perparser.service.newrelic.NrMetricService;
-import it.percassi.perparser.utils.PerPortalUtils;
+import it.percassi.perparser.utils.PerPortalConstants;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-test-config.xml")
@@ -97,8 +97,8 @@ public class NewRelicTest {
 		final LocalDateTime toDate = LocalDateTime.of(2017, 4, 3, 23, 59, 00);
 		final String[] metricName = { "Datastore/MySQL/allWeb", "HttpDispatcher" };
 		int samplePeriod = 7200;
-		final String[] valuesParam = { PerPortalUtils.NEW_RELIC_CALL_COUNT_VALUE,
-				PerPortalUtils.NEW_RELIC_AVG_RESP_TIME_VALUE };
+		final String[] valuesParam = { PerPortalConstants.NEW_RELIC_CALL_COUNT_VALUE,
+				PerPortalConstants.NEW_RELIC_AVG_RESP_TIME_VALUE };
 
 		NewRelicServiceRequest request = new NewRelicServiceRequest(fromDate, toDate, metricName, samplePeriod,
 				valuesParam, feId);
