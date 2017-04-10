@@ -3,14 +3,14 @@ var glViewModel = function () {
 
 	var _that = this;
 
-	
+
 	this.filters = {
-	    minstock: ko.observable(''),
-	    maxstock: ko.observable(''),
-	    minbook: ko.observable(''),
-	    maxbook: ko.observable(''),
-	    accstate: ko.observable(''),
-	    prodcod: ko.observable(''),
+		minstock: ko.observable(''),
+		maxstock: ko.observable(''),
+		minbook: ko.observable(''),
+		maxbook: ko.observable(''),
+		accstate: ko.observable(''),
+		prodcod: ko.observable(''),
 	};
 
 	this.resetFilters = function () {
@@ -22,16 +22,20 @@ var glViewModel = function () {
 		_that.filters.prodcod('');
 	}
 
-	this._setFilters = function(){
-		var minstock = _that.filters.minstock();	
-		var maxstock = _that.filters.maxstock();	
-		var minbook = _that.filters.minbook();	
-		var maxbook = _that.filters.maxbook();	
-		var accstate = _that.filters.accstate();	
-		var prodcod = _that.filters.prodcod();	
-		
+	this._setFilters = function () {
+		var minstock = _that.filters.minstock();
+		var maxstock = _that.filters.maxstock();
+		var minbook = _that.filters.minbook();
+		var maxbook = _that.filters.maxbook();
+		var accstate = _that.filters.accstate();
+		var prodcod = _that.filters.prodcod();
+
+		var md5Filter = filterService.getFilter("md5");
 		filterService.reset();
-		
+		if (md5Filter) {
+			filterService.addFilter(md5Filter.field, md5Filter.searchOperator, md5Filter.searchVal);
+		}
+
 		if (minstock) {
 			filterService.addFilter("stockedQty", "$gt", minstock);
 		}
@@ -51,13 +55,13 @@ var glViewModel = function () {
 			filterService.addFilter("uniqueProductCode", "$eq", prodcod);
 		}
 	};
-	
-	this.searchFilters = function () {		
+
+	this.searchFilters = function () {
 		_that._setFilters();
 		glController.search();
 	}
-	
-	this.getCSV = function(){
+
+	this.getCSV = function () {
 		_that._setFilters();
 		glController.getCSV();
 	}

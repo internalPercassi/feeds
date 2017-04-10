@@ -137,7 +137,16 @@ var filterService = function () {
 		});
 		return ret;
 	};
-
+	
+	var _getFilter = function(fieldName){
+		var ret;
+		filters.forEach(function (value, i) {
+			if (value && value.field == fieldName){
+				ret = value;
+			}
+		});
+		return ret;
+	}
 	return {
 		addFilter: function (field, searchOperator, searchVal) {
 			return _addFilter(field, searchOperator, searchVal);
@@ -150,6 +159,9 @@ var filterService = function () {
 		},
 		getFilters: function () {
 			return _getFilters();
+		},
+		getFilter: function(fieldName){
+			return _getFilter(fieldName);
 		}
 	};
 }()

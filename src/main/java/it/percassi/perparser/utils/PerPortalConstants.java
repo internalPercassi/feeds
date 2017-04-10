@@ -12,11 +12,11 @@ public class PerPortalConstants {
 	public static final String NEW_RELIC_AVG_RESP_TIME_VALUE="average_response_time";
 	public static final int SAMPLE_NR_PERIOD = 7200;
 	
-	public static final List<String> VALID_MIME = new ArrayList<String>();
+	public static final List<String> VALID_MIMES = new ArrayList<String>();
 	static{
-		VALID_MIME.add("application/vnd.ms-excel");
-		VALID_MIME.add("text/csv");
-		VALID_MIME.add("text/plain");
+		VALID_MIMES.add("application/vnd.ms-excel");
+		VALID_MIMES.add("text/csv");
+		VALID_MIMES.add("text/plain");
 	}
 	public static final String[] NR_METRICS ={
 			"HttpDispatcher",
