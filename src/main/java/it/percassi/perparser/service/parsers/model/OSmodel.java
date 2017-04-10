@@ -8,7 +8,7 @@ public class OSmodel extends BaseModel{
 
 	private String productCode;
 	private String modelCode;
-	private String invetory;
+	private String warehouse;
 	private String physicalInventory;
 	private String orderStatus;
 	private String replenishmentLevel;
@@ -24,11 +24,11 @@ public class OSmodel extends BaseModel{
 	public void setModelCode(String modelCode) {
 		this.modelCode = modelCode;
 	}
-	public String getInvetory() {
-		return invetory;
+	public String getWarehouse() {
+		return warehouse;
 	}
-	public void setInvetory(String invetory) {
-		this.invetory = invetory;
+	public void setWarehouse(String warehouse) {
+		this.warehouse = warehouse;
 	}
 	public String getPhysicalInventory() {
 		return physicalInventory;

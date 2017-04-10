@@ -64,7 +64,7 @@ public class OSParser extends BaseParser<OSmodel> {
 			OSmodel tmp = new OSmodel();
 			tmp.setProductCode(line.substring(0, 26).trim());
 			tmp.setModelCode(line.substring(26, 46).trim());
-			tmp.setInvetory(line.substring(46, 56).trim());
+			tmp.setWarehouse(line.substring(46, 56).trim());
 			tmp.setPhysicalInventory(line.substring(56, 68).trim());
 			tmp.setOrderStatus(line.substring(68, 80).trim());
 			tmp.setReplenishmentLevel(line.substring(86, 92).trim());

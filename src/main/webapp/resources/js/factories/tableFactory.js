@@ -6,7 +6,6 @@
 var tableFactory = function () {
 	var myTable;
 	var collectionName;
-
 	var selectorId = '#myTable';
 	var sortFieldSel = '#sortField';
 	var sortFieldSel = '#sortField';
