@@ -17,12 +17,9 @@ public class GetDocumentsRequestValidator implements Validator {
 	}
 
 	@Override
-	public void validate(Object target, Errors errors) {
-		
-		final GetDocumentsRequest request = (GetDocumentsRequest) target;
-		
+	public void validate(Object target, Errors errors) {		
+		final GetDocumentsRequest request = (GetDocumentsRequest) target;		
 		if (Objects.isNull(request)) {
-
 			errors.rejectValue("GetDocumentsRequest", "request is null", new Object[] { "'getDocumentsRequest'" }, "Request is null");
 		}
 

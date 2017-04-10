@@ -12,6 +12,10 @@ var dataService = function () {
 			$.map(jsonData.data, function (el) {
 				var objArr = [];
 				$.each(el, function (key, value) {
+					if (value && typeof value === 'object'){
+						var keys = Object.keys(value);
+						value = value[keys[0]];
+					}
 					objArr.push(value);
 				});
 				dataArr.push(objArr);
