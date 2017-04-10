@@ -164,9 +164,7 @@ var tableFactory = function () {
 			$(selectorId + ' tbody').on('click', 'tr', function () {
 				var data = myTable.row(this).data();
 				var md5 = data[0];
-				var collectionName = data[2];
-				filterService.reset();
-				filterService.addFilter('md5', '$eq', md5);
+				var collectionName = data[2];				
 //				_showDocs(collectionName);//data[1]=collectionName
 				appConstants.app.trigger(collectionName, data);
 //				appConstants.app.redirect('#/' + data[2], data[0]);

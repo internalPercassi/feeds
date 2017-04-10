@@ -4,8 +4,11 @@ var app = $.sammy('#app', function () {
 	this.get('#/', function (context) {});
 	this.get('#/FacebookProduct/:id', function (context) {
 		context.app.swap('');
+		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/FacebookProduct.template')
-				.then(function (response) {
+				.then(function (response) {					
+					filterService.reset();
+					filterService.addFilter('md5', '$eq', md5);
 					facebookController.search();
 					var $container = $('#app'),
 							$view = $container.find('.view'),
