@@ -28,8 +28,8 @@ public class UploadFileValidator implements Validator {
 		final String fileMimeType = req.getUploadedFile().getContentType();
 
 		if (!(MediaType.TEXT_PLAIN.getType().equals(fileMimeType)
-				|| PerPortalConstants.MIME_TYPE_TEXT_CSV.equals(fileMimeType)
-				|| PerPortalConstants.MIME_TYPE_EXCEL_CSV.equals(fileMimeType))) {
+				|| !(PerPortalConstants.MIME_TYPE_TEXT_CSV.equals(fileMimeType)
+				|| PerPortalConstants.MIME_TYPE_EXCEL_CSV.equals(fileMimeType)))) {
 
 			errors.rejectValue("uploadedFile", "file format is not supported", new Object[] { "uploadFile" },
 					"file type is " + fileMimeType + " is not supported");
