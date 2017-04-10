@@ -12,7 +12,6 @@
 		</div>
 		
 		<div class="col-md-3">
-<<<<<<< HEAD
 			<div class="form-group">
 				<label class="control-label">Maximum Stocket Qty.:</label>
 				<input type="number" class="form-control" data-bind="textInput: filters.maxbook">
@@ -24,55 +23,20 @@
 				<label class="control-label">Minimum Booked Qty.:</label>
 				<input type="number" class="form-control" data-bind="textInput: filters.maxstock">
 			</div>	
-=======
-			<form class="form-inline ">
-				<div class="form-group">
-					<label class="control-label">Maximum Stocket Qty.:</label>
-					<input type="number" class="form-control" data-bind="textInput: filters.maxstock">
-				</div>
-			</form>
->>>>>>> branch 'mongo' of https://github.com/internalPercassi/feeds.git
 		</div>
 		
 		<div class="col-md-3">
-<<<<<<< HEAD
 			<div class="form-group">
 				<label class="control-label">Maximum Booked Qty.:</label>
 				<input type="number" class="form-control" data-bind="textInput: filters.accstate">
 			</div>
-=======
-			<form class="form-inline">
-				<div class="form-group">
-					<label class="control-label">Minimum Booked Qty.:</label>
-					<input type="number" class="form-control" data-bind="textInput: filters.minbook">
-				</div>
-			</form>
-		</div>
-		
-		<div class="col-md-3">
-			<form class="form-inline">
-				<div class="form-group">
-					<label class="control-label">Maximum Booked Qty.:</label>
-					<input type="number" class="form-control" data-bind="textInput: filters.maxbook">
-				</div>
-			</form>
->>>>>>> branch 'mongo' of https://github.com/internalPercassi/feeds.git
 		</div>
 				
 		<div class="col-md-3">
-<<<<<<< HEAD
 			<div class="form-group">
 				<label class="control-label">Accounting State:</label>
 				<input type="text" class="form-control" data-bind="textInput: filters.minbook">
 			</div>
-=======
-			<form class="form-inline ">
-				<div class="form-group">
-					<label class="control-label">Accounting State:</label>
-					<input type="text" class="form-control" data-bind="textInput: filters.accstate">
-				</div>
-			</form>
->>>>>>> branch 'mongo' of https://github.com/internalPercassi/feeds.git
 		</div>
 		
 		<div class="col-md-3">
