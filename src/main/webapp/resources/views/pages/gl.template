@@ -3,9 +3,9 @@
 </div>	
 <div class="row">
 	<!-- First filters row -->
-	<div class="col-md-12 no-padding">
+	<div class="col-md-12 serverFilters">
 		
-		<div class="col-md-3 no-padding">
+		<div class="col-md-3">
 			<form class="form-inline">
 				<div class="form-group">
 					<label class="control-label">Minimum Stocket Qty.:</label>
@@ -14,48 +14,47 @@
 			</form>
 		</div>
 		
-		<div class="col-md-3 no-padding">
-			<form class="form-inline">
+		<div class="col-md-3">
+			<form class="form-inline ">
 				<div class="form-group">
 					<label class="control-label">Maximum Stocket Qty.:</label>
-					<input type="number" class="form-control" data-bind="textInput: filters.maxstock">
-				</div>
-			</form>
-		</div>
-		
-		<div class="col-md-3 no-padding">
-			<form class="form-inline ">
-				<div class="form-group">
-					<label class="control-label">Minimum Booked Qty.:</label>
-					<input type="number" class="form-control" data-bind="textInput: filters.minbook">
-				</div>
-			</form>
-		</div>
-		
-		<div class="col-md-3 no-padding">
-			<form class="form-inline ">
-				<div class="form-group">
-					<label class="control-label">Maximum Booked Qty.:</label>
 					<input type="number" class="form-control" data-bind="textInput: filters.maxbook">
 				</div>
 			</form>
 		</div>
 		
-	</div>
-	
-	<!-- Second filters row -->
-	<div class="col-md-12 no-padding" id="serverFilters2">
-		
-		<div class="col-md-3 no-padding">
+		<div class="col-md-3">
 			<form class="form-inline">
 				<div class="form-group">
-					<label class="control-label">Accounting State:</label>
-					<input type="text" class="form-control" data-bind="textInput: filters.accstate">
+					<label class="control-label">Minimum Booked Qty.:</label>
+					<input type="number" class="form-control" data-bind="textInput: filters.maxstock">
 				</div>
 			</form>
 		</div>
 		
-		<div class="col-md-3 no-padding">
+		<div class="col-md-3">
+			<form class="form-inline">
+				<div class="form-group">
+					<label class="control-label">Maximum Booked Qty.:</label>
+					<input type="number" class="form-control" data-bind="textInput: filters.accstate">
+				</div>
+			</form>
+		</div>
+		
+		
+	</div>
+	<div class="col-md-12 serverFilters">
+		
+		<div class="col-md-3">
+			<form class="form-inline ">
+				<div class="form-group">
+					<label class="control-label">Accounting State:</label>
+					<input type="text" class="form-control" data-bind="textInput: filters.minbook">
+				</div>
+			</form>
+		</div>
+		
+		<div class="col-md-3">
 			<form class="form-inline">
 				<div class="form-group">
 					<label class="control-label">Product code:</label>
@@ -67,39 +66,32 @@
 	</div>
 	
 	<!-- Filters btns -->
-	<div class="col-md-12 no-padding" id="serverFiltersBtn">
-		
-	<div class="col-md-12">
-		<div class="col-md-1 pull-right">
-			<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
+		<div class="col-md-8 pull-right">
+			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+				<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
+			</div>
+			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+				<div class="btn btn-default form-control" data-bind="click: searchFilters">Search</div>
+			</div>
 		</div>
-		<div class="col-md-1 pull-right">
-			<div class="btn btn-default form-control" data-bind="click: filteredSearch">Search</div>
-		</div>
-	</div>		
-		
-	</div>
 	
 </div>
 <div class="row">
 	</br>
 	<h1 class="page-header">Results</h1>
-
-	<!-- Export btns -->		
-	<div class="col-md-3 no-padding pull-right">
-		<form class="form-inline pull-right">
-			<div class="form-group">
-				<input type="button" class="form-control" value="CSV">
+	
+	<!-- Export btns -->
+		<div class="col-md-8 pull-right serverFilters">
+			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+				<div class="btn btn-default form-control">CSV</div>
 			</div>
-			<div class="form-group">
-				<input type="button" class="form-control" value="Excel">
+			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+				<div class="btn btn-default form-control">Excel</div>
 			</div>
-		</form>
-	</div>
-		
-	<div class="row">
-		<div class="col-md-12" id="tableContainer">
-			<table id="myTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
 		</div>
+
+	<div id="tableContainer">
+		<table id="myTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
 	</div>
+	</div
 </div>				

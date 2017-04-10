@@ -54,32 +54,19 @@ var historyController = function () {
 
 	var _init = function () {
 	
-		$(document).on('change', ':file', function () {
+		$(document).on('change', 'input[type="file"]', function () {
 			var input = $(this),
 			numFiles = input.get(0).files ? input.get(0).files.length : 1,
 			label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-			input.trigger('fileselect', [numFiles, label]);
-		});
+			var input2 = $(this).parents('.input-group').find(':text'),
+			log = numFiles > 1 ? numFiles + ' files selected' : label;
 
-		// We can watch for our custom `fileselect` event like this
-
-		var input = $(this).parents('.input-group').find(':text');
-
-		if (!input.val())
-			$('#uploadBtn').attr('disabled', true);
-
-		$(':file').on('fileselect', function (event, numFiles, label) {
-
-			var input = $(this).parents('.input-group').find(':text'),
-					log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-			if (input.length) {
-				input.val(log);
+			if (input2.length) {
+				input2.val(log);
 				$('#uploadBtn').attr('disabled', label.length ? false : true);
-			} else
-			if (log)
-				alert(log);
+			}
 		});
+
 	};
 
 	return {
@@ -101,9 +88,6 @@ var historyController = function () {
 
 }($);
 
-$(document).ready(function () {
-	historyController.init();
-});
 
 
 
