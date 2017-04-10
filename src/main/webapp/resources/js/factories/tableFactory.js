@@ -17,11 +17,11 @@ var tableFactory = function () {
 	var filtersActivesSel = '#filtersActivesP';
 
 	var tableOptions = {
-		deferRender: true,
+		deferRender: false,
 		scrollY: 400,
-		scrollCollapse: true,
-		scroller: true,
-		pageable: false,
+		scrollCollapse: false,
+		scroller: false,
+		pageable: true,
 		columnDefs: [
 			{"visible": false, "targets": 0}
 		]};

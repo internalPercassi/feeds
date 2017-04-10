@@ -8,7 +8,7 @@ var osViewModel = function () {
 		modelCode: ko.observable(''),
 		warehouse: ko.observable(''),
 		physicalInventory: ko.observable(''),
-		status: ko.observable(''),
+		orderStatus: ko.observable(''),
 		replenishmentLevel: ko.observable(''),
 	};
 
@@ -17,7 +17,7 @@ var osViewModel = function () {
 		_that.filters.modelCode('');
 		_that.filters.warehouse('');
 		_that.filters.physicalInventory('');
-		_that.filters.status(null);
+		_that.filters.orderStatus('');
 		_that.filters.replenishmentLevel('');
 	}
 
