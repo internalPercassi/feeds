@@ -3,12 +3,6 @@ var osViewModel = function () {
 
 	var _that = this;
 
-	this.status = [
-		{type: ""},
-		{type: ""},
-		{type: ""}
-	];
-
 	this.filters = {
 		productCode: ko.observable(''),
 		modelCode: ko.observable(''),
@@ -32,13 +26,14 @@ var osViewModel = function () {
 		var modelCode = _that.filters.modelCode();
 		var warehouse = _that.filters.warehouse();
 		var physicalInventory = _that.filters.physicalInventory();
+		var orderStatus = _that.filters.orderStatus();
 		var replenishmentLevel = _that.filters.replenishmentLevel();
 		
-		var status;
-		if (_that.filters.status()) {
-			status = _that.filters.status().type;
-		}
 		filterService.reset();
+
+		if (productCode) {
+			filterService.addFilter("productCode", "$eq", productCode);
+		}
 		
 		if (productCode) {
 			filterService.addFilter("productCode", "$eq", productCode);
