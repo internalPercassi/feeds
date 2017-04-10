@@ -53,9 +53,7 @@ var historyController = function () {
 
 
 	var _init = function () {
-		appConstants.app.bind(collectionName, function (e, data) {
-			this.redirect('#/' + data[2], data[0]);
-		});		
+	
 		$(document).on('change', ':file', function () {
 			var input = $(this),
 					numFiles = input.get(0).files ? input.get(0).files.length : 1,
@@ -99,10 +97,9 @@ var historyController = function () {
 			_showDocs();
 		},
 	}
+	
+	historyController.init();
 }($);
 
 
 
-$(document).ready(function () {
-	historyController.init();
-});

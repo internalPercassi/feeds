@@ -22,6 +22,7 @@ var app = $.sammy('#app', function () {
 		context.app.swap('');
 		context.load('/PerParserSPA/resources/views/pages/gl.template')
 				.then(function (response) {
+					glController.search();
 					var $container = $('#app'),
 							$view = $container.find('.view'),
 							$newView = $('<div>').addClass('view').html(response);
@@ -29,7 +30,7 @@ var app = $.sammy('#app', function () {
 						ko.removeNode($view[0]); // Clean up previous view
 					}
 					$container.append($newView);
-					ko.applyBindings(null, $newView[0]);
+					ko.applyBindings(new glViewModel(), $newView[0]);
 				});
 
 	});
@@ -78,7 +79,6 @@ var app = $.sammy('#app', function () {
 		$(".nav.nav-sidebar").find("li").removeClass("active");
 		$(".nav.nav-sidebar").find("a[href='" + hash + "']").parent().addClass("active");
 	});
-
 });
 
 
