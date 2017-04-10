@@ -14,7 +14,6 @@ var facebookViewModel = function () {
 
 	this.filteredSearch = function () {
 		var id = _that.filters.id();		
-		console.log("_that.filters.id=" + id);
 		filterService.reset();
 		if (id) {
 			filterService.addFilter("id", "$eq", id);

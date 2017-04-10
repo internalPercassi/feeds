@@ -4,8 +4,11 @@ var app = $.sammy('#app', function () {
 	this.get('#/', function (context) {});
 	this.get('#/FacebookProduct/:id', function (context) {
 		context.app.swap('');
+		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/FacebookProduct.template')
-				.then(function (response) {
+				.then(function (response) {					
+					filterService.reset();
+					filterService.addFilter('md5', '$eq', md5);
 					facebookController.search();
 					var $container = $('#app'),
 							$view = $container.find('.view'),
@@ -20,8 +23,33 @@ var app = $.sammy('#app', function () {
 
 	this.get('#/GL/:id', function (context) {
 		context.app.swap('');
+		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/gl.template')
-				.then(function (response) {
+		.then(function (response) {					
+			filterService.reset();
+			filterService.addFilter('md5', '$eq', md5);
+			glController.search();
+			var $container = $('#app'),
+					$view = $container.find('.view'),
+					$newView = $('<div>').addClass('view').html(response);
+			if ($view.length) {
+				ko.removeNode($view[0]); // Clean up previous view
+			}
+			$container.append($newView);
+			ko.applyBindings(new glViewModel(), $newView[0]);
+		});
+
+	});
+
+	this.get('#/OS/:id', function (context) {
+		context.app.swap('');
+		var md5 = context.params['id'];
+		context.load('/PerParserSPA/resources/views/pages/os.template')
+				
+				.then(function (response) {					
+					filterService.reset();
+					filterService.addFilter('md5', '$eq', md5);
+					osController.search();
 					var $container = $('#app'),
 							$view = $container.find('.view'),
 							$newView = $('<div>').addClass('view').html(response);
@@ -29,17 +57,7 @@ var app = $.sammy('#app', function () {
 						ko.removeNode($view[0]); // Clean up previous view
 					}
 					$container.append($newView);
-					ko.applyBindings(null, $newView[0]);
-				});
-
-	});
-
-	this.get('#/OS/:id', function (context) {
-		context.app.swap('');
-		context.load('/PerParserSPA/resources/views/pages/os.template')
-				.appendTo(context.$element())
-				.then(function () {
-					tableFactory.showDocs('OS');
+					ko.applyBindings(new osViewModel(), $newView[0]);
 				});
 
 	});
@@ -78,7 +96,6 @@ var app = $.sammy('#app', function () {
 		$(".nav.nav-sidebar").find("li").removeClass("active");
 		$(".nav.nav-sidebar").find("a[href='" + hash + "']").parent().addClass("active");
 	});
-
 });
 
 

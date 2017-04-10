@@ -6,7 +6,6 @@
 var tableFactory = function () {
 	var myTable;
 	var collectionName;
-
 	var selectorId = '#myTable';
 	var sortFieldSel = '#sortField';
 	var sortFieldSel = '#sortField';
@@ -18,11 +17,11 @@ var tableFactory = function () {
 	var filtersActivesSel = '#filtersActivesP';
 
 	var tableOptions = {
-		deferRender: true,
+		deferRender: false,
 		scrollY: 400,
-		scrollCollapse: true,
-		scroller: true,
-		pageable: false,
+		scrollCollapse: false,
+		scroller: false,
+		pageable: true,
 		columnDefs: [
 			{"visible": false, "targets": 0}
 		]};
@@ -36,27 +35,18 @@ var tableFactory = function () {
 		_showDocs(collectionName, url);
 	};
 
-	var _drawFilterList = function () {
-		$(filtersActivesSel).empty();
-		var elementsToAppen = [];
-		filterService.getFilters().forEach(function (value, i) {
-			var htmlStr = " " + value.field + " " + value.searchOperator + " " + value.searchVal + " ";
-			elementsToAppen.push($('<span>').addClass('label label-primary').html(htmlStr));
-		});
-		$(filtersActivesSel).append(elementsToAppen);
-	};
 
 	var _addFilter = function () {
 		var field = $(serverFiltersFieldsSel).val();
 		var searchOperator = $(serverFiltersSearchOperatorSel).val();
 		var searchVal = $(serverFilterSearchValSel).val();
 		filterService.addFilter(field, searchOperator, searchVal);
-		_drawFilterList();
+
 	};
 
 	var _resetFilter = function () {
 		filterService.reset();
-		_drawFilterList();
+
 	};
 
 	var _buildFiltersSelect = function () {
@@ -165,9 +155,7 @@ var tableFactory = function () {
 			$(selectorId + ' tbody').on('click', 'tr', function () {
 				var data = myTable.row(this).data();
 				var md5 = data[0];
-				var collectionName = data[2];
-				filterService.reset();
-				filterService.addFilter('md5', '$eq', md5);
+				var collectionName = data[2];				
 //				_showDocs(collectionName);//data[1]=collectionName
 				appConstants.app.trigger(collectionName, data);
 //				appConstants.app.redirect('#/' + data[2], data[0]);
