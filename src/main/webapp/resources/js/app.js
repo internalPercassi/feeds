@@ -45,7 +45,7 @@ var app = $.sammy('#app', function () {
 		context.app.swap('');
 		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/os.template')
-				.appendTo(context.$element())
+				
 				.then(function (response) {					
 					filterService.reset();
 					filterService.addFilter('md5', '$eq', md5);
