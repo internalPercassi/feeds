@@ -1,17 +1,35 @@
-(function ($) {
+var facebookController = function () {
+	var collectionName = 'FacebookProduct';
 
+	var _search = function () {		
+		var url = urlService.getDocs(collectionName, filterService.getFilters());
+		tableFactory.showDocs(collectionName, url);
+	};
 
+	var _resetFilter = function () {
+		filterService.reset();	
+	};
+	
 
-	app.get('#/FacebookProduct/:id', function (context) {
-		var md5 = this.params['id'];
-		context.app.swap('');
-		context.load('/PerParserSPA/resources/views/pages/FacebookProduct.template')
-				.appendTo(context.$element()).then(function () {
-//			tableController.init();
-//			filterService.reset();
-//			filterService.addFilter("md5", "$eq", md5)
-			tableController.showDocs('FacebookProduct');
-		});
-	});
+	var _init = function () {
+		appConstants.app.bind(collectionName, function (e, data) {
+			this.redirect('#/' + data[2], data[0]);
+		});			
+	};
+	return {
+		init: function () {
+			_init();
+		},		
+		search: function () {
+			_search();
+		},
+		resetFilter: function () {
+			_resetFilter();
+			_showDocs();
+		},
+	}
+}($);
 
-})(jQuery);
+$(document).ready(function () {
+	facebookController.init();
+});

@@ -88,7 +88,7 @@ var tableFactory = function () {
 	var _callAjax = function (url, successCbk) {
 		$.ajax({
 			url: url,
-			async:true,
+			async: true,
 			dataType: 'json',
 			cache: false,
 			contentType: false,
@@ -169,7 +169,7 @@ var tableFactory = function () {
 				filterService.reset();
 				filterService.addFilter('md5', '$eq', md5);
 //				_showDocs(collectionName);//data[1]=collectionName
-				appConstants.app.trigger('test',data);
+				appConstants.app.trigger(collectionName, data);
 //				appConstants.app.redirect('#/' + data[2], data[0]);
 			});
 			_hideFilters();
@@ -207,58 +207,21 @@ var tableFactory = function () {
 		$(document.body).append(form$);
 		form$.submit();
 		form$.remove();
-	};
-	
-	var _init = function () {
-		
-		 $(document).on('change', ':file', function () {
-		  var input = $(this),
-		    numFiles = input.get(0).files ? input.get(0).files.length : 1,
-		    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-		  input.trigger('fileselect', [numFiles, label]);
-		 });
-		
-		 // We can watch for our custom `fileselect` event like this
-		 
-		  var input = $(this).parents('.input-group').find(':text');
-		
-		  if (!input.val())
-		   $('#uploadBtn').attr('disabled', true);
-		
-		  $(':file').on('fileselect', function (event, numFiles, label) {
-		
-		   var input = $(this).parents('.input-group').find(':text'),
-		     log = numFiles > 1 ? numFiles + ' files selected' : label;
-		
-		   if (input.length) {
-		    input.val(log);
-		    $('#uploadBtn').attr('disabled', label.length ? false : true);
-		   } else
-		   if (log)
-		    alert(log);
-		  });
-	};
+	};	
 
 	return {
-		init: function () {
-			_init();
-		},
 		uploadFile: function () {
 			_uploadFile();
 		},
 		showUploadedFiles: function () {
 			_showUploadedFiles();
 		},
-		showDocs: function (collectionName) {			
+		showDocs: function (collectionName) {
 			_showDocs(collectionName);
 		},
 		search: function () {
 			_search();
-		},
-		resetFilter: function () {
-			_resetFilter();
-			_showDocs();
-		},
+		},		
 		downloadCsv: function () {
 			_downloadCsv();
 		},

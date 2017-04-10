@@ -13,7 +13,7 @@
 			<AppenderRef ref="Console"/>
 			<AppenderRef ref="MyFile"/>
 		</Root>
-		<Logger name="it.percassi" level="trace" additivity="false">
+		<Logger name="it.percassi" level="debug" additivity="false">
 			<AppenderRef ref="Console"/>
 			<AppenderRef ref="MyFile"/>
 		</Logger>
@@ -29,7 +29,7 @@
 			<AppenderRef ref="Console"/>
 			<AppenderRef ref="MyFile"/>
 		</Logger>
-		<Logger name="org.apache.logging" level="info" additivity="false">
+		<Logger name="org.apache.logging" level="warn" additivity="false">
 			<AppenderRef ref="Console"/>
 			<AppenderRef ref="MyFile"/>
 		</Logger>
