@@ -22,7 +22,7 @@ var glViewModel = function () {
 		_that.filters.prodcod('');
 	}
 
-	this.filteredSearch = function () {
+	this._setFilters = function(){
 		var minstock = _that.filters.minstock();	
 		var maxstock = _that.filters.maxstock();	
 		var minbook = _that.filters.minbook();	
@@ -50,7 +50,15 @@ var glViewModel = function () {
 		if (prodcod) {
 			filterService.addFilter("uniqueProductCode", "$eq", prodcod);
 		}
-		
+	};
+	
+	this.searchFilters = function () {		
+		_that._setFilters();
 		glController.search();
+	}
+	
+	this.getCSV = function(){
+		_that._setFilters();
+		glController.getCSV();
 	}
 };

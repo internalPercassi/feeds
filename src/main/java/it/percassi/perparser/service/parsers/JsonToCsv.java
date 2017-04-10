@@ -39,7 +39,8 @@ public class JsonToCsv {
 			values = new ArrayList<String>(keySet.size());
 			document = (Document) jsonArr.get(i);
 			for (String key : keySet) {
-				values.add((String) document.get(key));
+				Object val = document.get(key);
+				values.add(val.toString());
 			}
 			csvFilePrinter.printRecord(values);
 		}

@@ -188,10 +188,10 @@ var tableFactory = function () {
 		_callAjax(url, callback);
 	};
 
-	var _downloadCsv = function () {
+	var _downloadCsv = function (collectionName) {
 		var url = urlService.getCsv(collectionName, filterService.getFilters());
 		var form$ = $('<form/>').attr("method", "post");
-		form$.attr('action', encodeURI(url));
+		form$.attr('action', url);
 		$(document.body).append(form$);
 		form$.submit();
 		form$.remove();
@@ -210,8 +210,8 @@ var tableFactory = function () {
 		search: function () {
 			_search();
 		},		
-		downloadCsv: function () {
-			_downloadCsv();
+		downloadCsv: function (collectionName) {
+			_downloadCsv(collectionName);
 		},
 		addFilter: function () {
 			_addFilter();
