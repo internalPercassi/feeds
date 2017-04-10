@@ -84,7 +84,6 @@ var historyController = function () {
 			_showDocs();
 		},
 	}
-	
 
 }($);
 

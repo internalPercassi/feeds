@@ -12,9 +12,7 @@ var facebookController = function () {
 	
 
 	var _init = function () {
-		appConstants.app.bind(collectionName, function (e, data) {
-			this.redirect('#/' + data[2], data[0]);
-		});			
+	
 	};
 	return {
 		init: function () {
@@ -30,6 +28,4 @@ var facebookController = function () {
 	}
 }($);
 
-$(document).ready(function () {
-	facebookController.init();
-});
+
