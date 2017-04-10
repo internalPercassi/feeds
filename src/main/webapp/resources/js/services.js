@@ -104,7 +104,7 @@ var filterService = function () {
 		var filter = {
 			field: field,
 			searchOperator: searchOperator,
-			searchVal: searchVal
+			searchVal: encodeURIComponent(searchVal)
 		};
 
 		filters.forEach(function (value, i) {

@@ -31,7 +31,7 @@
 			<label class="control-label">
 				 Order Status
 			</label>
-			<select  class="form-control" data-bind="options:type, optionsCaption:'All', optionsText: 'type', value: filters.status"></select>
+			<input type="text" class="form-control" data-bind="textInput: filters.orderStatus">
 		</div>
 		<div class="col-md-3">
 			<label class="control-label">
