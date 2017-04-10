@@ -10,17 +10,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.ObjectUtils;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public class PerPortalUtils {
 
-	public static final String NEW_RELIC_API_KEY_HEADER = "X-Api-Key";
-	public static final String NEW_RELIC_NAMES="names";
-	public static final String NEW_RELIC_VALUES="values";
-	public static final String NEW_RELIC_CALL_COUNT_VALUE="call_count";
-	public static final String NEW_RELIC_AVG_RESP_TIME_VALUE="average_response_time";
+	
 
 	private static final String SLASH = "/";
 
@@ -62,14 +57,11 @@ public class PerPortalUtils {
 	 * @return The uri {@link URI}
 	 */
 	public static URI generateUriToCall(String urlToCall, LocalDateTime fromDate, LocalDateTime toDate,
-			MultiValueMap<String, String> uriParams, boolean isSummarize, int period) {
+			MultiValueMap<String, String> uriParams, int period) {
 
 		final UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(urlToCall).queryParams(uriParams)
 				.queryParam("from", fromDate).queryParam("to", toDate);
 
-		if (!ObjectUtils.isEmpty(isSummarize) && isSummarize) {
-			builder.queryParam("summarize", isSummarize);
-		}
 		if (period != 0) {
 			builder.queryParam("period", period);
 		}
@@ -92,7 +84,7 @@ public class PerPortalUtils {
 	private static HttpHeaders createNewRelicHttpHeaders(String apiKey) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
-		headers.set(NEW_RELIC_API_KEY_HEADER, apiKey);
+		headers.set(PerPortalConstants.NEW_RELIC_API_KEY_HEADER, apiKey);
 		return headers;
 	}
 }

@@ -1,4 +1,4 @@
-package it.percassi.perparser.nr_orchestrator;
+package it.percassi.perparser.orchestrator;
 
 public interface BaseOrchestrator<T extends BaseRequest, U extends BaseResponse> {
 	

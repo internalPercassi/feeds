@@ -56,9 +56,6 @@ public class PerPerserController {
 	private final static MediaType TEXT_CSV_TYPE = new MediaType("text", "csv");
 
 	@PostMapping(path = "/parseFile", produces = MediaType.APPLICATION_JSON_VALUE)
-	// public ResponseEntity<Void> uploadFile(@RequestParam("uploadedFile")
-	// MultipartFile file,
-	// @RequestParam("fileType") String fileType) throws IOException {
 	public ResponseEntity<?> uploadFile(UploadFileControllerRequest request, BindingResult bindingResult)
 			throws IOException, NotValidFileException {
 		final UploadFileValidator uploadValidator = new UploadFileValidator();
