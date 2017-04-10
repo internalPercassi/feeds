@@ -17,14 +17,15 @@ var tableFactory = function () {
 	var filtersActivesSel = '#filtersActivesP';
 
 	var tableOptions = {
-		deferRender: false,
-		scrollY: 400,
-		scrollCollapse: false,
-		scroller: false,
+//		deferRender: false,
+//		scrollY: 400,
+//		scrollCollapse: false,
+//		scroller: false,
 		pageable: true,
 		columnDefs: [
 			{"visible": false, "targets": 0}
-		]};
+		]
+	};
 
 	var _search = function () {
 		var sortConfig = {};
@@ -155,10 +156,11 @@ var tableFactory = function () {
 			$(selectorId + ' tbody').on('click', 'tr', function () {
 				var data = myTable.row(this).data();
 				var md5 = data[0];
-				var collectionName = data[2];				
-//				_showDocs(collectionName);//data[1]=collectionName
+				var collectionName = data[2];
+				appConstants.app.bind(collectionName, function (e, data) {
+					this.redirect('#/' + data[2], data[0]);
+				});
 				appConstants.app.trigger(collectionName, data);
-//				appConstants.app.redirect('#/' + data[2], data[0]);
 			});
 			_hideFilters();
 		};

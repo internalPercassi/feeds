@@ -12,9 +12,7 @@ var glController = function () {
 	
 
 	var _init = function () {
-		appConstants.app.bind(collectionName, function (e, data) {
-			this.redirect('#/' + data[2], data[0]);
-		});			
+		
 	};
 	return {
 		init: function () {
@@ -29,7 +27,3 @@ var glController = function () {
 		},
 	}
 }($);
-
-$(document).ready(function () {
-	glController.init();
-});

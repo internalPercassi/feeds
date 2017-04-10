@@ -2,11 +2,6 @@
 var historyViewModel = function () {
 
 	var _that = this;
-	
-	this.canSubmit = function(isEnable){
-		_that.isEnable = isEnable;
-		
-	}
 
 	this.types = [
 		{name: "GL"},
