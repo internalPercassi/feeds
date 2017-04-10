@@ -1,10 +1,57 @@
 <div class="row">
 	<h1 class="page-header">Filters</h1>
-</div>			
+	<div class="col-md-12">
+		<div class="col-md-3">
+			<label class="control-label">
+				Product Code
+			</label>
+			<input type="text" class="form-control" data-bind="textInput: filters.productCode">
+		</div>
+		<div class="col-md-3">
+			<label class="control-label">
+				 Model Code
+			</label>
+			<input type="text" class="form-control" data-bind="textInput: filters.modelCode">
+		</div>
+		<div class="col-md-3">
+			<label class="control-label">
+				 Warehouse
+			</label>
+			<input type="text" class="form-control" data-bind="textInput: filters.warehouse">
+		</div>
+		<div class="col-md-3">
+			<label class="control-label">
+				 Physical Inventory
+			</label>
+			<input type="text" class="form-control" data-bind="textInput: filters.physicalInventory">
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="col-md-3">
+			<label class="control-label">
+				 Order Status
+			</label>
+			<select  class="form-control" data-bind="options:type, optionsCaption:'All', optionsText: 'type', value: filters.status"></select>
+		</div>
+		<div class="col-md-3">
+			<label class="control-label">
+				 Replenishment Level
+			</label>
+			<input type="text" class="form-control" data-bind="textInput: filters.replenishmentLevel">
+		</div>
+	</div>		
+	<div class="col-md-12">
+		<div class="col-md-1 pull-right">
+			<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
+		</div>
+		<div class="col-md-1 pull-right">
+			<div class="btn btn-default form-control" data-bind="click: filteredSearch">Search</div>
+		</div>
+	</div>		
+</div>		
 <div class="row">
 	</br>
 	<h1 class="page-header">Results</h1>
-
 	<div class="row">
 		<div class="col-md-12" id="tableContainer">
 			<table id="myTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
