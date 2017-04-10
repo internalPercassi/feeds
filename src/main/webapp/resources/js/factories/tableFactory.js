@@ -214,8 +214,8 @@ var tableFactory = function () {
 		showUploadedFiles: function () {
 			_showUploadedFiles();
 		},
-		showDocs: function (collectionName) {
-			_showDocs(collectionName);
+		showDocs: function (collectionName,url) {
+			_showDocs(collectionName,url);
 		},
 		search: function () {
 			_search();
