@@ -69,7 +69,7 @@
 	<h1 class="page-header">Results</h1>
 	
 	<!-- Export btns -->
-		<div class="col-md-8 pull-right">
+		<div class="col-md-8 pull-right margin-bottom">
 			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
 				<div class="btn btn-default form-control" data-bind="click: getCSV">CSV</div>
 			</div>
