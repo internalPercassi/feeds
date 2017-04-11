@@ -45,7 +45,11 @@ public class JsonToCsv {
 					continue;
 				}
 				Object val = document.get(key);
-				values.add(val.toString());
+				String strTmp = "";
+				if (val != null){
+					strTmp = val.toString();
+				}
+				values.add(strTmp);
 			}
 			csvFilePrinter.printRecord(values);
 		}

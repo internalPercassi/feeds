@@ -13,7 +13,7 @@
 			<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
 		</div>
 		<div class="col-md-1 pull-right">
-			<div class="btn btn-default form-control" data-bind="click: filteredSearch">Search</div>
+			<div class="btn btn-default form-control" data-bind="click: searchFilters">Search</div>
 		</div>
 	</div>		
 </div>
@@ -23,8 +23,16 @@
 		<p id="filtersActivesP"></p>
 	</div>
 	</br>
-	<h1 class="page-header">History</h1>
-
+	<h1 class="page-header">Result</h1>
+	<!-- Export btns -->
+		<div class="col-md-8 pull-right serverFilters">
+			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+				<div class="btn btn-default form-control" data-bind="click: getCSV">CSV</div>
+			</div>
+			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+				<div class="btn btn-default form-control">Excel</div>
+			</div>
+		</div>
 	<div class="row">
 		<div class="col-md-12" id="tableContainer">
 			<table id="myTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
