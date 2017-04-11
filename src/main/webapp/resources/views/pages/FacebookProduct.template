@@ -1,5 +1,4 @@
 
-</br>
 <div class="row">
 	<h1 class="page-header">Filters</h1>
 	<div class="col-md-3">
@@ -8,20 +7,17 @@
 		</label>
 		<input type="text" class="form-control" data-bind="textInput: filters.id">
 	</div>	
-	<div class="col-md-12">
-		<div class="col-md-1 pull-right">
+	<div class="col-md-offset-5 col-md-8 pull-right">
+		<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
 			<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
 		</div>
-		<div class="col-md-1 pull-right">
-			<div class="btn btn-default form-control" data-bind="click: filteredSearch">Search</div>
+		<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+			<div class="btn btn-default form-control" data-bind="click: searchFilters">Search</div>
 		</div>
-	</div>		
+	</div>	
 </div>
 	
 <div class="row">
-	<div  class="col-md-12">
-		<p id="filtersActivesP"></p>
-	</div>
 	</br>
 	<h1 class="page-header">History</h1>
 
