@@ -21,7 +21,7 @@ var osViewModel = function () {
 		_that.filters.replenishmentLevel('');
 	}
 
-	this.filteredSearch = function () {
+	this._setFilters = function () {
 		var productCode = _that.filters.productCode();
 		var modelCode = _that.filters.modelCode();
 		var warehouse = _that.filters.warehouse();
@@ -51,14 +51,22 @@ var osViewModel = function () {
 			filterService.addFilter("physicalInventory", "$eq", physicalInventory);
 		}
 		
-		if (status){
-			filterService.addFilter("status", "$eq", status);
+		if (orderStatus){
+			filterService.addFilter("orderStatus", "$eq", orderStatus);
 		}
 		
 		if (replenishmentLevel){
 			filterService.addFilter("replenishmentLevel", "$eq", replenishmentLevel);
-		}
-		
+		}				
+	}
+	
+	this.searchFilters = function () {
+		_that._setFilters();
 		osController.search();
+	}
+
+	this.getCSV = function () {
+		_that._setFilters();
+		osController.getCSV();
 	}
 };

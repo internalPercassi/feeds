@@ -1,7 +1,12 @@
 
 var app = $.sammy('#app', function () {
 	this.use('Template');
-	this.get('#/', function (context) {});
+	this.get('#/', function (context) {
+		
+		
+	});
+	
+	
 	this.get('#/FacebookProduct/:id', function (context) {
 		context.app.swap('');
 		var md5 = context.params['id'];
@@ -10,14 +15,7 @@ var app = $.sammy('#app', function () {
 					filterService.reset();
 					filterService.addFilter('md5', '$eq', md5);
 					facebookController.search();
-					var $container = $('#app'),
-							$view = $container.find('.view'),
-							$newView = $('<div>').addClass('view').html(response);
-					if ($view.length) {
-						ko.removeNode($view[0]); // Clean up previous view
-					}
-					$container.append($newView);
-					ko.applyBindings(new facebookViewModel(), $newView[0]);
+					loadView(response, new facebookViewModel());
 				});
 	});
 
@@ -29,14 +27,7 @@ var app = $.sammy('#app', function () {
 			filterService.reset();
 			filterService.addFilter('md5', '$eq', md5);
 			glController.search();
-			var $container = $('#app'),
-					$view = $container.find('.view'),
-					$newView = $('<div>').addClass('view').html(response);
-			if ($view.length) {
-				ko.removeNode($view[0]); // Clean up previous view
-			}
-			$container.append($newView);
-			ko.applyBindings(new glViewModel(), $newView[0]);
+			loadView(response, new glViewModel());
 		});
 
 	});
@@ -46,19 +37,12 @@ var app = $.sammy('#app', function () {
 		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/os.template')
 				
-				.then(function (response) {					
-					filterService.reset();
-					filterService.addFilter('md5', '$eq', md5);
-					osController.search();
-					var $container = $('#app'),
-							$view = $container.find('.view'),
-							$newView = $('<div>').addClass('view').html(response);
-					if ($view.length) {
-						ko.removeNode($view[0]); // Clean up previous view
-					}
-					$container.append($newView);
-					ko.applyBindings(new osViewModel(), $newView[0]);
-				});
+		.then(function (response) {					
+			filterService.reset();
+			filterService.addFilter('md5', '$eq', md5);
+			osController.search();
+			loadView(response, new osViewModel());
+		});
 
 	});
 
@@ -75,27 +59,37 @@ var app = $.sammy('#app', function () {
 	this.get('#/history/', function (context) {
 		context.app.swap('');
 		context.load('/PerParserSPA/resources/views/pages/history.template')
-				.then(function (response) {
-					var $container = $('#app'),
-							$view = $container.find('.view'),
-							$newView = $('<div>').addClass('view').html(response);
+		.then(function (response) {
+			var vm = new historyViewModel();
+			historyController.init();
+			historyController.setViewModel(vm);
+			loadView(response, vm);
+			tableFactory.showUploadedFiles();
 
-
-					if ($view.length) {
-						ko.removeNode($view[0]); // Clean up previous view
-					}
-					tableFactory.showUploadedFiles();
-					$container.append($newView);
-					ko.applyBindings(new historyViewModel(), $newView[0]);
-				});
+		});
 	});
 
+	
 
 	this.before('.*', function () {
 		var hash = document.location.hash;
 		$(".nav.nav-sidebar").find("li").removeClass("active");
 		$(".nav.nav-sidebar").find("a[href='" + hash + "']").parent().addClass("active");
 	});
+	
+	function loadView(response, viewModel) {
+ 	
+        var $container = $('#app'),
+            $view = $container.find('.view'),
+            $newView = $('<div>').addClass('view').html(response);
+        
+        if ($view.length)
+            ko.removeNode($view[0]);
+        
+        $container.append($newView);
+        ko.applyBindings(viewModel, $newView[0]);
+	 
+	}
 });
 
 
