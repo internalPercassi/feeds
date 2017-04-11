@@ -51,8 +51,8 @@ var osViewModel = function () {
 			filterService.addFilter("physicalInventory", "$eq", physicalInventory);
 		}
 		
-		if (status){
-			filterService.addFilter("status", "$eq", status);
+		if (orderStatus){
+			filterService.addFilter("orderStatus", "$eq", orderStatus);
 		}
 		
 		if (replenishmentLevel){
