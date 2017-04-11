@@ -6,39 +6,31 @@
 	<div class="col-md-12 serverFilters">
 		
 		<div class="col-md-3">
-			<form class="form-inline">
-				<div class="form-group">
-					<label class="control-label">Minimum Stocket Qty.:</label>
-					<input type="number" class="form-control" data-bind="textInput: filters.minstock">
-				</div>
-			</form>
+			<div class="form-group">
+				<label class="control-label">Minimum Stocket Qty.:</label>
+				<input type="number" class="form-control" data-bind="textInput: filters.minstock">
+			</div>
 		</div>
 		
 		<div class="col-md-3">
-			<form class="form-inline ">
-				<div class="form-group">
-					<label class="control-label">Maximum Stocket Qty.:</label>
-					<input type="number" class="form-control" data-bind="textInput: filters.maxstock">
-				</div>
-			</form>
+			<div class="form-group">
+				<label class="control-label">Maximum Stocket Qty.:</label>
+				<input type="number" class="form-control" data-bind="textInput: filters.maxstock">
+			</div>
 		</div>
 		
 		<div class="col-md-3">
-			<form class="form-inline">
-				<div class="form-group">
-					<label class="control-label">Minimum Booked Qty.:</label>
-					<input type="number" class="form-control" data-bind="textInput: filters.minbook">
-				</div>
-			</form>
+			<div class="form-group">
+				<label class="control-label">Minimum Booked Qty.:</label>
+				<input type="number" class="form-control" data-bind="textInput: filters.minbook">
+			</div>
 		</div>
 		
 		<div class="col-md-3">
-			<form class="form-inline">
-				<div class="form-group">
-					<label class="control-label">Maximum Booked Qty.:</label>
-					<input type="number" class="form-control" data-bind="textInput: filters.maxbook">
-				</div>
-			</form>
+			<div class="form-group">
+				<label class="control-label">Maximum Booked Qty.:</label>
+				<input type="number" class="form-control" data-bind="textInput: filters.maxbook">
+			</div>
 		</div>
 		
 		
@@ -46,34 +38,30 @@
 	<div class="col-md-12 serverFilters">
 		
 		<div class="col-md-3">
-			<form class="form-inline ">
-				<div class="form-group">
-					<label class="control-label">Accounting State:</label>
-					<input type="text" class="form-control" data-bind="textInput: filters.accstate">
-				</div>
-			</form>
+			<div class="form-group">
+				<label class="control-label">Accounting State:</label>
+				<input type="text" class="form-control" data-bind="textInput: filters.accstate">
+			</div>
 		</div>
 		
 		<div class="col-md-3">
-			<form class="form-inline">
-				<div class="form-group">
-					<label class="control-label">Product code:</label>
-					<input type="text" class="form-control" data-bind="textInput: filters.prodcod">
-				</div>
-			</form>
+			<div class="form-group">
+				<label class="control-label">Product code:</label>
+				<input type="text" class="form-control" data-bind="textInput: filters.prodcod">
+			</div>
 		</div>
 		
 	</div>
 	
 	<!-- Filters btns -->
-		<div class="col-md-8 pull-right">
-			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
-				<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
-			</div>
-			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
-				<div class="btn btn-default form-control" data-bind="click: searchFilters">Search</div>
-			</div>
+	<div class="col-md-9 pull-right">
+		<div class="col-sm-6 col-md-2 col-xl-2 pull-right">
+			<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
 		</div>
+		<div class="col-sm-6 col-md-2 col-xl-2 pull-right">
+			<div class="btn btn-default form-control" data-bind="click: searchFilters">Search</div>
+		</div>
+	</div>
 	
 </div>
 <div class="row">
@@ -85,13 +73,13 @@
 			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
 				<div class="btn btn-default form-control" data-bind="click: getCSV">CSV</div>
 			</div>
-			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+<!-- 			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
 				<div class="btn btn-default form-control">Excel</div>
-			</div>
+			</div> -->
 		</div>
 
 	<div id="tableContainer">
 		<table id="myTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
 	</div>
-	</div
+	
 </div>				

@@ -28,11 +28,7 @@ var tableFactory = function () {
 	};
 
 	var _search = function () {
-		var sortConfig = {};
-		sortConfig.sortField = $(sortFieldSel).val();
-		sortConfig.sortType = $('input[name=sortType]:checked').val();
-
-		var url = urlService.getDocs(collectionName, filterService.getFilters(), sortConfig);
+		var url = urlService.getDocs(collectionName, filterService.getFilters(), undefined);
 		_showDocs(collectionName, url);
 	};
 
@@ -185,15 +181,27 @@ var tableFactory = function () {
 			}
 			myTable = $(selectorId).DataTable(tabOpt);
 			_buildFiltersSelect();
+			if(collectionName == 'uploadedFile'){
+				$(selectorId + ' tbody').on('click', 'tr', function () {
+					var data = myTable.row(this).data();
+					var md5 = data[0];
+					var collectionName = data[2];				
+					appConstants.app.bind(collectionName, function (e, data) {
+						this.redirect('#/' + data[2], data[0]);
+					});
+					appConstants.app.trigger(collectionName, data);
+				});
+				
+			}
 			_showFilters();
 		}
 		_callAjax(url, callback);
 	};
 
-	var _downloadCsv = function (collectionName) {
+	var _downloadCsv = function () {
 		var url = urlService.getCsv(collectionName, filterService.getFilters());
 		var form$ = $('<form/>').attr("method", "post");
-		form$.attr('action', url);
+		form$.attr('action', encodeURI(url));
 		$(document.body).append(form$);
 		form$.submit();
 		form$.remove();
@@ -206,14 +214,14 @@ var tableFactory = function () {
 		showUploadedFiles: function () {
 			_showUploadedFiles();
 		},
-		showDocs: function (collectionName,url) {
-			_showDocs(collectionName,url);
+		showDocs: function (collectionName) {
+			_showDocs(collectionName);
 		},
 		search: function () {
 			_search();
 		},		
-		downloadCsv: function (collectionName) {
-			_downloadCsv(collectionName);
+		downloadCsv: function () {
+			_downloadCsv();
 		},
 		addFilter: function () {
 			_addFilter();
