@@ -117,7 +117,9 @@ var tableFactory = function () {
 			processData: false,
 			type: 'POST',
 			beforeSend: function () {
-				$("body").addClass("loading");
+				//historyViewModel.loading(true);				
+				//$("body").addClass("loading");
+				
 			},
 			success: function (res) {
 				try {

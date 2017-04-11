@@ -1,9 +1,10 @@
 'use strict';
 
 var historyController = function () {
+	var _that = {};
 	var collectionName = 'uploadedFile';
 	var sortFieldSel = '#sortField';
-
+	
 	var _search = function () {
 		var sortConfig = {};
 		sortConfig.sortField = $(sortFieldSel).val();
@@ -32,13 +33,14 @@ var historyController = function () {
 			processData: false,
 			type: 'POST',
 			beforeSend: function () {
-				$("body").addClass("loading");
+				//$("body").addClass("loading");
+				_that.vm.isLoading(true);
 			},
 			success: function (res) {
 				try {
 					tableFactory.showUploadedFiles();
 				} catch (e) {
-					$("body").removeClass("loading");
+					_that.vm.isLoading(false);
 					console.error(e);
 				}
 			},
@@ -46,7 +48,7 @@ var historyController = function () {
 				console.log("ERROR, textStatus=" + textStatus + ", errorThrown=" + errorThrown);
 			},
 			complete: function () {
-				$("body").removeClass("loading");
+				_that.vm.isLoading(false);
 			}
 		});
 	};
@@ -68,10 +70,19 @@ var historyController = function () {
 		});
 
 	};
+	
+	var _setViewModel = function (vm) {
+		_that.vm = vm;
+	};
 
 	return {
+		
+	
 		init: function () {
 			_init();
+		},
+		setViewModel: function (vm) {
+			_setViewModel(vm);
 		},
 		uploadFile: function () {
 			_uploadFile();
