@@ -10,9 +10,9 @@ var facebookViewModel = function () {
 
 	this.resetFilters = function () {
 		_that.filters.id('');
-	}
+	}	
 
-	this.filteredSearch = function () {
+	this._setFilters = function () {
 		var id = _that.filters.id();
 		var md5Filter = filterService.getFilter("md5");
 		filterService.reset();
@@ -22,6 +22,15 @@ var facebookViewModel = function () {
 		if (id) {
 			filterService.addFilter("id", "$eq", id);
 		}
+	}
+
+	this.searchFilters = function () {
+		_that._setFilters();
 		facebookController.search();
+	}
+
+	this.getCSV = function () {
+		_that._setFilters();
+		facebookController.getCSV();
 	}
 };

@@ -201,7 +201,7 @@ var tableFactory = function () {
 	var _downloadCsv = function () {
 		var url = urlService.getCsv(collectionName, filterService.getFilters());
 		var form$ = $('<form/>').attr("method", "post");
-		form$.attr('action', encodeURI(url));
+		form$.attr('action', url);
 		$(document.body).append(form$);
 		form$.submit();
 		form$.remove();
