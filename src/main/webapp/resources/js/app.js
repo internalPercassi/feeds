@@ -1,7 +1,12 @@
 
 var app = $.sammy('#app', function () {
 	this.use('Template');
-	this.get('#/', function (context) {});
+	this.get('#/', function (context) {
+		
+		
+	});
+	
+	
 	this.get('#/FacebookProduct/:id', function (context) {
 		context.app.swap('');
 		var md5 = context.params['id'];
@@ -55,9 +60,10 @@ var app = $.sammy('#app', function () {
 		context.app.swap('');
 		context.load('/PerParserSPA/resources/views/pages/history.template')
 		.then(function (response) {
-					
-			loadView(response, new historyViewModel());
+			var vm = new historyViewModel();
 			historyController.init();
+			historyController.setViewModel(vm);
+			loadView(response, vm);
 			tableFactory.showUploadedFiles();
 
 		});
