@@ -7,11 +7,11 @@
 		</label>
 		<input type="text" class="form-control" data-bind="textInput: filters.id">
 	</div>	
-	<div class="col-md-offset-5 col-md-8 pull-right">
-		<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+	<div class="col-md-offset-5 col-md-9 pull-right">
+		<div class="col-sm-6 col-md-2 col-xl-2 pull-right">
 			<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
 		</div>
-		<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+		<div class="col-sm-6 col-md-2 col-xl-2 pull-right">
 			<div class="btn btn-default form-control" data-bind="click: searchFilters">Search</div>
 		</div>
 	</div>	
