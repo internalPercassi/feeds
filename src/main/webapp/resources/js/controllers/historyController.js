@@ -4,7 +4,7 @@ var historyController = function () {
 	var _that = {};
 	var collectionName = 'uploadedFile';
 	var sortFieldSel = '#sortField';
-	
+
 	var _search = function () {
 		var sortConfig = {};
 		sortConfig.sortField = $(sortFieldSel).val();
@@ -12,10 +12,6 @@ var historyController = function () {
 
 		var url = urlService.getDocs(collectionName, filterService.getFilters(), sortConfig);
 		tableFactory.showDocs(collectionName, url);
-	};
-
-	var _resetFilter = function () {
-		filterService.reset();	
 	};
 
 	var _uploadFile = function () {
@@ -55,13 +51,13 @@ var historyController = function () {
 
 
 	var _init = function () {
-	
+
 		$(document).on('change', 'input[type="file"]', function () {
 			var input = $(this),
-			numFiles = input.get(0).files ? input.get(0).files.length : 1,
-			label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+					numFiles = input.get(0).files ? input.get(0).files.length : 1,
+					label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
 			var input2 = $(this).parents('.input-group').find(':text'),
-			log = numFiles > 1 ? numFiles + ' files selected' : label;
+					log = numFiles > 1 ? numFiles + ' files selected' : label;
 
 			if (input2.length) {
 				input2.val(log);
@@ -70,14 +66,12 @@ var historyController = function () {
 		});
 
 	};
-	
+
 	var _setViewModel = function (vm) {
 		_that.vm = vm;
 	};
 
 	return {
-		
-	
 		init: function () {
 			_init();
 		},
@@ -89,11 +83,7 @@ var historyController = function () {
 		},
 		search: function () {
 			_search();
-		},
-		resetFilter: function () {
-			_resetFilter();
-			_showDocs();
-		},
+		}
 	}
 
 }($);

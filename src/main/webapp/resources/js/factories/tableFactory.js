@@ -4,35 +4,13 @@ var tableFactory = function () {
 	var myTable;
 	var collectionName;
 	var selectorId = '#myTable';
-	var sortFieldSel = '#sortField';
-	var sortFieldSel = '#sortField';	
 
 	var tableOptions = {
-//		deferRender: false,
-//		scrollY: 400,
-//		scrollCollapse: false,
-//		scroller: false,
 		pageable: true,
 		columnDefs: [
 			{"visible": false, "targets": 0}
 		]
-	};
-	
-	var _buildFiltersSelect = function () {
-		$(sortFieldSel).empty();
-		$(serverFiltersFieldsSel).empty();
-		var rowHash = dataService.getColumns();
-		for (var key in rowHash) {
-			$(sortFieldSel).append($('<option>', {
-				value: rowHash[key].title,
-				text: rowHash[key].title
-			}));
-			$(serverFiltersFieldsSel).append($('<option>', {
-				value: rowHash[key].title,
-				text: rowHash[key].title
-			}));
-		}
-	};
+	};		
 	
 	var _callAjax = function (url, successCbk) {
 		$.ajax({
@@ -78,14 +56,12 @@ var tableFactory = function () {
 			myTable = $(selectorId).DataTable(tabOpt);
 			$(selectorId + ' tbody').on('click', 'tr', function () {
 				var data = myTable.row(this).data();
-				var md5 = data[0];
 				var collectionName = data[2];
 				appConstants.app.bind(collectionName, function (e, data) {
 					this.redirect('#/' + data[2], data[0]);
 				});
 				appConstants.app.trigger(collectionName, data);
 			});
-			_hideFilters();
 		};
 		_callAjax(url, callback);
 	};
@@ -107,20 +83,16 @@ var tableFactory = function () {
 				$(selectorId).empty();
 			}
 			myTable = $(selectorId).DataTable(tabOpt);
-			_buildFiltersSelect();
 			if(collectionName == 'uploadedFile'){
 				$(selectorId + ' tbody').on('click', 'tr', function () {
 					var data = myTable.row(this).data();
-					var md5 = data[0];
 					var collectionName = data[2];				
 					appConstants.app.bind(collectionName, function (e, data) {
 						this.redirect('#/' + data[2], data[0]);
 					});
 					appConstants.app.trigger(collectionName, data);
-				});
-				
+				});				
 			}
-			_showFilters();
 		}
 		_callAjax(url, callback);
 	};

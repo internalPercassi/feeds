@@ -12,13 +12,7 @@ var glController = function () {
 	var _resetFilter = function () {
 		filterService.reset();
 	};
-
-
-	var _init = function () {
-		appConstants.app.bind(collectionName, function (e, data) {
-			this.redirect('#/' + data[2], data[0]);
-		});
-	};
+	
 	return {
 		init: function () {
 			_init();
@@ -36,6 +30,3 @@ var glController = function () {
 	}
 }($);
 
-$(document).ready(function () {
-	glController.init();
-});
