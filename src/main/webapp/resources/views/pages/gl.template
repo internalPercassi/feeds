@@ -7,14 +7,14 @@
 		
 		<div class="col-md-3">
 			<div class="form-group">
-				<label class="control-label">Minimum Stocket Qty.:</label>
+				<label class="control-label">Minimum Stocked Qty.:</label>
 				<input type="number" class="form-control" data-bind="textInput: filters.minstock">
 			</div>
 		</div>
 		
 		<div class="col-md-3">
 			<div class="form-group">
-				<label class="control-label">Maximum Stocket Qty.:</label>
+				<label class="control-label">Maximum Stocked Qty.:</label>
 				<input type="number" class="form-control" data-bind="textInput: filters.maxstock">
 			</div>
 		</div>
@@ -69,7 +69,7 @@
 	<h1 class="page-header">Results</h1>
 	
 	<!-- Export btns -->
-		<div class="col-md-8 pull-right serverFilters">
+		<div class="col-md-8 pull-right">
 			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
 				<div class="btn btn-default form-control" data-bind="click: getCSV">CSV</div>
 			</div>
