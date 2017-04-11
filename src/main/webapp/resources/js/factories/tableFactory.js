@@ -185,6 +185,18 @@ var tableFactory = function () {
 			}
 			myTable = $(selectorId).DataTable(tabOpt);
 			_buildFiltersSelect();
+			if(collectionName == 'uploadedFile'){
+				$(selectorId + ' tbody').on('click', 'tr', function () {
+					var data = myTable.row(this).data();
+					var md5 = data[0];
+					var collectionName = data[2];				
+					appConstants.app.bind(collectionName, function (e, data) {
+						this.redirect('#/' + data[2], data[0]);
+					});
+					appConstants.app.trigger(collectionName, data);
+				});
+				
+			}
 			_showFilters();
 		}
 		_callAjax(url, callback);
