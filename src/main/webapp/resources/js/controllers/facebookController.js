@@ -6,28 +6,14 @@ var facebookController = function () {
 		tableFactory.showDocs(collectionName, url);
 	};
 
-	var _resetFilter = function () {
-		filterService.reset();
-	};
-
 	var _getCSV = function () {
 		tableFactory.downloadCsv(collectionName);
 	};
-	
-	var _init = function () {
-
-	};
-	return {
-		init: function () {
-			_init();
-		},
+		
+	return {	
 		search: function () {
 			_search();
-		},
-		resetFilter: function () {
-			_resetFilter();
-			_showDocs();
-		},
+		},		
 		getCSV: function () {
 			_getCSV();
 		}

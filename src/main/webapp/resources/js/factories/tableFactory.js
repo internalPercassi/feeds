@@ -1,20 +1,11 @@
 'use strict';
 
-
-
-
 var tableFactory = function () {
 	var myTable;
 	var collectionName;
 	var selectorId = '#myTable';
 	var sortFieldSel = '#sortField';
-	var sortFieldSel = '#sortField';
-	var serverFiltersSel = '#serverFilters';
-	var serverFiltersSeparatorSel = '#serverFiltersSeparator';
-	var serverFiltersFieldsSel = '#serverFiltersFields';
-	var serverFiltersSearchOperatorSel = '#serverFiltersSearchOperator';
-	var serverFilterSearchValSel = '#serverFilterSearchVal';
-	var filtersActivesSel = '#filtersActivesP';
+	var sortFieldSel = '#sortField';	
 
 	var tableOptions = {
 //		deferRender: false,
@@ -26,26 +17,7 @@ var tableFactory = function () {
 			{"visible": false, "targets": 0}
 		]
 	};
-
-	var _search = function () {
-		var url = urlService.getDocs(collectionName, filterService.getFilters(), undefined);
-		_showDocs(collectionName, url);
-	};
-
-
-	var _addFilter = function () {
-		var field = $(serverFiltersFieldsSel).val();
-		var searchOperator = $(serverFiltersSearchOperatorSel).val();
-		var searchVal = $(serverFilterSearchValSel).val();
-		filterService.addFilter(field, searchOperator, searchVal);
-
-	};
-
-	var _resetFilter = function () {
-		filterService.reset();
-
-	};
-
+	
 	var _buildFiltersSelect = function () {
 		$(sortFieldSel).empty();
 		$(serverFiltersFieldsSel).empty();
@@ -61,17 +33,7 @@ var tableFactory = function () {
 			}));
 		}
 	};
-
-	var _showFilters = function () {
-		$(serverFiltersSel).show();
-		$(serverFiltersSeparatorSel).show();
-	}
-
-	var _hideFilters = function () {
-		$(serverFiltersSel).hide();
-		$(serverFiltersSeparatorSel).hide();
-	}
-
+	
 	var _callAjax = function (url, successCbk) {
 		$.ajax({
 			url: url,
@@ -101,44 +63,7 @@ var tableFactory = function () {
 			}
 		});
 	};
-
-	var _uploadFile = function () {
-		filterService.reset();
-		var form = $('#uploadForm')[0];
-		var formData = new FormData(form);
-		var fileType = $('#fileType').val();
-		var url = appConstants.uploadFileUrl + '?fileType=' + fileType;
-		$.ajax({
-			enctype: 'multipart/form-data',
-			url: url,
-			data: formData,
-			cache: false,
-			contentType: false,
-			processData: false,
-			type: 'POST',
-			beforeSend: function () {
-				//historyViewModel.loading(true);				
-				//$("body").addClass("loading");
-				
-			},
-			success: function (res) {
-				try {
-					_showUploadedFiles();
-				} catch (e) {
-					$("body").removeClass("loading");
-					console.error(e);
-				}
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("ERROR, textStatus=" + textStatus + ", errorThrown=" + errorThrown);
-			},
-			complete: function () {
-				$("body").removeClass("loading");
-			}
-		});
-	};
-
-
+	
 	var _showUploadedFiles = function () {
 		var url = urlService.getUploadedFiles();
 		var callback = function (res) {
@@ -209,24 +134,15 @@ var tableFactory = function () {
 		form$.remove();
 	};	
 
-	return {
-		uploadFile: function () {
-			_uploadFile();
-		},
+	return {		
 		showUploadedFiles: function () {
 			_showUploadedFiles();
 		},
 		showDocs: function (collectionName) {
 			_showDocs(collectionName);
-		},
-		search: function () {
-			_search();
 		},		
 		downloadCsv: function () {
 			_downloadCsv();
-		},
-		addFilter: function () {
-			_addFilter();
 		}
 	}
 }($);
