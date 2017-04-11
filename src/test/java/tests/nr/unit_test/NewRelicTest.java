@@ -129,8 +129,8 @@ public class NewRelicTest {
 
 	@Test
 	public void saveJsonToMongoDB_success() {
+		
 		final MongoClientURI mcu = new MongoClientURI(mongoDBUri);
-
 		final MongoClient mc = new MongoClient(mcu);
 		final MongoDatabase mdb = mc.getDatabase(mongoDBName);
 
@@ -138,7 +138,7 @@ public class NewRelicTest {
 
 		try {
 
-			final File file = new File("src/test/resources/mock_new_relic.json");
+			final File file = new File("src/test/resources/json_mocks/mock_new_relic.json");
 			final String jsonAsString = FileUtils.readFileToString(file, Charset.defaultCharset());
 
 			Document doc = Document.parse(jsonAsString);
