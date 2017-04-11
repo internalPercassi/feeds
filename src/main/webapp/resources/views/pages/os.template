@@ -52,19 +52,27 @@
 			</div>
 		</div>
 	</div>		
-	<div class="col-md-9 pull-right no-padding">
+	<div class="col-md-9 pull-right">
 		<div class="col-sm-6 col-md-2 col-xl-2 pull-right">
 			<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
 		</div>
 		<div class="col-sm-6 col-md-2 col-xl-2 pull-right">
 			<div class="btn btn-default form-control" data-bind="click: searchFilters">Search</div>
 		</div>
-	</div>	
+	</div>
 </div>		
 <div class="row">
 	</br>
 	<h1 class="page-header">Results</h1>
-	<div class="row">
+		<!-- Export btns -->
+		<div class="col-md-9 pull-right serverFilters">
+			<div class="col-sm-6 col-md-2 col-xl-2 pull-right">
+				<div class="btn btn-default form-control" data-bind="click: getCSV">CSV</div>
+			</div>
+<!-- 			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+				<div class="btn btn-default form-control">Excel</div>
+			</div> -->
+		</div>
 		<div class="col-md-12" id="tableContainer">
 			<table id="myTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
 		</div>
