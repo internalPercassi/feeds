@@ -10,10 +10,10 @@
 
 <div class="tab-content ">
 	<div class="tab-pane active" id="1">
-	      <canvas id="myChart" width="400" height="400"></canvas>  <!-- Add chart here -->
+	      <h3>Add Filters</h3>
+	      <canvas id="myChart" width="400" height="400"></canvas>
 	</div>
 	<div class="tab-pane" id="2">
-	      <canvas id="myChart" width="400" height="400"></canvas> <!-- Add chart here -->
+	      <h3>Add graph</h3>
 	</div>
 </div>
-<script>
