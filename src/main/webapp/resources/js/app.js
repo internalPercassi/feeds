@@ -56,8 +56,7 @@ var app = $.sammy('#app', function () {
 					historyController.init();
 					historyController.setViewModel(vm);
 					loadView(response, vm);
-					tableFactory.showUploadedFiles();
-
+					historyController.showUploadedFiles();
 				});
 	});
 
