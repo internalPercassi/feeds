@@ -31,7 +31,7 @@
 				<div class="btn btn-default form-control">Excel</div>
 			</div> -->
 		</div>
-		<div class="col-md-12" id="tableContainer">
+		<div class="col-md-12">
 			<table id="facebookTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
 		</div>
 
