@@ -14,13 +14,13 @@ var facebookViewModel = function () {
 
 	this._setFilters = function () {
 		var id = _that.filters.id();
-		var md5Filter = filterService.getFilter("md5");
-		filterService.reset();
+		var md5Filter = filterFactory.getFilter("md5");
+		filterFactory.reset();
 		if (md5Filter) {
-			filterService.addFilter(md5Filter.field, md5Filter.searchOperator, md5Filter.searchVal);
+			filterFactory.addFilter(md5Filter.field, md5Filter.searchOperator, md5Filter.searchVal);
 		}
 		if (id) {
-			filterService.addFilter("id", "$eq", id);
+			filterFactory.addFilter("id", "$eq", id);
 		}
 	}
 

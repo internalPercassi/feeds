@@ -30,7 +30,7 @@
 			</div> -->
 		</div>
 		<div class="col-md-12" id="tableContainer">
-			<table id="myTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
+			<table id="facebookTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
 		</div>
 
 </div>				

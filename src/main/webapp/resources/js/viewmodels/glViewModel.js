@@ -30,29 +30,29 @@ var glViewModel = function () {
 		var accstate = _that.filters.accstate();
 		var prodcod = _that.filters.prodcod();
 
-		var md5Filter = filterService.getFilter("md5");
-		filterService.reset();
+		var md5Filter = filterFactory.getFilter("md5");
+		filterFactory.reset();
 		if (md5Filter) {
-			filterService.addFilter(md5Filter.field, md5Filter.searchOperator, md5Filter.searchVal);
+			filterFactory.addFilter(md5Filter.field, md5Filter.searchOperator, md5Filter.searchVal);
 		}
 
 		if (minstock) {
-			filterService.addFilter("stockedQty", "$gt", minstock);
+			filterFactory.addFilter("stockedQty", "$gt", minstock);
 		}
 		if (maxstock) {
-			filterService.addFilter("stockedQty", "$lt", maxstock);
+			filterFactory.addFilter("stockedQty", "$lt", maxstock);
 		}
 		if (minbook) {
-			filterService.addFilter("bookedQty", "$gt", minbook);
+			filterFactory.addFilter("bookedQty", "$gt", minbook);
 		}
 		if (maxbook) {
-			filterService.addFilter("bookedQty", "$lt", maxbook);
+			filterFactory.addFilter("bookedQty", "$lt", maxbook);
 		}
 		if (accstate) {
-			filterService.addFilter("accountingState", "$eq", accstate);
+			filterFactory.addFilter("accountingState", "$eq", accstate);
 		}
 		if (prodcod) {
-			filterService.addFilter("uniqueProductCode", "$eq", prodcod);
+			filterFactory.addFilter("uniqueProductCode", "$eq", prodcod);
 		}
 	};
 

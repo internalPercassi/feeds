@@ -1,19 +1,19 @@
 
 var app = $.sammy('#app', function () {
 	this.use('Template');
+	
 	this.get('#/', function (context) {
 		
 		
 	});
 	
-	
 	this.get('#/FacebookProduct/:id', function (context) {
 		context.app.swap('');
 		var md5 = context.params['id'];
-		context.load('/PerParserSPA/resources/views/pages/FacebookProduct.template')
+		context.load('/PerParserSPA/resources/views/pages/facebook.template')
 				.then(function (response) {					
-					filterService.reset();
-					filterService.addFilter('md5', '$eq', md5);
+					filterFactory.reset();
+					filterFactory.addFilter('md5', '$eq', md5);
 					facebookController.search();
 					loadView(response, new facebookViewModel());
 				});
@@ -24,8 +24,8 @@ var app = $.sammy('#app', function () {
 		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/gl.template')
 		.then(function (response) {					
-			filterService.reset();
-			filterService.addFilter('md5', '$eq', md5);
+			filterFactory.reset();
+			filterFactory.addFilter('md5', '$eq', md5);
 			glController.search();
 			loadView(response, new glViewModel());
 		});
@@ -36,10 +36,9 @@ var app = $.sammy('#app', function () {
 		context.app.swap('');
 		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/os.template')
-				
 		.then(function (response) {					
-			filterService.reset();
-			filterService.addFilter('md5', '$eq', md5);
+			filterFactory.reset();
+			filterFactory.addFilter('md5', '$eq', md5);
 			osController.search();
 			loadView(response, new osViewModel());
 		});
@@ -64,12 +63,10 @@ var app = $.sammy('#app', function () {
 			historyController.init();
 			historyController.setViewModel(vm);
 			loadView(response, vm);
-			tableFactory.showUploadedFiles();
+			historyController.showUploadedFiles();
 
 		});
 	});
-
-	
 
 	this.before('.*', function () {
 		var hash = document.location.hash;
@@ -94,5 +91,5 @@ var app = $.sammy('#app', function () {
 
 
 $(document).ready(function () {
-	app.run('#/');
+	app.run('#/history/');
 });

@@ -1,48 +1,34 @@
 'use strict';
 
-
-
-
 var tableFactory = function () {
 	var myTable;
 	var collectionName;
-	var selectorId = '#myTable';
+/*	var selectorId = '#myTable';*/
+/*	var sortFieldSel = '#sortField';*/
 	var sortFieldSel = '#sortField';
-	var sortFieldSel = '#sortField';
-	var serverFiltersSel = '#serverFilters';
+/*	var serverFiltersSel = '#serverFilters';*/
 	var serverFiltersSeparatorSel = '#serverFiltersSeparator';
 	var serverFiltersFieldsSel = '#serverFiltersFields';
 	var serverFiltersSearchOperatorSel = '#serverFiltersSearchOperator';
 	var serverFilterSearchValSel = '#serverFilterSearchVal';
-	var filtersActivesSel = '#filtersActivesP';
+/*	var filtersActivesSel = '#filtersActivesP';*/
 
-	var tableOptions = {
-//		deferRender: false,
-//		scrollY: 400,
-//		scrollCollapse: false,
-//		scroller: false,
-		pageable: true,
-		columnDefs: [
-			{"visible": false, "targets": 0}
-		]
-	};
-
-	var _search = function () {
-		var url = urlService.getDocs(collectionName, filterService.getFilters(), undefined);
+/*	var _search = function () {
+		var url = urlFactory.getDocs(collectionName, filterFactory.getFilters(), undefined);
 		_showDocs(collectionName, url);
-	};
+	};*/
 
 
 	var _addFilter = function () {
 		var field = $(serverFiltersFieldsSel).val();
 		var searchOperator = $(serverFiltersSearchOperatorSel).val();
 		var searchVal = $(serverFilterSearchValSel).val();
-		filterService.addFilter(field, searchOperator, searchVal);
+		filterFactory.addFilter(field, searchOperator, searchVal);
 
 	};
 
 	var _resetFilter = function () {
-		filterService.reset();
+		filterFactory.reset();
 
 	};
 
@@ -63,145 +49,17 @@ var tableFactory = function () {
 	};
 
 	var _showFilters = function () {
-		$(serverFiltersSel).show();
-		$(serverFiltersSeparatorSel).show();
+/*		$(serverFiltersSel).show();
+		$(serverFiltersSeparatorSel).show();*/
 	}
 
 	var _hideFilters = function () {
-		$(serverFiltersSel).hide();
-		$(serverFiltersSeparatorSel).hide();
+/*		$(serverFiltersSel).hide();
+		$(serverFiltersSeparatorSel).hide();*/
 	}
 
-	var _callAjax = function (url, successCbk) {
-		$.ajax({
-			url: url,
-			async: true,
-			dataType: 'json',
-			cache: false,
-			contentType: false,
-			processData: false,
-			type: 'POST',
-			beforeSend: function () {
-				$("body").addClass("loading");
-			},
-			success: function (res) {
-				if (res && res.data && res.data.length > 0) {
-					successCbk(res);
-				} else {
-					console.log("http resposonse is null");
-					successCbk(res);
-				}
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.error(JSON.stringify(jqXHR));
-				$("body").removeClass("loading");
-			},
-			complete: function () {
-				$("body").removeClass("loading");
-			}
-		});
-	};
-
-	var _uploadFile = function () {
-		filterService.reset();
-		var form = $('#uploadForm')[0];
-		var formData = new FormData(form);
-		var fileType = $('#fileType').val();
-		var url = appConstants.uploadFileUrl + '?fileType=' + fileType;
-		$.ajax({
-			enctype: 'multipart/form-data',
-			url: url,
-			data: formData,
-			cache: false,
-			contentType: false,
-			processData: false,
-			type: 'POST',
-			beforeSend: function () {
-				//historyViewModel.loading(true);				
-				//$("body").addClass("loading");
-				
-			},
-			success: function (res) {
-				try {
-					_showUploadedFiles();
-				} catch (e) {
-					$("body").removeClass("loading");
-					console.error(e);
-				}
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("ERROR, textStatus=" + textStatus + ", errorThrown=" + errorThrown);
-			},
-			complete: function () {
-				$("body").removeClass("loading");
-			}
-		});
-	};
-
-
-	var _showUploadedFiles = function () {
-		var url = urlService.getUploadedFiles();
-		var callback = function (res) {
-			var tabOpt = jQuery.extend(true, {}, tableOptions);
-			tabOpt.data = dataService.getRowsForDatatables(res);
-			tabOpt.columns = dataService.getColumnsForDatatables(res);
-			if (myTable) {
-				myTable.destroy();
-				myTable = undefined;
-				$(selectorId).empty();
-			}
-			myTable = $(selectorId).DataTable(tabOpt);
-			$(selectorId + ' tbody').on('click', 'tr', function () {
-				var data = myTable.row(this).data();
-				var md5 = data[0];
-				var collectionName = data[2];
-				appConstants.app.bind(collectionName, function (e, data) {
-					this.redirect('#/' + data[2], data[0]);
-				});
-				appConstants.app.trigger(collectionName, data);
-			});
-			_hideFilters();
-		};
-		_callAjax(url, callback);
-	};
-
-	var _showDocs = function (collectionNamePar, url) {
-		if (collectionNamePar) {
-			collectionName = collectionNamePar;
-		}
-		if (!url) {
-			url = urlService.getDocs(collectionName, filterService.getFilters());
-		}
-		var callback = function (res) {
-			var tabOpt = jQuery.extend(true, {}, tableOptions);
-			tabOpt.data = dataService.getRowsForDatatables(res);
-			tabOpt.columns = dataService.getColumnsForDatatables(res);
-			if (myTable) {
-				myTable.destroy();
-				myTable = undefined;
-				$(selectorId).empty();
-			}
-			myTable = $(selectorId).DataTable(tabOpt);
-			_buildFiltersSelect();
-			if(collectionName == 'uploadedFile'){
-				$(selectorId + ' tbody').on('click', 'tr', function () {
-					var data = myTable.row(this).data();
-					var md5 = data[0];
-					var collectionName = data[2];				
-					appConstants.app.bind(collectionName, function (e, data) {
-						this.redirect('#/' + data[2], data[0]);
-					});
-					appConstants.app.trigger(collectionName, data);
-				});
-				
-			}
-			_showFilters();
-		}
-		_callAjax(url, callback);
-	};
-
 	var _downloadCsv = function () {
-		var url = urlService.getCsv(collectionName, filterService.getFilters());
+		var url = urlFactory.getCsv(collectionName, filterFactory.getFilters());
 		var form$ = $('<form/>').attr("method", "post");
 		form$.attr('action', url);
 		$(document.body).append(form$);
@@ -213,20 +71,69 @@ var tableFactory = function () {
 		uploadFile: function () {
 			_uploadFile();
 		},
-		showUploadedFiles: function () {
+/*		showUploadedFiles: function () {
 			_showUploadedFiles();
-		},
-		showDocs: function (collectionName) {
+		},*/
+/*		showDocs: function (collectionName) {
 			_showDocs(collectionName);
 		},
 		search: function () {
 			_search();
-		},		
+		},*/		
 		downloadCsv: function () {
 			_downloadCsv();
 		},
 		addFilter: function () {
 			_addFilter();
+		}
+	}
+}($);
+
+var dataService = function () {
+	var dataArr = [];
+	var colArr = [];
+	
+	return {
+		getRowsForDatatables: function (jsonData) {
+			/*il formato che abbiamo in ingresso è questo
+			 * {data:[{key1:value1,key2:value2,key2:value2},...],recordsTotal:x}
+			 * in uscita questo */
+			dataArr = [];
+			$.map(jsonData.data, function (el) {
+				var objArr = [];
+				$.each(el, function (key, value) {
+					if (value && typeof value === 'object'){
+						var keys = Object.keys(value);
+						value = value[keys[0]];
+					}
+					objArr.push(value);
+				});
+				dataArr.push(objArr);
+			});
+			return  dataArr;
+		},
+		getColumnsForDatatables: function (jsonData) {
+			/*il formato che abbiamo in ingresso è questo
+			 * {data:[{key1:value1,key2:value2,key2:value2},...],recordsTotal:x}
+			 * in uscita questo */
+			var tmpArr = [];
+			var el = jsonData.data[0];
+			if (jsonData && jsonData.data && jsonData.data.length > 0) {
+				$.each(el, function (key, value) {
+					tmpArr.push({title: key});
+				});
+				colArr = tmpArr;
+			}
+			if (!colArr || colArr.length==0){
+				return [{title:"no data found"}]; //todo: gestire un result set vuoto
+			}
+			return  colArr;
+		},
+		getData: function () {
+			return dataArr;
+		},
+		getColumns: function () {
+			return colArr;
 		}
 	}
 }($);

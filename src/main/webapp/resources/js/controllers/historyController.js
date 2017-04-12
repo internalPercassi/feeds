@@ -4,22 +4,31 @@ var historyController = function () {
 	var _that = {};
 	var collectionName = 'uploadedFile';
 	var sortFieldSel = '#sortField';
+	var selectorId = '#historyTable';
+	var historyTable;
+	
+	var tableOptions = {
+			pageable: true,
+			columnDefs: [
+				{"visible": false, "targets": 0}
+			]
+		};
 	
 	var _search = function () {
 		var sortConfig = {};
 		sortConfig.sortField = $(sortFieldSel).val();
 		sortConfig.sortType = $('input[name=sortType]:checked').val();
 
-		var url = urlService.getDocs(collectionName, filterService.getFilters(), sortConfig);
-		tableFactory.showDocs(collectionName, url);
+		var url = urlFactory.getDocs(collectionName, filterFactory.getFilters(), undefined);
+		_loadHistoryGrid(collectionName, url);
 	};
 
-	var _resetFilter = function () {
-		filterService.reset();	
-	};
+/*	var _resetFilter = function () {
+		filterFactory.reset();	
+	};*/
 
 	var _uploadFile = function () {
-		filterService.reset();
+		filterFactory.reset();
 		var form = $('#uploadForm')[0];
 		var formData = new FormData(form);
 		var fileType = $('#fileType').val();
@@ -33,12 +42,11 @@ var historyController = function () {
 			processData: false,
 			type: 'POST',
 			beforeSend: function () {
-				//$("body").addClass("loading");
 				_that.vm.isLoading(true);
 			},
 			success: function (res) {
 				try {
-					tableFactory.showUploadedFiles();
+					historyController.showUploadedFiles();
 				} catch (e) {
 					_that.vm.isLoading(false);
 					console.error(e);
@@ -53,7 +61,55 @@ var historyController = function () {
 		});
 	};
 
-
+	var _showUploadedFiles = function () {
+		var url = urlFactory.getUploadedFiles();
+		var callback = function (res) {
+			var tabOpt = jQuery.extend(true, {}, tableOptions);
+			tabOpt.data = dataService.getRowsForDatatables(res);
+			tabOpt.columns = dataService.getColumnsForDatatables(res);
+			if (historyTable) {
+				historyTable.destroy();
+				historyTable = undefined;
+				$(selectorId).empty();
+			}
+			historyTable = $(selectorId).DataTable(tabOpt);
+			$(selectorId + ' tbody').on('click', 'tr', function () {
+				var data = historyTable.row(this).data();
+				var md5 = data[0];
+				var collectionName = data[2];
+				appConstants.app.bind(collectionName, function (e, data) {
+					this.redirect('#/' + data[2], data[0]);
+				});
+				appConstants.app.trigger(collectionName, data);
+			});
+			//_hideFilters();
+		};
+		restService.post(url, callback);
+	};
+	
+	var _loadHistoryGrid = function (collectionNamePar, url) {
+		if (collectionNamePar) {
+			collectionName = collectionNamePar;
+		}
+		if (!url) {
+			url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
+		}
+		var callback = function (res) {
+			var tabOpt = jQuery.extend(true, {}, tableOptions);
+			tabOpt.data = dataService.getRowsForDatatables(res);
+			tabOpt.columns = dataService.getColumnsForDatatables(res);
+			if (historyTable) {
+				historyTable.destroy();
+				historyTable = undefined;
+				$(selectorId).empty();
+			}
+			historyTable = $(selectorId).DataTable(tabOpt);
+			//_buildFiltersSelect();
+			//_showFilters();
+		}
+		restService.post(url, callback);
+	};
+	
 	var _init = function () {
 	
 		$(document).on('change', 'input[type="file"]', function () {
@@ -76,8 +132,6 @@ var historyController = function () {
 	};
 
 	return {
-		
-	
 		init: function () {
 			_init();
 		},
@@ -87,13 +141,12 @@ var historyController = function () {
 		uploadFile: function () {
 			_uploadFile();
 		},
+		showUploadedFiles: function () {
+			_showUploadedFiles();
+		},
 		search: function () {
 			_search();
-		},
-		resetFilter: function () {
-			_resetFilter();
-			_showDocs();
-		},
+		}
 	}
 
 }($);

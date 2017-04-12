@@ -27,14 +27,15 @@ var historyViewModel = function () {
 		if (_that.filters.type()) {
 			fileType = _that.filters.type().name;
 		}
-		console.log("_that.filters.name=" + fileName + ", _that.filters.type=" + fileType);
-		filterService.reset();
+
+		filterFactory.reset();
 		if (fileName) {
-			filterService.addFilter("fileName", "$eq", fileName);
+			filterFactory.addFilter("fileName", "$eq", fileName);
 		}
 		if (fileType){
-			filterService.addFilter("type", "$eq", fileType);
+			filterFactory.addFilter("type", "$eq", fileType);
 		}
+		
 		historyController.search();
 	}
 };

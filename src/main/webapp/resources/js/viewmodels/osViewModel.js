@@ -29,34 +29,34 @@ var osViewModel = function () {
 		var orderStatus = _that.filters.orderStatus();
 		var replenishmentLevel = _that.filters.replenishmentLevel();
 		
-		filterService.reset();
+		filterFactory.reset();
 
 		if (productCode) {
-			filterService.addFilter("productCode", "$eq", productCode);
+			filterFactory.addFilter("productCode", "$eq", productCode);
 		}
 		
 		if (productCode) {
-			filterService.addFilter("productCode", "$eq", productCode);
+			filterFactory.addFilter("productCode", "$eq", productCode);
 		}
 		
 		if (modelCode) {
-			filterService.addFilter("modelCode", "$eq", modelCode);
+			filterFactory.addFilter("modelCode", "$eq", modelCode);
 		}
 		
 		if (warehouse) {
-			filterService.addFilter("warehouse", "$eq", warehouse);
+			filterFactory.addFilter("warehouse", "$eq", warehouse);
 		}
 		
 		if (physicalInventory) {
-			filterService.addFilter("physicalInventory", "$eq", physicalInventory);
+			filterFactory.addFilter("physicalInventory", "$eq", physicalInventory);
 		}
 		
 		if (orderStatus){
-			filterService.addFilter("orderStatus", "$eq", orderStatus);
+			filterFactory.addFilter("orderStatus", "$eq", orderStatus);
 		}
 		
 		if (replenishmentLevel){
-			filterService.addFilter("replenishmentLevel", "$eq", replenishmentLevel);
+			filterFactory.addFilter("replenishmentLevel", "$eq", replenishmentLevel);
 		}				
 	}
 	
