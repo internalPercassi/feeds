@@ -5,15 +5,15 @@
 <form id="uploadForm">
 	<h1 class="page-header">Upload</h1>
 	<div class="col-md-3">
-  			<select name="fileType" id="fileType" class="selectpicker form-control">
+  		<select name="fileType" id="fileType" class="form-control">
 	       <option value="GL">GL File</option>
 	       <option value="OS">OverSelling</option>
 		    <option value="FacebookProduct">Facebook Product</option>
     		</select>
  		</div>
- 		<div class="col-md-3">
-  			<div class="input-group">
-      			<div class="input-group">
+ 		<div class="col-md-4">
+  			<div class="input-group col-md-12">
+      			<div class="input-group col-md-12">
                 <input type="text" class="form-control" readonly>
                 <label class="input-group-btn">
                     <span class="btn btn-default">Browse&hellip; 
@@ -28,20 +28,15 @@
 	</div>
 </form>
 </div>	
-
 </br>
 <div class="row">
 	<h1 class="page-header">Filters</h1>
 	<div class="col-md-3">
-		<label class="control-label">
-			File Name
-		</label>
+		<label class="control-label">File Name</label>
 		<input type="text" class="form-control" data-bind="textInput: filters.name">
 	</div>
 	<div class="col-md-3">
-		<label class="control-label">
-			 Type
-		</label>
+		<label class="control-label">Type </label>
 		<select  class="form-control" data-bind="options:types, optionsCaption:'All', optionsText: 'name', value: filters.type">
 		</select>
 	</div>
@@ -56,16 +51,10 @@
 </div>
 	
 <div class="row">
-<!-- 	<div  class="col-md-12">
-		<p id="filtersActivesP"></p>
-	</div> -->
 	</br>
 	<h1 class="page-header">History</h1>
-
-	<div class="row">
-		<!-- <div data-bind='historyGrid: gridViewModel'> </div> -->
-		<div class="col-md-12" id="tableContainer">
-			<table id="historyTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
-		</div>
+	<!-- <div data-bind='historyGrid: gridViewModel'> </div> -->
+	<div class="col-md-12">
+		<table id="historyTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
 	</div>
 </div>				
