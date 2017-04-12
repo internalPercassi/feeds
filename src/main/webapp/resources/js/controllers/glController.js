@@ -1,5 +1,5 @@
 var glController = function () {
-	
+	var _that = {};
 	var collectionName = 'GL';
 	//var sortFieldSel = '#sortField';
 	var selectorId = '#glTable';
@@ -26,6 +26,8 @@ var glController = function () {
 	};
 
 	var _loadGlGrid = function (collectionNamePar, url) {
+		_that.vm.isLoading(true);
+		
 		if (collectionNamePar) {
 			collectionName = collectionNamePar;
 		}
@@ -44,8 +46,13 @@ var glController = function () {
 			glTable = $(selectorId).DataTable(tabOpt);
 			//_buildFiltersSelect();
 			//_showFilters();
+			_that.vm.isLoading(false);
 		}
 		restService.post(url, callback);
+	};
+	
+	var _setViewModel = function (vm) {
+		_that.vm = vm;
 	};
 	
 	var _init = function () {
@@ -57,6 +64,9 @@ var glController = function () {
 	return {
 		init: function () {
 			_init();
+		},
+		setViewModel: function (vm) {
+			_setViewModel(vm);
 		},
 		search: function () {
 			_search();

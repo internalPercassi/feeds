@@ -1,0 +1,3 @@
+<div id="loading" data-bind="visible: isLoading">
+	<div id="loading-img"></div>
+</div>

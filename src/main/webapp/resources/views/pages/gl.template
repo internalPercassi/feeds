@@ -1,3 +1,6 @@
+<div id="loading" data-bind="visible: isLoading">
+	<div id="loading-img"></div>
+</div>
 <div class="row">
 	<h1 class="page-header">Filters</h1>
 </div>	

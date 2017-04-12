@@ -3,6 +3,8 @@ var osViewModel = function () {
 
 	var _that = this;
 
+	this.isLoading = ko.observable(false);
+
 	this.filters = {
 		productCode: ko.observable(''),
 		modelCode: ko.observable(''),

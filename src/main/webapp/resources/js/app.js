@@ -9,10 +9,12 @@ var app = $.sammy('#app', function () {
 		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/facebook.template')
 				.then(function (response) {					
+					var vm = new facebookViewModel();
 					filterFactory.reset();
 					filterFactory.addFilter('md5', '$eq', md5);
+					facebookController.setViewModel(vm);
 					facebookController.search();
-					loadView(response, new facebookViewModel());
+					loadView(response, vm);
 				});
 	});
 
@@ -21,10 +23,12 @@ var app = $.sammy('#app', function () {
 		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/gl.template')
 				.then(function (response) {
-					filterService.reset();
-					filterService.addFilter('md5', '$eq', md5);
+					var vm = new glViewModel();
+					filterFactory.reset();
+					filterFactory.addFilter('md5', '$eq', md5);
+					glController.setViewModel(vm);
 					glController.search();
-					loadView(response, new glViewModel());
+					loadView(response,vm);
 				});
 
 	});
@@ -34,10 +38,12 @@ var app = $.sammy('#app', function () {
 		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/os.template')
 				.then(function (response) {
-					filterService.reset();
-					filterService.addFilter('md5', '$eq', md5);
+					var vm = new osViewModel()
+					filterFactory.reset();
+					filterFactory.addFilter('md5', '$eq', md5);
+					osController.setViewModel(vm);
 					osController.search();
-					loadView(response, new osViewModel());
+					loadView(response, vm);
 				});
 	});
 
