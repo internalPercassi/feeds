@@ -1,3 +1,19 @@
-<div id="loading" data-bind="visible: isLoading">
-	<div id="loading-img"></div>
+
+<ul class="nav nav-tabs">
+	<li class="active">
+      <a  href="#1" data-toggle="tab">Specific Period</a>
+	</li>
+	<li>
+		<a href="#2" data-toggle="tab">Monthly Report</a>
+	</li>
+</ul>
+
+<div class="tab-content ">
+	<div class="tab-pane active" id="1">
+	      <h3>Add Filters</h3>
+	      <canvas id="myChart" width="400" height="400"></canvas>
+	</div>
+	<div class="tab-pane" id="2">
+	      <h3>Add graph</h3>
+	</div>
 </div>
