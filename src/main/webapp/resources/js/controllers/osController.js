@@ -15,10 +15,6 @@ var osController = function () {
 		_loadOSGrid(collectionName, url);
 	};
 
-/*	var _resetFilter = function () {
-		filterFactory.reset();
-	};*/
-
 	var _loadGlGrid = function (collectionNamePar, url) {
 		if (collectionNamePar) {
 			collectionName = collectionNamePar;
@@ -41,7 +37,7 @@ var osController = function () {
 		}
 		restService.post(url, callback);
 	};
-	
+
 	var _getCSV = function () {
 		tableFactory.downloadCsv(collectionName);
 	};
@@ -56,11 +52,7 @@ var osController = function () {
 		},
 		search: function () {
 			_search();
-		},
-/*		resetFilter: function () {
-			_resetFilter();
-			_showDocs();
-		},*/
+		},		
 		getCSV: function () {
 			_getCSV();
 		}

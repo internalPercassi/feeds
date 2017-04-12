@@ -13,19 +13,16 @@ var historyController = function () {
 				{"visible": false, "targets": 0}
 			]
 		};
-	
+
 	var _search = function () {
 		var sortConfig = {};
 		sortConfig.sortField = $(sortFieldSel).val();
 		sortConfig.sortType = $('input[name=sortType]:checked').val();
 
-		var url = urlFactory.getDocs(collectionName, filterFactory.getFilters(), undefined);
+
+	var url = urlFactory.getDocs(collectionName, filterFactory.getFilters(), undefined);
 		_loadHistoryGrid(collectionName, url);
 	};
-
-/*	var _resetFilter = function () {
-		filterFactory.reset();	
-	};*/
 
 	var _uploadFile = function () {
 		filterFactory.reset();
@@ -111,13 +108,13 @@ var historyController = function () {
 	};
 	
 	var _init = function () {
-	
+
 		$(document).on('change', 'input[type="file"]', function () {
 			var input = $(this),
-			numFiles = input.get(0).files ? input.get(0).files.length : 1,
-			label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+					numFiles = input.get(0).files ? input.get(0).files.length : 1,
+					label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
 			var input2 = $(this).parents('.input-group').find(':text'),
-			log = numFiles > 1 ? numFiles + ' files selected' : label;
+					log = numFiles > 1 ? numFiles + ' files selected' : label;
 
 			if (input2.length) {
 				input2.val(log);
@@ -126,7 +123,7 @@ var historyController = function () {
 		});
 
 	};
-	
+
 	var _setViewModel = function (vm) {
 		_that.vm = vm;
 	};

@@ -71,6 +71,3 @@ var glController = function () {
 	}
 }($);
 
-$(document).ready(function () {
-	glController.init();
-});

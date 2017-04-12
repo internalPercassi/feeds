@@ -31,11 +31,11 @@ public class UploadFileValidator implements Validator {
 		final String fileType = req.getFileType();
 		final String fileMimeType = req.getUploadedFile().getContentType();
 
-		if (!PerPortalConstants.VALID_MIMES.contains(fileMimeType)){
-			String errMsg = "File type " + fileMimeType + " is not supported";
-			LOG.error(errMsg);
-			errors.rejectValue("uploadedFile", "file format is not supported", new Object[] { "uploadFile" },errMsg);
-		}		
+//		if (!PerPortalConstants.VALID_MIMES.contains(fileMimeType)){
+//			String errMsg = "File type " + fileMimeType + " is not supported";
+//			LOG.error(errMsg);
+//			errors.rejectValue("uploadedFile", "file format is not supported", new Object[] { "uploadFile" },errMsg);
+//		}		
 
 		if (Objects.isNull(uploadFile)) {
 			String errMsg = "File is mandatory";

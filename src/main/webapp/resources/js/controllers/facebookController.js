@@ -59,10 +59,6 @@ var facebookController = function () {
 		search: function () {
 			_search();
 		},
-/*		resetFilter: function () {
-			_resetFilter();
-			_showDocs();
-		},*/
 		getCSV: function () {
 			_getCSV();
 		}

@@ -3,21 +3,13 @@
 var tableFactory = function () {
 	var myTable;
 	var collectionName;
-/*	var selectorId = '#myTable';*/
-/*	var sortFieldSel = '#sortField';*/
+
 	var sortFieldSel = '#sortField';
-/*	var serverFiltersSel = '#serverFilters';*/
+
 	var serverFiltersSeparatorSel = '#serverFiltersSeparator';
 	var serverFiltersFieldsSel = '#serverFiltersFields';
 	var serverFiltersSearchOperatorSel = '#serverFiltersSearchOperator';
 	var serverFilterSearchValSel = '#serverFilterSearchVal';
-/*	var filtersActivesSel = '#filtersActivesP';*/
-
-/*	var _search = function () {
-		var url = urlFactory.getDocs(collectionName, filterFactory.getFilters(), undefined);
-		_showDocs(collectionName, url);
-	};*/
-
 
 	var _addFilter = function () {
 		var field = $(serverFiltersFieldsSel).val();
@@ -71,20 +63,8 @@ var tableFactory = function () {
 		uploadFile: function () {
 			_uploadFile();
 		},
-/*		showUploadedFiles: function () {
-			_showUploadedFiles();
-		},*/
-/*		showDocs: function (collectionName) {
-			_showDocs(collectionName);
-		},
-		search: function () {
-			_search();
-		},*/		
 		downloadCsv: function () {
 			_downloadCsv();
-		},
-		addFilter: function () {
-			_addFilter();
 		}
 	}
 }($);
