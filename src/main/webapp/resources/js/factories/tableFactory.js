@@ -41,7 +41,7 @@ var tableFactory = function () {
 		}
 		return  colArr;
 	}
-	var _downloadCsv = function () {
+	var _downloadCsv = function (collectionName) {
 		var url = urlFactory.getCsv(collectionName, filterFactory.getFilters());
 		var form$ = $('<form/>').attr("method", "post");
 		form$.attr('action', url);
@@ -51,14 +51,14 @@ var tableFactory = function () {
 	};	
 
 	return {
-		downloadCsv: function () {
-			_downloadCsv();
+		downloadCsv: function (collectionName) {
+			return _downloadCsv(collectionName);
 		},
-		getColumnsForDatatables: function () {
-			_getColumnsForDatatables();
+		getColumnsForDatatables: function (jsonData) {
+			return _getColumnsForDatatables(jsonData);
 		},
-		getRowsForDatatables: function () {
-			_getRowsForDatatables();
+		getRowsForDatatables: function (jsonData) {
+			return _getRowsForDatatables(jsonData);
 		}
 	}
 }();
