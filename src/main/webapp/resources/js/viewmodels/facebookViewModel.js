@@ -3,6 +3,7 @@ var facebookViewModel = function () {
 
 	var _that = this;
 
+	this.isLoading = ko.observable(false);
 
 	this.filters = {
 		id: ko.observable('')

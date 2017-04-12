@@ -1,4 +1,5 @@
 var facebookController = function () {
+	var _that = {};
 	var collectionName = 'FacebookProduct';
 	var selectorId = '#facebookTable';
 	var facebookTable;
@@ -24,7 +25,7 @@ var facebookController = function () {
 	};
 	
 	var _loadFacebookGrid = function (collectionNamePar, url) {
-		
+		_that.vm.isLoading(true);
 		if (collectionNamePar) {
 			collectionName = collectionNamePar;
 		}
@@ -45,6 +46,7 @@ var facebookController = function () {
 			facebookTable = $(selectorId).DataTable(tabOpt);
 			//_buildFiltersSelect();
 			//_showFilters();
+			_that.vm.isLoading(false);
 		}
 		restService.post(url, callback);
 	};
@@ -52,9 +54,17 @@ var facebookController = function () {
 	var _init = function () {
 
 	};
+	
+	var _setViewModel = function (vm) {
+		_that.vm = vm;
+	};
+	
 	return {
 		init: function () {
 			_init();
+		},
+		setViewModel: function (vm) {
+			_setViewModel(vm);
 		},
 		search: function () {
 			_search();
