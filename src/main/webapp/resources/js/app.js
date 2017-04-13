@@ -47,12 +47,22 @@ var app = $.sammy('#app', function () {
 				});
 	});
 
-	this.get('#/newRelic', function (context) {
+	this.get('#/pageViews', function (context) {
 		context.app.swap('');
-		context.load('/PerParserSPA/resources/views/pages/newRelic.template')
+		context.load('/PerParserSPA/resources/views/partials/newRelic/pageViews.template')
 				.then(function (response) {
-					var vm = new newRelicViewModel();
-					newRelicController.setViewModel(vm);
+					var vm = new pageViewsViewModel();
+					pageViewsController.setViewModel(vm);
+					loadView(response, vm);
+				});
+	});
+	
+	this.get('#/loadTime', function (context) {
+		context.app.swap('');
+		context.load('/PerParserSPA/resources/views/partials/newRelic/loadTime.template')
+				.then(function (response) {
+					var vm = new loadTimeViewModel();
+					loadTimeController.setViewModel(vm);
 					loadView(response, vm);
 				});
 	});
