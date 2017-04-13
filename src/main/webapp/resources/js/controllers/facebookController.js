@@ -1,6 +1,6 @@
 var facebookController = function () {
 	var _that = {};
-	var collectionName = 'FacebookProduct';
+	var collectionName = appConstants.collectionNames.FacebookProduct;
 	var selectorId = '#facebookTable';
 	var facebookTable;
 	

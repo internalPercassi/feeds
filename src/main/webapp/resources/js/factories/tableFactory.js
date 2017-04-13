@@ -7,7 +7,7 @@ var tableFactory = function () {
 	
 	var _getRowsForDatatables = function (jsonData) {
 		/*il formato che abbiamo in ingresso è questo
-		 * {data:[{key1:value1,key2:value2,key2:value2},...],recordsTotal:x}
+		 * {data:[{key1:value1,key2:value2,key2:value2},...],recordsTotal:x,columnNames:['a','b,'c']}
 		 * in uscita questo */
 		dataArr = [];
 		$.map(jsonData.data, function (el) {

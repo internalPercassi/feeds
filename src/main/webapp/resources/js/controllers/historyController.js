@@ -2,7 +2,7 @@
 
 var historyController = function () {
 	var _that = {};
-	var collectionName = 'uploadedFile';
+	var collectionName = appConstants.collectionNames.UploadedFile;
 	var sortFieldSel = '#sortField';
 	var selectorId = '#historyTable';
 	var historyTable;

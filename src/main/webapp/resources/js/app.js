@@ -23,12 +23,9 @@ var app = $.sammy('#app', function () {
 		var md5 = context.params['id'];
 		context.load('/PerParserSPA/resources/views/pages/gl.template')
 				.then(function (response) {
-					var vm = new glViewModel();
-					filterFactory.reset();
-					filterFactory.addFilter('md5', '$eq', md5);
-					glController.setViewModel(vm);
-					glController.search();
-					loadView(response,vm);
+                                    var vm = new glViewModel();
+                                    glController.loadNewGlGrid(md5,vm);
+                                    loadView(response,vm);
 				});
 
 	});

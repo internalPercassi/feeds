@@ -1,6 +1,6 @@
 var osController = function () {
 	var _that = {};
-	var collectionName = 'OS';
+	var collectionName = appConstants.collectionNames.OS;
 	var selectorId = '#osTable';
 	var osTable;
 	
