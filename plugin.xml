@@ -6,4 +6,10 @@
 <extension point="org.eclipse.emf.ecp.view.template">
 <viewTemplate xmi="src/main/webapp/resources/views/pages/newRelic.template"/>
 </extension>
+<extension point="org.eclipse.emf.ecp.view.template">
+<viewTemplate xmi="src/main/webapp/resources/views/partials/newRelic/specificPartial.template"/>
+</extension>
+<extension point="org.eclipse.emf.ecp.view.template">
+<viewTemplate xmi="src/main/webapp/resources/views/partials/newRelic/monthlyPartial.template"/>
+</extension>
 </plugin>

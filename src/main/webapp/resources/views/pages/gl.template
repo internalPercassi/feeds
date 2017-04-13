@@ -5,41 +5,33 @@
 	<h1 class="page-header">Filters</h1>
 </div>	
 <div class="row">
-	<!-- First filters row -->
 	<div class="col-md-12 serverFilters">
-		
 		<div class="col-md-3">
 			<div class="form-group">
 				<label class="control-label">Minimum Stocked Qty.:</label>
 				<input type="number" class="form-control" data-bind="textInput: filters.minstock">
 			</div>
 		</div>
-		
 		<div class="col-md-3">
 			<div class="form-group">
 				<label class="control-label">Maximum Stocked Qty.:</label>
 				<input type="number" class="form-control" data-bind="textInput: filters.maxstock">
 			</div>
 		</div>
-		
 		<div class="col-md-3">
 			<div class="form-group">
 				<label class="control-label">Minimum Booked Qty.:</label>
 				<input type="number" class="form-control" data-bind="textInput: filters.minbook">
 			</div>
 		</div>
-		
 		<div class="col-md-3">
 			<div class="form-group">
 				<label class="control-label">Maximum Booked Qty.:</label>
 				<input type="number" class="form-control" data-bind="textInput: filters.maxbook">
 			</div>
 		</div>
-		
-		
 	</div>
-	<div class="col-md-12 serverFilters">
-		
+	<div class="col-md-12">
 		<div class="col-md-3">
 			<div class="form-group">
 				<label class="control-label">Accounting State:</label>
@@ -70,19 +62,16 @@
 <div class="row">
 	</br>
 	<h1 class="page-header">Results</h1>
-	
 	<!-- Export btns -->
-		<div class="col-md-8 pull-right margin-bottom">
-			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
-				<div class="btn btn-default form-control" data-bind="click: getCSV">CSV</div>
-			</div>
+	<div class="col-md-8 pull-right margin-bottom">
+		<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+			<div class="btn btn-default form-control" data-bind="click: getCSV">CSV</div>
+		</div>
 <!-- 			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
 				<div class="btn btn-default form-control">Excel</div>
 			</div> -->
-		</div>
-
-	<div id="tableContainer">
+	</div>
+	<div class="col-md-12">
 		<table id="glTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
 	</div>
-	
 </div>				

@@ -27,6 +27,7 @@ var urlFactory = function () {
 		}
 		return url
 	};
+	
 	return {
 		uploadFile: function (fileType) {
 			return encodeURI(_uploadFile(fileType));
