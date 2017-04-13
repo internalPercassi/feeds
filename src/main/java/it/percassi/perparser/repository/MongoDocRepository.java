@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 import javax.annotation.PreDestroy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -121,7 +123,7 @@ public class MongoDocRepository extends BaseRepository {
 		BasicDBObject filter = new BasicDBObject();
 		filter.put("md5", md5);
 		Document documentDeleted = this.getDb().getCollection(fileType).findOneAndDelete(filter);
-		return (!documentDeleted.isEmpty());
+		return (!Objects.isNull(documentDeleted));
 	}
 	
 	@PreDestroy

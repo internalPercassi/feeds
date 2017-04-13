@@ -1,6 +1,7 @@
 package it.percassi.perparser.facade;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +14,14 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import it.percassi.perparser.controller.request.GetDocumentsRequest;
 import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.facade.model.AppEnum;
 import it.percassi.perparser.facade.model.MongoPaginationConfig;
 import it.percassi.perparser.facade.model.MongoSortConfig;
-
 import it.percassi.perparser.facade.model.MongodbFilter;
 import it.percassi.perparser.service.mongo.MongoService;
-import java.text.ParseException;
 
 /**
  *
@@ -57,8 +57,8 @@ public class QueryFacade {
 	}
 
 	public boolean deleteDocument(String md5,String fileType) throws IOException{
-		mongoService.deleteDocument(md5, fileType);
-		return false;
+		return mongoService.deleteDocument(md5, fileType);
+		
 				
 	}
 }
