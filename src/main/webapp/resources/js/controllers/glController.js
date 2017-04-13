@@ -7,7 +7,20 @@ var glController = function () {
 	var tableOptions = {
 			pageable: true,
 			columnDefs: [
-				{"visible": false, "targets": 0}
+	            {
+	                "targets": [ 0 ],
+	                "visible": false,
+	            }
+	        ],
+	  		columns: [
+			    { "title": "md5",},
+			    { "title": "Pertinency Site"},
+			    { "title": "Pertinency Site Desc"},
+			    { "title": "Unique Product Code"},
+			    { "title": "Depositor"},
+			    { "title": "Stocked Qty"},
+			    { "title": "Booked Qty"},
+			    { "title": "Accounting State"},
 			]
 		};
 	
@@ -43,8 +56,6 @@ var glController = function () {
 				$(selectorId).empty();
 			}
 			glTable = $(selectorId).DataTable(tabOpt);
-			//_buildFiltersSelect();
-			//_showFilters();
 			_that.vm.isLoading(false);
 		}
 		restService.post(url, callback);
