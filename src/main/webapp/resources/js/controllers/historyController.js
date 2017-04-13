@@ -2,7 +2,7 @@
 
 var historyController = function () {
 	var _that = {};
-	var collectionName = 'uploadedFile';
+	var collectionName = appConstants.collectionNames.UploadedFile;
 	var sortFieldSel = '#sortField';
 	var selectorId = '#historyTable';
 	var historyTable;
@@ -10,7 +10,16 @@ var historyController = function () {
 	var tableOptions = {
 			pageable: true,
 			columnDefs: [
-				{"visible": false, "targets": 0}
+	            {
+	                "targets": [ 0 ],
+	                "visible": false,
+	            }
+	        ],
+	  		columns: [
+			    { "title": "md5",},
+			    { "title": "Type"},
+			    { "title": "Upload Date"},
+			    { "title": "Row Count"}
 			]
 		};
 
@@ -63,7 +72,7 @@ var historyController = function () {
 		var callback = function (res) {
 			var tabOpt = jQuery.extend(true, {}, tableOptions);
 			tabOpt.data = tableFactory.getRowsForDatatables(res);
-			tabOpt.columns = tableFactory.getColumnsForDatatables(res);
+			//tabOpt.columns = tableFactory.getColumnsForDatatables(res);
 			if (historyTable) {
 				historyTable.destroy();
 				historyTable = undefined;

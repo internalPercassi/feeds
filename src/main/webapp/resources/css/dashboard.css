@@ -212,3 +212,24 @@ span.filter{
 .navbarUl {
 	list-style-type: none;
 }
+
+/*PerParser logo*/
+.headerLogo {
+  float: left;
+  height: 50px;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+  color: #9d9d9d;
+  background-color: none;
+}
+.headerLogo:hover {
+  float: left;
+  height: 50px;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+  color: #9d9d9d;
+  background-color: none;
+  font-weight:normal;
+}
