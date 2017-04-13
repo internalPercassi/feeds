@@ -7,7 +7,19 @@ var osController = function () {
 	var tableOptions = {
 			pageable: true,
 			columnDefs: [
-				{"visible": false, "targets": 0}
+	            {
+	                "targets": [ 0 ],
+	                "visible": false,
+	            }
+	        ],
+	  		columns: [
+			    { "title": "md5",},
+			    { "title": "Product Code"},
+			    { "title": "Model Code"},
+			    { "title": "Warehouse"},
+			    { "title": "Physical Inventory"},
+			    { "title": "Order Status"},
+			    { "title": "Replenishment Level"},
 			]
 		};
 	
@@ -28,7 +40,6 @@ var osController = function () {
 		var callback = function (res) {
 			var tabOpt = jQuery.extend(true, {}, tableOptions);
 			tabOpt.data = tableFactory.getRowsForDatatables(res);
-			tabOpt.columns = tableFactory.getColumnsForDatatables(res);
 			if (osTable) {
 				osTable.destroy();
 				osTable = undefined;
