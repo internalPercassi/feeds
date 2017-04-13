@@ -62,6 +62,11 @@ public class MongoService {
 	public void updatetUploadedFileModel(UploadedFileModel uploadedFile) throws IOException {
 		mongoRepository.updatetUploadedFileModel(uploadedFile);
 	}
+	
+	public boolean deleteDocument(String md5,String fileType) throws IOException{
+		return mongoRepository.deleteDocument(md5, fileType);
+		
+	}
 
 	private final static BasicDBObject buildFilter(List<MongodbFilter> filters, String fileType) throws NoSuchFieldException, ParseException {
 		BasicDBObject query = new BasicDBObject();

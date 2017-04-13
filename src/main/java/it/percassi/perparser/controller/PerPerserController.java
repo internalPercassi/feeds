@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mongodb.util.JSON;
 
+import it.percassi.perparser.controller.request.DeleteDocumentRequest;
 import it.percassi.perparser.controller.request.GetDocumentsRequest;
 import it.percassi.perparser.controller.request.GetNewRelicControllerRequest;
 import it.percassi.perparser.controller.request.UploadFileControllerRequest;
@@ -121,13 +123,27 @@ public class PerPerserController {
 
 	@GetMapping("/getNewRelicData")
 	public ResponseEntity<Void> getNewRelicApi(GetNewRelicControllerRequest request, BindingResult bindResult) {
+		
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 
 	}
 
 	@DeleteMapping("/deleteUploadedFile")
-	public ResponseEntity<Void> deleteFileUploaded(@RequestBody String md5) throws Exception {
-		return new ResponseEntity<Void>(HttpStatus.OK);
+	public ResponseEntity<String> deleteFileUploaded(@RequestBody DeleteDocumentRequest request) throws Exception {
+		String message;
+		if(request == null || StringUtils.isBlank(request.getMd5()) || StringUtils.isBlank(request.getFileType())){
+			return new ResponseEntity<String>("Request not valid ",HttpStatus.BAD_REQUEST);
+		}
+		boolean deleteSuccess = queryFacade.deleteDocument(request.getMd5(), request.getFileType());
+		if(deleteSuccess){
+			message = "Document " +request.getMd5() +" deleted";
+			return new ResponseEntity<String>(message,HttpStatus.OK);
+		}
+		else{
+			message="Error";
+			return new ResponseEntity<String>(message,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 
 	}
 
