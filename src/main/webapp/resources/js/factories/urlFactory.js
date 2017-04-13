@@ -6,7 +6,7 @@ var urlFactory = function () {
 		uploadFileUrl: 'parseFile',
 		defaultDocsNum: 1000
 	};
-	var docDefUrl = constats.getDocUrl + '?length=';
+	var docDefUrl = constats.getDocUrl + '?length='+constats.defaultDocsNum;
 	var _uploadFile = function (fileType) {
 		return constats.uploadFileUrl + '?fileType=' + fileType;
 	}
