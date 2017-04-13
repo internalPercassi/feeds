@@ -27,16 +27,14 @@ var osController = function () {
 		}
 		var callback = function (res) {
 			var tabOpt = jQuery.extend(true, {}, tableOptions);
-			tabOpt.data = dataService.getRowsForDatatables(res);
-			tabOpt.columns = dataService.getColumnsForDatatables(res);
+			tabOpt.data = tableFactory.getRowsForDatatables(res);
+			tabOpt.columns = tableFactory.getColumnsForDatatables(res);
 			if (osTable) {
 				osTable.destroy();
 				osTable = undefined;
 				$(selectorId).empty();
 			}
 			osTable = $(selectorId).DataTable(tabOpt);
-			//_buildFiltersSelect();
-			//_showFilters();
 			_that.vm.isLoading(false);
 		}
 		restService.post(url, callback);

@@ -36,8 +36,8 @@ var glController = function () {
 		}
 		var callback = function (res) {
 			var tabOpt = jQuery.extend(true, {}, tableOptions);
-			tabOpt.data = dataService.getRowsForDatatables(res);
-			tabOpt.columns = dataService.getColumnsForDatatables(res);
+			tabOpt.data = tableFactory.getRowsForDatatables(res);
+			tabOpt.columns = tableFactory.getColumnsForDatatables(res);
 			if (glTable) {
 				glTable.destroy();
 				glTable = undefined;

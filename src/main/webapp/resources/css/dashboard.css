@@ -122,10 +122,6 @@ a:focus {
   padding: 20px;
 }
 @media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
   .serverFilters input.form-control{
   	display: block;
   }
@@ -211,15 +207,6 @@ body.loading .loader {
 
 span.filter{
 	margin: 7px;
-}
-
-
-#myTable tr:hover {
-          background-color: lightgrey;
-		  cursor: pointer;
-        }
-#tableContainer{
-	width:98%;
 }
 
 .navbarUl {

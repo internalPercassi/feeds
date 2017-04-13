@@ -62,8 +62,8 @@ var historyController = function () {
 		var url = urlFactory.getUploadedFiles();
 		var callback = function (res) {
 			var tabOpt = jQuery.extend(true, {}, tableOptions);
-			tabOpt.data = dataService.getRowsForDatatables(res);
-			tabOpt.columns = dataService.getColumnsForDatatables(res);
+			tabOpt.data = tableFactory.getRowsForDatatables(res);
+			tabOpt.columns = tableFactory.getColumnsForDatatables(res);
 			if (historyTable) {
 				historyTable.destroy();
 				historyTable = undefined;
@@ -79,7 +79,6 @@ var historyController = function () {
 				});
 				appConstants.app.trigger(collectionName, data);
 			});
-			//_hideFilters();
 		};
 		restService.post(url, callback);
 	};
@@ -93,8 +92,8 @@ var historyController = function () {
 		}
 		var callback = function (res) {
 			var tabOpt = jQuery.extend(true, {}, tableOptions);
-			tabOpt.data = dataService.getRowsForDatatables(res);
-			tabOpt.columns = dataService.getColumnsForDatatables(res);
+			tabOpt.data = tableFactory.getRowsForDatatables(res);
+			tabOpt.columns = tableFactory.getColumnsForDatatables(res);
 			if (historyTable) {
 				historyTable.destroy();
 				historyTable = undefined;
