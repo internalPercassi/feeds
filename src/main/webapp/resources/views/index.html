@@ -79,42 +79,43 @@
 		</nav>
 		
 		<div class="col-sm-3 col-md-2 sidebar">
-		  <ul class="nav nav-sidebar">
-		    <li class="active"><a href="#/history/">History<span class="sr-only">(current)</span></a></li>
-		   
-		    <li>
-                 <a href="javascript:;" data-toggle="collapse" data-target="#newRelicMenu"><i class="fa fa-fw fa-arrows-v"></i>New Relic<i class="fa fa-fw fa-caret-down"></i></a>
-	                 <ul id="newRelicMenu" class="collapse">
-	                     <li>
-                           	<a href="javascript:;" data-toggle="collapse" data-target="#newRelicSubMenu"><i class="fa fa-fw fa-arrows-v"></i>End user time<i class="fa fa-fw fa-caret-down"></i></a>
-				                 <ul id="newRelicSubMenu" class="collapse">
-				                     <li>
-				                         <a href="/newRelic/EndUser/PageViews">Page Views millions</a>
-				                     </li>
-				                      <li>
-				                         <a href="/newRelic/EndUser/LoadTime">Load time sec</a>
-				                     </li>
-				                 </ul>
-	                     </li>
-	                 </ul>
-             </li>
-             
-              <li>
-	            <a href="javascript:;" data-toggle="collapse" data-target="#applicationServerMenu"><i class="fa fa-fw fa-arrows-v"></i>Application server<i class="fa fa-fw fa-caret-down"></i></a>
-	                 <ul id="applicationServerMenu" class="collapse">
-	                     <li>
-	                         <a href="/newRelic/AppServer/Requests">Request millions</a>
-	                     </li>
-	                     <li>
-	                         <a href="/newRelic/AppServer/ResponseTime">Resp. time ms</a>
-	                     </li>
-	                 </ul>
-	          </li>
-		  </ul>
+			  <ul class="nav nav-sidebar">
+				    <li class="active">
+				    	<a href="#/history/">History<span class="sr-only">(current)</span></a>
+				    </li>
+				   
+				    <li class="active">
+		                 <a href="javascript:;" data-toggle="collapse" data-target="#newRelicMenu">New Relic</a>
+			                 <ul id="newRelicMenu" class="collapse navbarUl">
+			                     <li class="active">
+		                           	<a href="javascript:;" data-toggle="collapse" data-target="#newRelicSubMenu"><i class="fa fa-fw fa-arrows-v"></i>End user time<i class="fa fa-fw fa-caret-down"></i></a>
+						                 <ul id="newRelicSubMenu" class="collapse navbarUl">
+						                     <li>
+						                         <a href="/newRelic/EndUser/PageViews">Page Views millions</a>
+						                     </li>
+						                      <li>
+						                         <a href="/newRelic/EndUser/LoadTime">Load time sec</a>
+						                     </li>
+						                 </ul>
+						           
+				                      <a href="javascript:;" data-toggle="collapse" data-target="#applicationServerMenu"><i class="fa fa-fw fa-arrows-v"></i>Application server<i class="fa fa-fw fa-caret-down"></i></a>
+						                 <ul id="applicationServerMenu" class="collapse navbarUl">
+						                     <li>
+						                         <a href="/newRelic/AppServer/Requests">Request millions</a>
+						                     </li>
+						                     <li>
+						                         <a href="/newRelic/AppServer/ResponseTime">Resp. time ms</a>
+						                     </li>
+						                 </ul>
+									         
+			                     </li>
+			                 </ul>
+			          
+		             </li>
+			  </ul>
 		</div>
 		
 		<div class="main-container">
-		  <div class="main wrapper clearfix">
 		  	<div class="container-fluid">
 		    	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="app">
 		    	</div>
