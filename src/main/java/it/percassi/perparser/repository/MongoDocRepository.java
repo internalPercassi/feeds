@@ -14,6 +14,7 @@ import javax.annotation.PreDestroy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Repository;
 
@@ -113,6 +114,14 @@ public class MongoDocRepository extends BaseRepository {
 		} finally {
 			cursor.close();
 		}
+	}
+	
+	public boolean deleteDocument(String md5,String fileType) throws IOException{
+		
+		BasicDBObject filter = new BasicDBObject();
+		filter.put("md5", md5);
+		Document documentDeleted = this.getDb().getCollection(fileType).findOneAndDelete(filter);
+		return (!documentDeleted.isEmpty());
 	}
 	
 	@PreDestroy

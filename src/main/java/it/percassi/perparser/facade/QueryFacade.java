@@ -56,4 +56,9 @@ public class QueryFacade {
 		return ret;
 	}
 
+	public boolean deleteDocument(String md5,String fileType) throws IOException{
+		mongoService.deleteDocument(md5, fileType);
+		return false;
+				
+	}
 }
