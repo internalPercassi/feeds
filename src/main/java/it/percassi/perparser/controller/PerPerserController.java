@@ -1,9 +1,12 @@
 package it.percassi.perparser.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +15,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -122,9 +127,16 @@ public class PerPerserController {
 	}
 
 	@GetMapping("/getNewRelicData")
-	public ResponseEntity<Void> getNewRelicApi(GetNewRelicControllerRequest request, BindingResult bindResult) {
-		
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	public ResponseEntity<String> getNewRelicApi(GetNewRelicControllerRequest request, BindingResult bindResult) throws IOException {
+		Resource resource = new ClassPathResource("chart_mock_daily.json");
+		InputStream resourceInputStream = resource.getInputStream();
+		String jsonAsString;
+		try {
+			jsonAsString = IOUtils.toString(resourceInputStream,Charset.defaultCharset()); 
+		} catch (IOException e) {
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(jsonAsString,HttpStatus.OK);
 
 	}
 
