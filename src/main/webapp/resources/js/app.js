@@ -47,8 +47,11 @@ var app = $.sammy('#app', function () {
 	this.get('#/newRelic', function (context) {
 		context.app.swap('');
 		context.load('/PerParserSPA/resources/views/pages/newRelic.template')
-				.replace(context.$element())
-				.then(function () {});
+				.then(function (response) {
+					var vm = new newRelicViewModel();
+					newRelicController.setViewModel(vm);
+					loadView(response, vm);
+				});
 	});
 
 	this.get('#/history/', function (context) {

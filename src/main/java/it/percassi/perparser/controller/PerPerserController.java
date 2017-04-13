@@ -1,6 +1,7 @@
 package it.percassi.perparser.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -16,8 +17,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,13 +32,12 @@ import it.percassi.perparser.controller.request.UploadFileControllerRequest;
 import it.percassi.perparser.controller.response.BaseControllerResponse;
 import it.percassi.perparser.controller.validator.GetDocumentsRequestValidator;
 import it.percassi.perparser.controller.validator.UploadFileValidator;
+import it.percassi.perparser.exception.NotValidFileException;
+import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
-import it.percassi.perparser.exception.NotValidFileException;
-import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.utils.PerPortalUtils;
-import java.text.ParseException;
 
 @RestController
 public class PerPerserController {
@@ -120,6 +122,12 @@ public class PerPerserController {
 	@GetMapping("/getNewRelicData")
 	public ResponseEntity<Void> getNewRelicApi(GetNewRelicControllerRequest request, BindingResult bindResult) {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+
+	}
+
+	@DeleteMapping("/deleteUploadedFile")
+	public ResponseEntity<Void> deleteFileUploaded(@RequestBody String md5) throws Exception {
+		return new ResponseEntity<Void>(HttpStatus.OK);
 
 	}
 
