@@ -1,7 +1,6 @@
 var glController = function () {
 	var _that = {};
 	var collectionName = 'GL';
-	//var sortFieldSel = '#sortField';
 	var selectorId = '#glTable';
 	var glTable;
 	
