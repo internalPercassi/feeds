@@ -11,7 +11,7 @@ var historyController = function () {
 			columnDefs: [
 				{"visible": false, "targets": 0},
 				{
-		            "targets": 5,
+		            "targets": 4,
 		            "width": "20%",
 		            "data": null,
 /*		            "title": "Actions",*/
@@ -31,7 +31,6 @@ var historyController = function () {
 			    { "title": "File Name"},
 			    { "title": "Type"},
 			    { "title": "Upload Date"},
-			    { "title": "Row Count"},
 			    { "title": "Actions"}
 		    ]
 		};

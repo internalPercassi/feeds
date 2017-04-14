@@ -62,7 +62,7 @@ public class ParserFacade {
 				}
 				mongoService.saveUploadedFileModel(fileModel);
 				mongoService.saveDocs(fileType, feeds, fileType);
-				fileModel.setRowCount(feeds.size());
+//				fileModel.setRowCount(feeds.size());
 				mongoService.updatetUploadedFileModel(fileModel);
 			} else {
 				LOG.info("Nothing to import for the file {} ", fileName);
