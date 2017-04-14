@@ -88,8 +88,7 @@ public class MongoDocRepository extends BaseRepository {
 		}
 		try {
 			while (cursor.hasNext()) {
-
-;
+				ret.add(cursor.next());	
 				c++;
 			}
 		} finally {
