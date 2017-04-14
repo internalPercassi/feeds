@@ -13,7 +13,7 @@ var pageViewsController = function () {
 		
 	var _callAjax = function (type, url, successCbk) {
 		$.ajax({
-			url: 'getNewRelicData',
+			url: 'endUser/pageview/',
 			dataType: 'json',
 			cache: false,
 			data: params,
@@ -24,7 +24,7 @@ var pageViewsController = function () {
 			beforeSend: function () {
 			},
 			success: function (res) {
-				if (res && res.daily && res.daily.length > 0) {
+				if (res && res.monthly && res.monthly.length > 0) {
 					_that._data = res;
 				} else {
 					console.log("http resposonse is null");
