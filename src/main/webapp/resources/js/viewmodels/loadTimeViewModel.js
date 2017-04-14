@@ -25,7 +25,7 @@ var loadTimeViewModel = function () {
 		labels: _labels,
 		    datasets: [
 		        {
-		        	label: "Page Views",
+		        	label: "Load Time",
 		            fill: false,
 		            lineTension: 0.3,
 		            backgroundColor: "rgba(75,192,192,0.4)",
