@@ -12,6 +12,15 @@ var pageViewsViewModel = function () {
 		_data.push(value.value);
 	});
 	
+	this.fromDateFilter = ko.observable();
+	this.toDateFilter = ko.observable();
+
+	var _fromDay = new Date();
+	_fromDay.setDate(_fromDay.getDate() - 7);
+	this.fromDateFilter(_fromDay);
+	var _toDay = new Date();
+	this.toDateFilter(_toDay);
+	
 	this.chartData = {
 		labels: _labels,
 		    datasets: [

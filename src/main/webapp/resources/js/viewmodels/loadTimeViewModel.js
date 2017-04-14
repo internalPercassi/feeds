@@ -3,7 +3,7 @@
  */
 var loadTimeViewModel = function () {
 	
-var _myData = pageViewsController.getData();
+	var _myData = pageViewsController.getData();
 	
 	var _labels = [];
 	var _data = [];
@@ -12,11 +12,20 @@ var _myData = pageViewsController.getData();
 		_data.push(value.value);
 	});
 	
+	this.fromDateFilter = ko.observable();
+	this.toDateFilter = ko.observable();
+
+	var _fromDay = new Date();
+	_fromDay.setDate(_fromDay.getDate() - 7);
+	this.fromDateFilter(_fromDay);
+	var _toDay = new Date();
+	this.toDateFilter(_toDay);
+	
 	this.chartData = {
 		labels: _labels,
 		    datasets: [
 		        {
-		            label: "Load Time",
+		        	label: "Page Views",
 		            fill: false,
 		            lineTension: 0.3,
 		            backgroundColor: "rgba(75,192,192,0.4)",

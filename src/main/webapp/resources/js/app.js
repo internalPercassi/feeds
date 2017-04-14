@@ -40,7 +40,7 @@ var app = $.sammy('#app', function () {
 
     this.get('#/pageViews', function (context) {
         context.app.swap('');
-        context.load('/PerParserSPA/resources/views/partials/newRelic/pageViews.template')
+        context.load('/PerParserSPA/resources/views/pages/newRelic/pageViews.template')
                 .then(function (response) {
                     var vm = new pageViewsViewModel();
                     pageViewsController.setViewModel(vm);
@@ -50,7 +50,7 @@ var app = $.sammy('#app', function () {
 
     this.get('#/loadTime', function (context) {
         context.app.swap('');
-        context.load('/PerParserSPA/resources/views/partials/newRelic/loadTime.template')
+        context.load('/PerParserSPA/resources/views/pages/newRelic/loadTime.template')
                 .then(function (response) {
                     var vm = new loadTimeViewModel();
                     loadTimeController.setViewModel(vm);

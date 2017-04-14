@@ -1,0 +1,39 @@
+<ul class="nav nav-tabs">
+	<li>
+  	<a  href="#1" data-toggle="tab">Specific Period</a>
+	</li>
+	<li class="active">
+		<a href="#2" data-toggle="tab">Monthly Report</a>
+	</li>
+</ul>
+
+<div class="tab-content ">
+	<div class="tab-pane" id="1">
+		<h3>Add Filters</h3>
+		<div class="col-md-12 serverFilters">
+			<div class="col-md-6">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="control-label">From date:</label>
+						<input type="text" class="form-control" data-bind="datepicker: {}, value: fromDateFilter">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="control-label">To date:</label>
+						<input type="text" class="form-control" data-bind="datepicker: {}, value: toDateFilter">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<canvas data-bind="chart: { type: 'line', data: chartData }"></canvas>
+		</div>
+	</div>
+	<div class="tab-pane active" id="2">
+	  <h3>Add graph</h3>
+	  <div>
+			<canvas data-bind="chart: { type: 'line', data: chartData }"></canvas>
+		</div>
+	</div>
+</div>
