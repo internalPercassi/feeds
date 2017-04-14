@@ -14,10 +14,7 @@ var glController = function () {
         ],
         columns: [
             {"title": "md5", },
-            {"title": "Pertinency Site"},
-            {"title": "Pertinency Site Desc"},
             {"title": "Unique Product Code"},
-            {"title": "Depositor"},
             {"title": "Stocked Qty"},
             {"title": "Booked Qty"},
             {"title": "Accounting State"},
@@ -46,17 +43,7 @@ var glController = function () {
         if (!url) {
             url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
         }
-        var callback = function (res) {
-            var tabOpt = jQuery.extend(true, {}, tableOptions);
-            tabOpt.data = tableFactory.getRowsForDatatables(res);
-            if (glTable) {
-                glTable.destroy();
-                glTable = undefined;
-                $(selectorId).empty();
-            }
-            glTable = $(selectorId).DataTable(tabOpt);
-            _that.vm.isLoading(false);
-        }
+
         restService.post(url, callback);
     };
 
@@ -67,23 +54,21 @@ var glController = function () {
      var _loadNewGrid = function (md5,viewModel) {
         _setViewModel(viewModel);
         _that.vm.isLoading(true);
-        var callback = function (res) {
-            var tabOpt = jQuery.extend(true, {}, tableOptions);
-            tabOpt.data = tableFactory.getRowsForDatatables(res);
-            tabOpt.columns = tableFactory.getColumnsForDatatables(res);
-            if (glTable) {
-                glTable.destroy();
-                glTable = undefined;
-                $(selectorId).empty();
-            }
-            glTable = $(selectorId).DataTable(tabOpt);
-            _that.vm.isLoading(false);
-        }
         documentService.getGL(md5,callback);
     };
     
     var _init = function () {};
-
+    var callback = function (res) {
+        var tabOpt = jQuery.extend(true, {}, tableOptions);
+        tabOpt.data = tableFactory.getRowsForDatatables(res);
+        if (glTable) {
+            glTable.destroy();
+            glTable = undefined;
+            $(selectorId).empty();
+        }
+        glTable = $(selectorId).DataTable(tabOpt);
+        _that.vm.isLoading(false);
+    }
     return {
         init: function () {
             _init();

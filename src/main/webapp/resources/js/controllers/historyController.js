@@ -11,7 +11,7 @@ var historyController = function () {
 			columnDefs: [
 				{"visible": false, "targets": 0},
 				{
-		            "targets": 5,
+		            "targets": 4,
 		            "width": "20%",
 		            "data": null,
 /*		            "title": "Actions",*/
@@ -27,19 +27,15 @@ var historyController = function () {
 		        }
 			],
 			columns: [
-			    { "title": "md5",},
+			    { "title": "md5"},
+			    { "title": "File Name"},
 			    { "title": "Type"},
 			    { "title": "Upload Date"},
-			    { "title": "Row Count"},
 			    { "title": "Actions"}
-			]
+		    ]
 		};
 
-	var _search = function (filters) {
-//		var sortConfig = {};
-//		sortConfig.sortField = $(sortFieldSel).val();
-//		sortConfig.sortType = $('input[name=sortType]:checked').val();
-		
+	var _search = function (filters) {		
 		var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
 		restService.get('getUploadedFiles', filters, callback);
 		_loadHistoryGrid(collectionName, url);
@@ -47,7 +43,7 @@ var historyController = function () {
 	
 	
 	var _uploadFile = function () {
-		filtcderFactory.reset();
+		filterFactory.reset();
 		var form = $('#uploadForm')[0];
 		var formData = new FormData(form);
 		var fileType = $('#fileType').val();
@@ -120,7 +116,6 @@ var historyController = function () {
 	var callback = function (res) {
 		var tabOpt = jQuery.extend(true, {}, tableOptions);
 		tabOpt.data = tableFactory.getRowsForDatatables(res);
-		tabOpt.columns = tableFactory.getColumnsForDatatables(res);
 		if (historyTable) {
 			historyTable.destroy();
 			historyTable = undefined;
@@ -150,11 +145,10 @@ var historyController = function () {
 		$.ajax({
 			url: "/deleteUploadedFile",
 			data: JSON.stringify(data),
-	        headers: {
-	            "Accept": "application/json",
-	            "Content-Type": "application/json"
-	        },
-			type: 'DELETE',
+			cache: false,
+			contentType: false,
+			processData: false,
+			type: 'POST',
 			beforeSend: function () {
 				_that.vm.isLoading(true);
 			},

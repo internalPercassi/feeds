@@ -161,7 +161,7 @@ public class PerPerserController {
 
 	}
 
-	@DeleteMapping("/deleteUploadedFile")
+	@PostMapping("/deleteUploadedFile")
 	public ResponseEntity<String> deleteFileUploaded(@RequestBody DeleteDocumentRequest request) throws Exception {
 		String message;
 		if (request == null || StringUtils.isBlank(request.getMd5()) || StringUtils.isBlank(request.getFileType())) {

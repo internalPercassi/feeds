@@ -39,10 +39,10 @@ public class GLParser extends BaseParser<GLmodel> {
 			GLmodel tmp = new GLmodel();
 //			tmp.setGL(line.substring(0, 2).trim());
 //			tmp.setINS(line.substring(2, 5).trim());
-			tmp.setPertinencySite(line.substring(5, 15).trim());
-			tmp.setPertinencySiteDesc(line.substring(15, 18).trim());
+//			tmp.setPertinencySite(line.substring(5, 15).trim());
+//			tmp.setPertinencySiteDesc(line.substring(15, 18).trim());
 			tmp.setUniqueProductCode(line.substring(38, 64).trim());
-			tmp.setDepositor(line.substring(64, 67).trim());
+//			tmp.setDepositor(line.substring(64, 67).trim());
 			tmp.setStockedQty(Integer.parseInt(line.substring(150, 160).replaceFirst("^0+(?!$)", "").trim()));
 			tmp.setBookedQty(Integer.parseInt(line.substring(163, 173).replaceFirst("^0+(?!$)", "").trim()));
 			tmp.setAccountingState(line.substring(176, 191).trim());
