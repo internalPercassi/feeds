@@ -70,7 +70,6 @@ var facebookController = function () {
         var callback = function (res) {
             var tabOpt = jQuery.extend(true, {}, tableOptions);
             tabOpt.data = tableFactory.getRowsForDatatables(res);
-//            var takis = tableFactory.getColumnsForDatatables(res);
             if (facebookTable) {
                 facebookTable.destroy();
                 facebookTable = undefined;
@@ -95,8 +94,7 @@ var facebookController = function () {
         _that.vm.isLoading(true);
         var callback = function (res) {
             var tabOpt = jQuery.extend(true, {}, tableOptions);
-            tabOpt.data = tableFactory.getRowsForDatatables(res);
-//            tabOpt.columns = tableFactory.getColumnsForDatatables(res);
+            tabOpt.data = tableFactory.getRowsForDatatables(res);            tabOpt.columns = tableFactory.getColumnsForDatatables(res);
             if (facebookTable) {
                 facebookTable.destroy();
                 facebookTable = undefined;

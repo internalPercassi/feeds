@@ -120,8 +120,6 @@ var historyController = function () {
 	var callback = function (res) {
 		var tabOpt = jQuery.extend(true, {}, tableOptions);
 		tabOpt.data = tableFactory.getRowsForDatatables(res);
-
-
 		if (historyTable) {
 			historyTable.destroy();
 			historyTable = undefined;
