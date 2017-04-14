@@ -7,8 +7,8 @@ var pageViewsViewModel = function () {
 	
 	var _labels = [];
 	var _data = [];
-	_.forEach(_myData.daily, function(value, key) {
-		_labels.push(value.day);
+	_.forEach(_myData.monthly, function(value, key) {
+		_labels.push(value.month);
 		_data.push(value.value);
 	});
 	
