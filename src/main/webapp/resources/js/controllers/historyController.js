@@ -35,11 +35,7 @@ var historyController = function () {
 		    ]
 		};
 
-	var _search = function (filters) {
-//		var sortConfig = {};
-//		sortConfig.sortField = $(sortFieldSel).val();
-//		sortConfig.sortType = $('input[name=sortType]:checked').val();
-		
+	var _search = function (filters) {		
 		var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
 		restService.get('getUploadedFiles', filters, callback);
 		_loadHistoryGrid(collectionName, url);

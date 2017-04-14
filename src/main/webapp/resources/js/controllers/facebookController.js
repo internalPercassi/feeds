@@ -66,18 +66,6 @@ var facebookController = function () {
         if (!url) {
             url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
         }
-
-        var callback = function (res) {
-            var tabOpt = jQuery.extend(true, {}, tableOptions);
-            tabOpt.data = tableFactory.getRowsForDatatables(res);
-            if (facebookTable) {
-                facebookTable.destroy();
-                facebookTable = undefined;
-                $(selectorId).empty();
-            }
-            facebookTable = $(selectorId).DataTable(tabOpt);
-            _that.vm.isLoading(false);
-        }
         restService.post(url, callback);
     };
 
@@ -92,19 +80,22 @@ var facebookController = function () {
     var _loadNewGrid = function (md5, viewModel) {
         _setViewModel(viewModel);
         _that.vm.isLoading(true);
-        var callback = function (res) {
-            var tabOpt = jQuery.extend(true, {}, tableOptions);
-            tabOpt.data = tableFactory.getRowsForDatatables(res);            tabOpt.columns = tableFactory.getColumnsForDatatables(res);
-            if (facebookTable) {
-                facebookTable.destroy();
-                facebookTable = undefined;
-                $(selectorId).empty();
-            }
-            facebookTable = $(selectorId).DataTable(tabOpt);
-            _that.vm.isLoading(false);
-        }
+
         documentService.getFacebook(md5, callback);
     };
+    
+    var callback = function (res) {
+        var tabOpt = jQuery.extend(true, {}, tableOptions);
+        tabOpt.data = tableFactory.getRowsForDatatables(res);
+        if (facebookTable) {
+            facebookTable.destroy();
+            facebookTable = undefined;
+            $(selectorId).empty();
+        }
+        facebookTable = $(selectorId).DataTable(tabOpt);
+        _that.vm.isLoading(false);
+    };
+    
     return {
         init: function () {
             _init();
