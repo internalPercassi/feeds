@@ -14,8 +14,6 @@ var glController = function () {
         ],
         columns: [
             {"title": "md5", },
-            {"title": "Pertinency Site"},
-            {"title": "Pertinency Site Desc"},
             {"title": "Unique Product Code"},
             {"title": "Depositor"},
             {"title": "Stocked Qty"},
