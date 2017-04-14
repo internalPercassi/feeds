@@ -9,6 +9,8 @@ public class GetNewRelicControllerRequest extends BaseRequest {
 	private LocalDateTime fromDate;
 	
 	private LocalDateTime toDate;
+	
+	
 
 	public LocalDateTime getFromDate() {
 		return fromDate;

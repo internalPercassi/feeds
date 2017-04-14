@@ -6,7 +6,6 @@ import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -134,7 +133,7 @@ public class PerPerserController {
 		try {
 			jsonAsString = IOUtils.toString(resourceInputStream,Charset.defaultCharset()); 
 		} catch (IOException e) {
-			return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Error: "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<String>(jsonAsString,HttpStatus.OK);
 
@@ -152,8 +151,8 @@ public class PerPerserController {
 			return new ResponseEntity<String>(message,HttpStatus.OK);
 		}
 		else{
-			message="Error";
-			return new ResponseEntity<String>(message,HttpStatus.INTERNAL_SERVER_ERROR);
+			message="Document not found";
+			return new ResponseEntity<String>(message,HttpStatus.OK);
 		}
 		
 
