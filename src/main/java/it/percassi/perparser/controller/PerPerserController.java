@@ -22,7 +22,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -167,15 +166,23 @@ public class PerPerserController {
 		if (request == null || StringUtils.isBlank(request.getMd5()) || StringUtils.isBlank(request.getFileType())) {
 			return new ResponseEntity<String>("Request not valid ", HttpStatus.BAD_REQUEST);
 		}
-		boolean deleteSuccess = queryFacade.deleteDocument(request.getMd5(), request.getFileType());
-		if (deleteSuccess) {
-			message = "Document " + request.getMd5() + " deleted";
-			return new ResponseEntity<String>(message, HttpStatus.OK);
-		} else {
-			message = "Document not found";
-			return new ResponseEntity<String>(message, HttpStatus.OK);
-		}
+		try {
+			boolean deleteSuccess = queryFacade.deleteDocument(request.getMd5(), request.getFileType());
+			if (deleteSuccess) {
+				message = "Document " + request.getMd5() + " deleted";
+				final BaseControllerResponse response = new BaseControllerResponse(message, HttpStatus.OK);
+				return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
+			} else {
+				message = "Document not found";
+				final BaseControllerResponse response = new BaseControllerResponse(message, HttpStatus.OK);
+				return new ResponseEntity<String>(response.getMessage(),response.getErrorCode());
+			}
+		} catch (Exception e) {
+			final BaseControllerResponse response = new BaseControllerResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 
+		}
+	
 	}
 
 }
