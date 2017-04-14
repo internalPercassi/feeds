@@ -69,7 +69,6 @@ var osController = function () {
         var callback = function (res) {
             var tabOpt = jQuery.extend(true, {}, tableOptions);
             tabOpt.data = tableFactory.getRowsForDatatables(res);
-            tabOpt.columns = tableFactory.getColumnsForDatatables(res);
             if (osTable) {
                 osTable.destroy();
                 osTable = undefined;

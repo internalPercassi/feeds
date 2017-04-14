@@ -70,7 +70,6 @@ var facebookController = function () {
         var callback = function (res) {
             var tabOpt = jQuery.extend(true, {}, tableOptions);
             tabOpt.data = tableFactory.getRowsForDatatables(res);
-            var takis = tableFactory.getColumnsForDatatables(res);
             if (facebookTable) {
                 facebookTable.destroy();
                 facebookTable = undefined;
