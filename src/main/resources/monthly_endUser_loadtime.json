@@ -1,0 +1,81 @@
+{
+	"monthly": [{
+			"month": "Apr 2015",
+			"value": "7.5"
+		},
+		{
+			"month": "May 2015",
+			"value": "7.11"
+		}, {
+			"month": "Jun 2015 ",
+			"value": "7.69"
+		}, {
+			"month": "Jul 2015",
+			"value": "8.21"
+		}, {
+			"month": "Aug 2015",
+			"value": "8.29"
+		}, {
+			"month": "Sep 2015",
+			"value": "7.88"
+		}, {
+			"month": "Oct 2015",
+			"value": "8.35"
+		}, {
+			"month": "Nov 2015",
+			"value": "8.07"
+		}, {
+			"month": "Dec 2015",
+			"value": "8.1"
+		}, {
+			"month": "Jan 2016",
+			"value": "7.93"
+		}, {
+			"month": "Feb 2016",
+			"value": "7.7"
+		}, {
+			"month": "Mar 2016",
+			"value": "7.71"
+		}, {
+			"month": "Apr 2016",
+			"value": "7.49"
+		}, {
+			"month": "May 2016",
+			"value": "10.2"
+		}, {
+			"month": "Jun 2016",
+			"value": "15.9"
+		}, {
+			"month": "Jul 2016",
+			"value": "16.6"
+		}, {
+			"month": "Aug 2016",
+			"value": "16"
+		}, {
+			"month": "Sep 2016",
+			"value": "16.2"
+		}, {
+			"month": "Oct 2016",
+			"value": "16.2"
+		}, {
+			"month": "Nov 2016",
+			"value": "9.1"
+		}, {
+			"month": "Dec 2016",
+			"value": "7.81"
+		}, {
+			"month": "Jan 2017",
+			"value": "7.63"
+		}, {
+			"month": "Feb 2017",
+			"value": "7.5"
+		}, {
+			"month": "Mar 2017",
+			"value": "7.35"
+		}, {
+			"month": "Apr 2017",
+			"value": "7.34"
+		}
+
+	]
+}

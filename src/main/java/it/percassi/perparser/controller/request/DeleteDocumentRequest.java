@@ -19,9 +19,4 @@ public class DeleteDocumentRequest extends BaseRequest{
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
-	
-	
-	
-	
-
 }

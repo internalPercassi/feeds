@@ -22,8 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -126,36 +126,63 @@ public class PerPerserController {
 	}
 
 	@GetMapping("/getNewRelicData")
-	public ResponseEntity<String> getNewRelicApi(GetNewRelicControllerRequest request, BindingResult bindResult) throws IOException {
+	public ResponseEntity<String> getNewRelicApi(GetNewRelicControllerRequest request, BindingResult bindResult)
+			throws IOException {
 		Resource resource = new ClassPathResource("chart_mock_daily.json");
 		InputStream resourceInputStream = resource.getInputStream();
 		String jsonAsString;
 		try {
-			jsonAsString = IOUtils.toString(resourceInputStream,Charset.defaultCharset()); 
+			jsonAsString = IOUtils.toString(resourceInputStream, Charset.defaultCharset());
 		} catch (IOException e) {
-			return new ResponseEntity<String>("Error: "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<String>(jsonAsString,HttpStatus.OK);
+		return new ResponseEntity<String>(jsonAsString, HttpStatus.OK);
 
 	}
 
-	@DeleteMapping("/deleteUploadedFile")
-	public ResponseEntity<String> deleteFileUploaded(@RequestBody DeleteDocumentRequest request) throws Exception {
-		String message;
-		if(request == null || StringUtils.isBlank(request.getMd5()) || StringUtils.isBlank(request.getFileType())){
-			return new ResponseEntity<String>("Request not valid ",HttpStatus.BAD_REQUEST);
-		}
-		boolean deleteSuccess = queryFacade.deleteDocument(request.getMd5(), request.getFileType());
-		if(deleteSuccess){
-			message = "Document " +request.getMd5() +" deleted";
-			return new ResponseEntity<String>(message,HttpStatus.OK);
-		}
-		else{
-			message="Document not found";
-			return new ResponseEntity<String>(message,HttpStatus.OK);
+	@GetMapping("/{metric}/{type}")
+	public ResponseEntity<String> getNewRelicApi(@PathVariable("metric") String metric,
+			@PathVariable("type") String type) throws IOException {
+		
+		if(metric == null  || type == null){
+			return new ResponseEntity<String>("Parameters : "+metric+ ","+type,HttpStatus.BAD_REQUEST);
 		}
 		
+		Resource resource = new ClassPathResource("monthly_"+metric+"_"+type+".json");
+		InputStream resourceInputStream = resource.getInputStream();
+		String jsonAsString;
+		try {
+			jsonAsString = IOUtils.toString(resourceInputStream, Charset.defaultCharset());
+		} catch (IOException e) {
+			return new ResponseEntity<String>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(jsonAsString, HttpStatus.OK);
 
+	}
+
+	@PostMapping("/deleteUploadedFile")
+	public ResponseEntity<String> deleteFileUploaded(@RequestBody DeleteDocumentRequest request) throws Exception {
+		String message;
+		if (request == null || StringUtils.isBlank(request.getMd5()) || StringUtils.isBlank(request.getFileType())) {
+			return new ResponseEntity<String>("Request not valid ", HttpStatus.BAD_REQUEST);
+		}
+		try {
+			boolean deleteSuccess = queryFacade.deleteDocument(request.getMd5(), request.getFileType());
+			if (deleteSuccess) {
+				message = "Document " + request.getMd5() + " deleted";
+				final BaseControllerResponse response = new BaseControllerResponse(message, HttpStatus.OK);
+				return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
+			} else {
+				message = "Document not found";
+				final BaseControllerResponse response = new BaseControllerResponse(message, HttpStatus.OK);
+				return new ResponseEntity<String>(response.getMessage(),response.getErrorCode());
+			}
+		} catch (Exception e) {
+			final BaseControllerResponse response = new BaseControllerResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
+
+		}
+	
 	}
 
 }

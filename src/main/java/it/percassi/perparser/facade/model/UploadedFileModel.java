@@ -17,7 +17,7 @@ public class UploadedFileModel implements Serializable {
 	private String type;
 //	@JsonSerialize(using = IsoDateSerializer.class)
 	private Date date;
-	private Integer rowCount;
+//	private Integer rowCount;
 
 	public UploadedFileModel() {
 	}
@@ -26,7 +26,7 @@ public class UploadedFileModel implements Serializable {
 		String md5 = this.getMD5(bytes);
 		this.date = new Date();
 		this.md5 = md5;
-		this.rowCount = 0;
+//		this.rowCount = 0;
 		this.type = type;
 		this.fileName = fileName;
 	}
@@ -63,13 +63,13 @@ public class UploadedFileModel implements Serializable {
 		this.date = date;
 	}
 
-	public Integer getRowCount() {
-		return rowCount;
-	}
-
-	public void setRowCount(Integer rowCount) {
-		this.rowCount = rowCount;
-	}
+//	public Integer getRowCount() {
+//		return rowCount;
+//	}
+//
+//	public void setRowCount(Integer rowCount) {
+//		this.rowCount = rowCount;
+//	}
 
 	private static String getMD5(byte[] bytes) throws IOException {
 		String md5 = DigestUtils.md5Hex(bytes);
@@ -83,7 +83,7 @@ public class UploadedFileModel implements Serializable {
 		ret.append("fileName", this.fileName);
 		ret.append("type", this.type);
 		ret.append("date", this.date);
-		ret.append("rowCount", this.rowCount);
+//		ret.append("rowCount", this.rowCount);
 		return ret;
 	}
 }

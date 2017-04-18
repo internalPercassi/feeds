@@ -6,29 +6,29 @@ package it.percassi.perparser.service.parsers.model;
  */
 public class GLmodel extends BaseModel{
 
-	private String pertinencySite;
-	private String pertinencySiteDesc;
+//	private String pertinencySite;
+//	private String pertinencySiteDesc;
 	private String uniqueProductCode;
-	private String depositor;
+//	private String depositor;
 	private Integer stockedQty;
 	private Integer bookedQty;
 	private String accountingState;
 
-	public void setPertinencySite(String pertinencySite) {
-		this.pertinencySite = pertinencySite;
-	}
-
-	public void setPertinencySiteDesc(String pertinencySiteDesc) {
-		this.pertinencySiteDesc = pertinencySiteDesc;
-	}
+//	public void setPertinencySite(String pertinencySite) {
+//		this.pertinencySite = pertinencySite;
+//	}
+//
+//	public void setPertinencySiteDesc(String pertinencySiteDesc) {
+//		this.pertinencySiteDesc = pertinencySiteDesc;
+//	}
 
 	public void setUniqueProductCode(String uniqueProductCode) {
 		this.uniqueProductCode = uniqueProductCode;
 	}
 
-	public void setDepositor(String depositor) {
-		this.depositor = depositor;
-	}
+//	public void setDepositor(String depositor) {
+//		this.depositor = depositor;
+//	}
 
 	public void setStockedQty(Integer stockedQty) {
 		this.stockedQty = stockedQty;
@@ -42,21 +42,21 @@ public class GLmodel extends BaseModel{
 		this.accountingState = accountingState;
 	}
 
-	public String getPertinencySite() {
-		return pertinencySite;
-	}
-
-	public String getPertinencySiteDesc() {
-		return pertinencySiteDesc;
-	}
+//	public String getPertinencySite() {
+//		return pertinencySite;
+//	}
+//
+//	public String getPertinencySiteDesc() {
+//		return pertinencySiteDesc;
+//	}
 
 	public String getUniqueProductCode() {
 		return uniqueProductCode;
 	}
 
-	public String getDepositor() {
-		return depositor;
-	}
+//	public String getDepositor() {
+//		return depositor;
+//	}
 
 	public Integer getStockedQty() {
 		return stockedQty;
