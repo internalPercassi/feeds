@@ -57,6 +57,26 @@ var app = $.sammy('#app', function () {
                     loadView(response, vm);
                 });
     });
+    
+    this.get('#/request', function (context) {
+        context.app.swap('');
+        context.load('/PerParserSPA/resources/views/pages/newRelic/request.template')
+                .then(function (response) {
+                    var vm = new requestViewModel();
+                    requestController.setViewModel(vm);
+                    loadView(response, vm);
+                });
+    });
+    
+    this.get('#/responseTime', function (context) {
+        context.app.swap('');
+        context.load('/PerParserSPA/resources/views/pages/newRelic/responseTime.template')
+                .then(function (response) {
+                    var vm = new responseTimeViewModel();
+                    responseTimeController.setViewModel(vm);
+                    loadView(response, vm);
+                });
+    });
 
     this.get('#/history/', function (context) {
         context.app.swap('');
