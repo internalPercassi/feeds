@@ -89,6 +89,16 @@ var app = $.sammy('#app', function () {
                     historyController.showUploadedFiles();
                 });
     });
+    
+    this.get('#/requestMillions', function (context) {
+        context.app.swap('');
+        context.load('/PerParserSPA/resources/views/partials/newRelic/requestMillions.template')
+                .then(function (response) {
+                    var vm = new requestMillionsViewModel();
+                    requestMillionsController.setViewModel(vm);
+                    loadView(response, vm);
+                });
+    });
 
     this.before('.*', function () {
         var hash = document.location.hash;
