@@ -135,19 +135,16 @@ var historyController = function () {
 	    
 	    $('.removeFile').on('click', function () {
 	    	var data = historyTable.row( $(this).parents('tr') ).data();
-	    	deleteFile({ md5: data[0], fileType: data[2] });
-//			restService.delete("deleteUploadedFile", { md5: data[0], fileType: data[2] }, historyController.showUploadedFiles);
-			
+	    	deleteFile({ md5: data[0], fileType: data[2] });		
 	    } );
 	};
 	
 	var deleteFile = function(data){
 		$.ajax({
-			url: "/deleteUploadedFile",
+			url: "/PerParserSPA/deleteUploadedFile",
 			data: JSON.stringify(data),
 			cache: false,
-			contentType: false,
-			processData: false,
+			contentType: "application/json",
 			type: 'POST',
 			beforeSend: function () {
 				_that.vm.isLoading(true);
