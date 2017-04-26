@@ -37,7 +37,6 @@ var historyController = function () {
 
 	var _search = function (filters) {		
 		var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
-		restService.get('getUploadedFiles', filters, callback);
 		_loadHistoryGrid(collectionName, url);
 	};
 	
@@ -137,6 +136,12 @@ var historyController = function () {
 	    	var data = historyTable.row( $(this).parents('tr') ).data();
 	    	deleteFile({ md5: data[0], fileType: data[2] });		
 	    } );
+	    
+		var uploadedFileName = $('.input-group').find(':text');
+		if (uploadedFileName.length) {
+			uploadedFileName.val('');
+			$('#uploadBtn').attr('disabled', true);
+		}
 	};
 	
 	var deleteFile = function(data){
