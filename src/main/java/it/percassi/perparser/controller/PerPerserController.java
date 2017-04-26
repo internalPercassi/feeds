@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.util.JSON;
 
 import it.percassi.perparser.controller.request.DeleteDocumentRequest;
@@ -163,6 +164,7 @@ public class PerPerserController {
 	@PostMapping("/deleteUploadedFile")
 	public ResponseEntity<String> deleteFileUploaded(@RequestBody DeleteDocumentRequest request) throws Exception {
 		String message;
+		final ObjectMapper objectMapper = new ObjectMapper();
 		if (request == null || StringUtils.isBlank(request.getMd5()) || StringUtils.isBlank(request.getFileType())) {
 			return new ResponseEntity<String>("Request not valid ", HttpStatus.BAD_REQUEST);
 		}
@@ -170,11 +172,12 @@ public class PerPerserController {
 			boolean deleteSuccess = queryFacade.deleteDocument(request.getMd5(), request.getFileType());
 			if (deleteSuccess) {
 				message = "Document " + request.getMd5() + " deleted";
-				final BaseControllerResponse response = new BaseControllerResponse(message, HttpStatus.OK);
+				
+				final BaseControllerResponse response = new BaseControllerResponse(objectMapper.writeValueAsString(message), HttpStatus.OK);
 				return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 			} else {
 				message = "Document not found";
-				final BaseControllerResponse response = new BaseControllerResponse(message, HttpStatus.OK);
+				final BaseControllerResponse response = new BaseControllerResponse(objectMapper.writeValueAsString(message), HttpStatus.OK);
 				return new ResponseEntity<String>(response.getMessage(),response.getErrorCode());
 			}
 		} catch (Exception e) {
