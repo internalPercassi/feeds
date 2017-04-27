@@ -123,3 +123,11 @@ var app = $.sammy('#app', function () {
 $(document).ready(function () {
     app.run('#/history/');
 });
+
+$.notify({
+	// options
+	message: 'Hello World' 
+},{
+	// settings
+	type: 'danger'
+});

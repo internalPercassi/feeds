@@ -62,6 +62,7 @@ var historyController = function () {
 			success: function (res) {
 				try {
 					historyController.showUploadedFiles();
+					$.notify("File uploaded successfully", "success");
 				} catch (e) {
 					_that.vm.isLoading(false);
 					console.error(e);
@@ -69,6 +70,7 @@ var historyController = function () {
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("ERROR, textStatus=" + textStatus + ", errorThrown=" + errorThrown);
+				$.notify("Error during upload", "error");
 			},
 			complete: function () {
 				_that.vm.isLoading(false);
@@ -142,6 +144,8 @@ var historyController = function () {
 			uploadedFileName.val('');
 			$('#uploadBtn').attr('disabled', true);
 		}
+		
+		
 	};
 	
 	var deleteFile = function(data){
@@ -157,6 +161,7 @@ var historyController = function () {
 			success: function (res) {
 				try {
 					historyController.showUploadedFiles();
+					$.notify("File deleted successfully", "success");
 				} catch (e) {
 					_that.vm.isLoading(false);
 					console.error(e);
@@ -164,6 +169,7 @@ var historyController = function () {
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("ERROR, textStatus=" + textStatus + ", errorThrown=" + errorThrown);
+				$.notify("Error during file delete", "error");
 			},
 			complete: function () {
 				_that.vm.isLoading(false);
