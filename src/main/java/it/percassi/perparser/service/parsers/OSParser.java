@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -52,7 +53,7 @@ public class OSParser extends BaseParser<OSmodel> {
 	private static final int ROW_LENGTH_B = 224;
 	
 	@Override
-	public List<OSmodel> parse(InputStream stream) throws IOException, NotValidFileException {
+	public List<OSmodel> parse(InputStream stream, Locale locale) throws IOException, NotValidFileException {
 		List<OSmodel> ret = new ArrayList<OSmodel>();
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
 		String line = null;

@@ -46,7 +46,8 @@ var historyController = function () {
 		var form = $('#uploadForm')[0];
 		var formData = new FormData(form);
 		var fileType = $('#fileType').val();
-		var url = appConstants.uploadFileUrl + '?fileType=' + fileType;
+                var localeCod = "it_IT";//TODO, aggiungere alla form di upload (serve solo per facebook)
+		var url = appConstants.uploadFileUrl + '?fileType=' + fileType+"&localeCod="+localeCod;
 		
 		$.ajax({
 			enctype: 'multipart/form-data',

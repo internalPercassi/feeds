@@ -45,6 +45,8 @@ import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
 import it.percassi.perparser.utils.PerPortalUtils;
+import java.util.Locale;
+import org.apache.commons.lang3.LocaleUtils;
 
 @RestController
 public class PerPerserController {
@@ -82,9 +84,11 @@ public class PerPerserController {
 		final MultipartFile file = request.getUploadedFile();
 		final String fileType = request.getFileType();
 		final String fileName = file.getOriginalFilename();
-
+                final String localeStr = request.getLocaleCod();
+                
 		byte[] bytes = IOUtils.toByteArray(file.getInputStream());
-		final String md5 = parserFacade.parseAndSave(fileName, fileType, bytes);
+                Locale locale = LocaleUtils.toLocale(localeStr);
+		final String md5 = parserFacade.parseAndSave(fileName, fileType, locale, bytes);
 		LOG.info("md5 of {}  is: {} ", fileName, md5);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}

@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,13 +50,14 @@ public class ParserFacade {
 	@Autowired
 	MongoService mongoService;
 
-	public String parseAndSave(String fileName, String fileType, byte[] bytes) throws IOException, NotValidFileException {
+	public String parseAndSave(String fileName, String fileType, Locale locale, byte[] bytes) throws IOException, NotValidFileException {
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 		UploadedFileModel fileModel = new UploadedFileModel(fileName, bytes, fileType);
 		long startTime = System.nanoTime();
 		LOG.info("Start parsing of file {} , type is {}, length is {} Bytes", fileName, fileType, bytes.length);
 		if (!mongoService.isFileAlreadyUploaded(fileModel.getMd5())) {
-			List<BaseModel> feeds = getParser(fileType).parse(inputStream);
+                    BaseParser parser = getParser(fileType);
+			List<BaseModel> feeds = parser.parse(inputStream,locale);
 			if (feeds.size() > 0) {
 				for (BaseModel model : feeds) {
 					model.setMd5(fileModel.getMd5());
@@ -77,7 +79,7 @@ public class ParserFacade {
 
 	private BaseParser getParser(String fileType) {
 		if (AppEnum.FileType.FACEBOOK.getCode().equalsIgnoreCase(fileType)) {
-			LOG.info("Using parser {} ", AppEnum.FileType.FACEBOOK.name());
+			LOG.info("Using parser {} ", AppEnum.FileType.FACEBOOK.name());                        
 			return fbParser;
 		} else if (AppEnum.FileType.GL.getCode().equalsIgnoreCase(fileType)) {
 			LOG.info("Using parser {} ", AppEnum.FileType.GL.name());

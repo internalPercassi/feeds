@@ -23,7 +23,7 @@ public class FacebookFeed extends BaseModel{
 	private String expirationDate;
 	private String gender;
 	private String itemGroupId;
-	private String googleProductCategory="Health & Beauty > Personal Care > Cosmetics > Makeup > Eye Makeup > Mascara";
+	private String googleProductCategory;
 	private String material;
 	private String pattern;
 	private String productType;

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import it.percassi.perparser.exception.NotValidFileException;
 import it.percassi.perparser.service.parsers.model.FacebookFeed;
 import it.percassi.perparser.service.parsers.model.WAFModel;
+import java.util.Locale;
 
 /**
  *
@@ -30,7 +31,7 @@ public class WAFParser extends BaseParser<WAFModel> {
 	public static final String FIELD_SEPARATOR = ",";
 
 	@Override
-	public List<WAFModel> parse(InputStream stream) throws IOException {
+	public List<WAFModel> parse(InputStream stream, Locale locale) throws IOException {
 		List<WAFModel> ret = new ArrayList<WAFModel>();
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
 		final CSVFormat csvFileFormat = CSVFormat.RFC4180;
