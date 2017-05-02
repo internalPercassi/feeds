@@ -45,6 +45,7 @@ var app = $.sammy('#app', function () {
                     var vm = new pageViewsViewModel();
                     pageViewsController.setViewModel(vm);
                     loadView(response, vm);
+                    vm.drawChart();
                 });
     });
 
@@ -57,7 +58,7 @@ var app = $.sammy('#app', function () {
                     loadView(response, vm);
                 });
     });
-    
+
     this.get('#/request', function (context) {
         context.app.swap('');
         context.load('/PerParserSPA/resources/views/pages/newRelic/request.template')
@@ -67,7 +68,7 @@ var app = $.sammy('#app', function () {
                     loadView(response, vm);
                 });
     });
-    
+
     this.get('#/responseTime', function (context) {
         context.app.swap('');
         context.load('/PerParserSPA/resources/views/pages/newRelic/responseTime.template')
@@ -89,7 +90,7 @@ var app = $.sammy('#app', function () {
                     historyController.showUploadedFiles();
                 });
     });
-    
+
     this.get('#/requestMillions', function (context) {
         context.app.swap('');
         context.load('/PerParserSPA/resources/views/partials/newRelic/requestMillions.template')
@@ -125,9 +126,9 @@ $(document).ready(function () {
 });
 
 $.notify({
-	// options
-	message: 'Hello World' 
-},{
-	// settings
-	type: 'danger'
+    // options
+    message: 'Hello World'
+}, {
+    // settings
+    type: 'danger'
 });

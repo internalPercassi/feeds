@@ -6,7 +6,8 @@ var appConstants = {
         GL: "GL",
         OS: "OS",
         FacebookProduct: 'FacebookProduct',
-        UploadedFile: 'uploadedFile'
+        UploadedFile: 'uploadedFile',
+        newRelic: 'newRelic'
     },
     url: {getDocuments: 'getDocuments',
         uploadFileUrl: 'parseFile'},

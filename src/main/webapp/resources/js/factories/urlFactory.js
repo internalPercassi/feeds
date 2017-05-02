@@ -4,7 +4,7 @@ var urlFactory = function () {
 	var constats = {
 		getDocUrl: 'getDocuments',
 		uploadFileUrl: 'parseFile',
-		defaultDocsNum: 1000
+		defaultDocsNum: 100
 	};
 	var docDefUrl = constats.getDocUrl + '?length='+constats.defaultDocsNum;
 	var _uploadFile = function (fileType) {
