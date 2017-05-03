@@ -9,17 +9,29 @@ var documentService = function () {
 
     };
 
-    var _getPageViewMillions = function(fromDate,toDate,callback){
+    var _getPageViewMillionsDaily = function(fromDate,toDate,callback){
         filterFactory.reset();
         filterFactory.addFilter('day', '$gt', fromDate);
         filterFactory.addFilter('day', '$lt', toDate);
         filterFactory.addFilter('metricName', '$eq', 'EndUser');
-        filterFactory.addFilter('metricValue', '$eq', 'callCount');
+        filterFactory.addFilter('valueName', '$eq', 'callCount');
         var sortConfig = {
             sortField:'day',
             sortType:1
         };
-        var url = urlFactory.getDocs(appConstants.collectionNames.newRelic, filterFactory.getFilters(),sortConfig);
+        var url = urlFactory.getDocs(appConstants.collectionNames.newRelicDaily, filterFactory.getFilters(),sortConfig);
+        restService.post(url, callback);
+    };
+    
+    var _getPageViewMillionsMonthly = function(callback){
+        filterFactory.reset();
+        filterFactory.addFilter('metricName', '$eq', 'EndUser');
+        filterFactory.addFilter('valueName', '$eq', 'callCount');
+        var sortConfig = {
+            sortField:'yearMonth',
+            sortType:1
+        };
+        var url = urlFactory.getDocs(appConstants.collectionNames.newRelicMonthly, filterFactory.getFilters(),sortConfig);
         restService.post(url, callback);
     };
     
@@ -33,8 +45,11 @@ var documentService = function () {
         getOS: function (md5,callback) {
             return _getParsedDocuments(appConstants.collectionNames.OS,md5,callback);
         },
-        getPageViewMillions: function (fromDate,toDate,callback) {
-            return _getPageViewMillions(fromDate,toDate,callback);
+        getPageViewMillionsDaily: function (fromDate,toDate,callback) {
+            return _getPageViewMillionsDaily(fromDate,toDate,callback);
+        },
+        getPageViewMillionsMonthly: function (callback) {
+            return _getPageViewMillionsMonthly(callback);
         }
     }
 }();

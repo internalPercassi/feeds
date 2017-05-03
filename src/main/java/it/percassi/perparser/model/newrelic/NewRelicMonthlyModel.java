@@ -13,12 +13,21 @@ import org.bson.Document;
  *
  * @author Daniele Sperto
  */
-public class NewRelicModel implements Serializable {
+public class NewRelicMonthlyModel implements Serializable {
 
     private Date day;
+    private Integer yearMonth;
     private String metricName;
-    private String metricValue;
+    private String valueName;
     private Float value;
+
+    public Integer getYearMonth() {
+        return yearMonth;
+    }
+
+    public void setYearMonth(Integer yearMonth) {
+        this.yearMonth = yearMonth;
+    }
 
     public Date getDay() {
         return day;
@@ -36,12 +45,12 @@ public class NewRelicModel implements Serializable {
         this.metricName = metricName;
     }
 
-    public String getMetricValue() {
-        return metricValue;
+    public String getValueName() {
+        return valueName;
     }
 
-    public void setMetricValue(String metricValue) {
-        this.metricValue = metricValue;
+    public void setValueName(String valueName) {
+        this.valueName = valueName;
     }
 
     public Float getValue() {
@@ -56,7 +65,7 @@ public class NewRelicModel implements Serializable {
         Document ret = new Document();
         ret.append("day", this.day);
         ret.append("metricName", this.metricName);
-        ret.append("metricValue", this.metricValue);
+        ret.append("metricValue", this.valueName);
         ret.append("value", this.value);
         return ret;
     }
