@@ -16,7 +16,7 @@ var appConstants = {
     colors: {
         2015: 'red',
         2016: 'green',
-        2017: 'LightSeaGreen ',
+        2017: 'LightSeaGreen',
         2018: 'orange',
         2019: 'blue'
     }
