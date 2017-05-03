@@ -1,54 +1,70 @@
 
 <h1 class="page-header">Page Views Millions</h1>
-<div id="pageViewsMillions">
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a  href="#1" data-toggle="tab" data-bind="click: drawChartDaily">Specific Period</a>
+    </li>
+    <li>
+        <a href="#2" data-toggle="tab" data-bind="click: drawChartMonthly">Monthly Report</a>
+    </li>
+</ul>
 
-	<div class="col-md-2">
-		<label class="control-label">From date</label>
-		<div class='input-group date' id='fromDateFilter'>
-			<input type='text' class="form-control" id='fromDateFilterVal' onkeydown="return false"/>
-			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-calendar"></span>
-			</span>
-		</div>
-	</div>
+<div class="tab-content ">
+    <div class="tab-pane active" id="1">
+        <br>
+        <div class="col-md-12 serverFilters">
+            <div class="col-md-6">
+                <div class="col-md-6">
+                    <label class="control-label">From date</label>
+                    <div class="input-group date" data-bind='dateTimePicker: dateFrom' >
+                        <input class="form-control"  onkeydown="return false"/>
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="control-label">From date</label>
+                    <div class="input-group date" data-bind='dateTimePicker: dateTo' >
+                        <input class="form-control"  onkeydown="return false"/>
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-sm-6 col-md-2 col-xl-2 pull-right">
+                    <div class="btn btn-default form-control" data-bind="click: drawChartDaily">Search</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="2">
+        <!--<div>
+            <canvas data-bind="chart: { type: 'line', data: chartData }"></canvas>
+        </div>-->
 
-	<div class="col-md-2">
-		<label class="control-label">From date</label>
-		<div class='input-group date' id='toDateFilter'>
-			<input type='text' class="form-control" id='toDateFilterVal' onkeydown="return false"/>
-			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-calendar"></span>
-			</span>
-		</div>
-	</div>
- 
-	<div class="col-md-6 pull-right">
-	    <div class="col-sm-6 col-md-2 col-xl-2 pull-right">
-	    	<label class="control-label"></label>
-	        <div class="btn btn-default form-control" data-bind="click: drawChart">Search</div>
-	    </div>
-	</div>
-    <div>
-        <canvas data-bind="chart: { type: 'line', data: chartData }"></canvas>
     </div>
 </div>
+<div>
+    &nbsp;<canvas data-bind="chart: { type: 'line', data: chartData }"></canvas>
+</div>
+<script type="text/javascript">
+    var dateToday = new Date();
 
-                <script type="text/javascript">
-                var dateToday =  new Date();
-                
-                $(function () {
-                    var defFromDate = new Date();
-                    defFromDate.setDate(defFromDate.getDate()-7);
-                    $('#fromDateFilter').datetimepicker({
-                        defaultDate: defFromDate,
-                        format: 'DD-MM-YYYY'});
-                });
-                    $(function () {
-                        $('#toDateFilter').datetimepicker({
-                            defaultDate: new Date(),
-                            format: 'DD-MM-YYYY',
-                            minDate: new Date()});
-                    });
+    $(function () {
+        var defFromDate = new Date();
+        defFromDate.setDate(defFromDate.getDate() - 7);
+        $('#fromDateFilter').datetimepicker({
+            defaultDate: defFromDate,
+            format: 'DD-MM-YYYY'});
+    });
+    $(function () {
+        $('#toDateFilter').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD-MM-YYYY',
+            minDate: new Date()});
+    });
 
-                </script>
-                
+</script>

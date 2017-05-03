@@ -45,7 +45,7 @@ var app = $.sammy('#app', function () {
                     var vm = new pageViewsViewModel();
                     pageViewsController.setViewModel(vm);
                     loadView(response, vm);
-                    vm.drawChart();
+                    vm.drawChartDaily();
                 });
     });
 
