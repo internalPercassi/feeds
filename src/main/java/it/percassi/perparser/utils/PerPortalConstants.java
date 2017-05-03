@@ -20,6 +20,6 @@ public class PerPortalConstants {
 	}
 	public static final String[] NR_METRICS ={
 			"HttpDispatcher",
-			"External/allWeb",
+			"EndUser",
 	};
 }

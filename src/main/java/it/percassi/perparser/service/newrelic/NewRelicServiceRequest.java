@@ -8,18 +8,20 @@ public class NewRelicServiceRequest extends BaseRequest {
 
 	private LocalDateTime fromDate;
 	private LocalDateTime toDate;
-	private String[] metricName;
+	private String metricName;
 	private int samplePeriod;
-	private String[] valueParameter;
+	private boolean isSummarize;
+	private String valueParameter;
 	private int machineId;
 
-	public NewRelicServiceRequest(LocalDateTime fromDate, LocalDateTime toDate, String[] metricName, int samplePeriod,
-			String[] valueParameter, int machineId) {
+	public NewRelicServiceRequest(LocalDateTime fromDate, LocalDateTime toDate, String metricName, int samplePeriod,
+			boolean isSummarize, String valueParameter, int machineId) {
 		super();
 		this.fromDate = fromDate;
 		this.toDate = toDate;
 		this.metricName = metricName;
 		this.samplePeriod = samplePeriod;
+		this.isSummarize = isSummarize;
 		this.valueParameter = valueParameter;
 		this.machineId = machineId;
 	}
@@ -32,7 +34,7 @@ public class NewRelicServiceRequest extends BaseRequest {
 		return toDate;
 	}
 
-	public String[] getMetricName() {
+	public String getMetricName() {
 		return metricName;
 	}
 
@@ -40,7 +42,11 @@ public class NewRelicServiceRequest extends BaseRequest {
 		return samplePeriod;
 	}
 
-	public String[] getValueParameter() {
+	public boolean isSummarize() {
+		return isSummarize;
+	}
+
+	public String getValueParameter() {
 		return valueParameter;
 	}
 
@@ -48,7 +54,8 @@ public class NewRelicServiceRequest extends BaseRequest {
 		return machineId;
 	}
 
-	public void setMachineId(int machineId) {
-		this.machineId = machineId;
-	}
+
+
 }
+
+

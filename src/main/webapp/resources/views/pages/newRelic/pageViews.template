@@ -21,16 +21,6 @@
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
-                    <script type="text/javascript">
-                        $(function () {
-                            var defFromDate = new Date();
-                            defFromDate.setDate(defFromDate.getDate() - 30);
-                            $('#fromDateFilter').datetimepicker({
-                                defaultDate: defFromDate,
-                                format: 'DD-MM-YYYY'});
-                        });
-
-                    </script>
                     <!--<div class="form-group">
                         <label class="control-label">From date:</label>
                         <input type="text" class="form-control" data-bind="datepicker: {}, value: fromDateFilter">
@@ -43,14 +33,6 @@
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
-                    <script type="text/javascript">
-                        $(function () {
-                            $('#toDateFilter').datetimepicker({
-                                defaultDate: new Date(),
-                                format: 'DD-MM-YYYY'});
-                        });
-
-                    </script>
                 </div>
             </div>
             <div class="col-md-6">
@@ -70,3 +52,21 @@
 <div>
     &nbsp;<canvas data-bind="chart: { type: 'line', data: chartData }"></canvas>
 </div>
+<script type="text/javascript">
+    var dateToday = new Date();
+
+    $(function () {
+        var defFromDate = new Date();
+        defFromDate.setDate(defFromDate.getDate() - 7);
+        $('#fromDateFilter').datetimepicker({
+            defaultDate: defFromDate,
+            format: 'DD-MM-YYYY'});
+    });
+    $(function () {
+        $('#toDateFilter').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD-MM-YYYY',
+            minDate: new Date()});
+    });
+
+</script>
