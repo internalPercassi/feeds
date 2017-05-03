@@ -1,13 +1,8 @@
-/**
- * 
- */
 var pageViewsViewModel = function () {
     var that = this;
-    
-    that.fromDateFilter = ko.observable();
-    that.toDateFilter = ko.observable();
     that.chartData = ko.observable();
-
+    that.dateFrom = ko.observable(moment().add(-7, 'day')); 
+    that.dateTo = ko.observable(moment()); 
 
     var toBackEndData = function (aDate) {
         if (aDate) {
@@ -15,7 +10,7 @@ var pageViewsViewModel = function () {
             return arr[2]+"-"+arr[1]+"-"+arr[0]+" 00:00";
         } 
     };
-
+    
     this.drawChart = function () {
         var fromDay, toDay;
         fromDay = $('#fromDateFilterVal').val();

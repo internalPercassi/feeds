@@ -1,27 +1,24 @@
 
 <h1 class="page-header">Page Views Millions</h1>
 <div id="pageViewsMillions">
-
 	<div class="col-md-2">
-		<label class="control-label">From date</label>
-		<div class='input-group date' id='fromDateFilter'>
-			<input type='text' class="form-control" id='fromDateFilterVal' onkeydown="return false"/>
-			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-calendar"></span>
-			</span>
-		</div>
+		<label class="control-label">From:</label>
+		<div class="input-group date" data-bind='dateTimePicker: dateFrom' >
+            <input class="form-control"  onkeydown="return false"/>
+           	<span class="input-group-addon">
+           		<i class="glyphicon glyphicon-calendar"></i>
+           	</span>
+        </div>
 	</div>
-
 	<div class="col-md-2">
-		<label class="control-label">From date</label>
-		<div class='input-group date' id='toDateFilter'>
-			<input type='text' class="form-control" id='toDateFilterVal' onkeydown="return false"/>
-			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-calendar"></span>
-			</span>
-		</div>
+		<label class="control-label">To:</label>
+		<div class="input-group date" data-bind='dateTimePicker: dateTo' >
+            <input class="form-control"  onkeydown="return false"/>
+           	<span class="input-group-addon">
+           		<i class="glyphicon glyphicon-calendar"></i>
+           	</span>
+        </div>
 	</div>
- 
 	<div class="col-md-6 pull-right">
 	    <div class="col-sm-6 col-md-2 col-xl-2 pull-right">
 	    	<label class="control-label"></label>
@@ -33,22 +30,4 @@
     </div>
 </div>
 
-                <script type="text/javascript">
-                var dateToday =  new Date();
-                
-                $(function () {
-                    var defFromDate = new Date();
-                    defFromDate.setDate(defFromDate.getDate()-7);
-                    $('#fromDateFilter').datetimepicker({
-                        defaultDate: defFromDate,
-                        format: 'DD-MM-YYYY'});
-                });
-                    $(function () {
-                        $('#toDateFilter').datetimepicker({
-                            defaultDate: new Date(),
-                            format: 'DD-MM-YYYY',
-                            minDate: new Date()});
-                    });
-
-                </script>
                 
