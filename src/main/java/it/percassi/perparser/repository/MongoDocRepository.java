@@ -69,7 +69,7 @@ public class MongoDocRepository extends BaseRepository {
 		bexcludes.append("_id", false);
 
 		int start = 0;
-		int length = 10000;
+		int length = 100;
 		if (pagConfig != null) {
 			if (pagConfig.getStart() != null) {
 				start = pagConfig.getStart();

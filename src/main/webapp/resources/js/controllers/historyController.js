@@ -37,7 +37,6 @@ var historyController = function () {
 
 	var _search = function (filters) {		
 		var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
-		restService.get('getUploadedFiles', filters, callback);
 		_loadHistoryGrid(collectionName, url);
 	};
 	
@@ -47,7 +46,8 @@ var historyController = function () {
 		var form = $('#uploadForm')[0];
 		var formData = new FormData(form);
 		var fileType = $('#fileType').val();
-		var url = appConstants.uploadFileUrl + '?fileType=' + fileType;
+                var localeCod = "it_IT";//TODO, aggiungere alla form di upload (serve solo per facebook)
+		var url = appConstants.uploadFileUrl + '?fileType=' + fileType+"&localeCod="+localeCod;
 		
 		$.ajax({
 			enctype: 'multipart/form-data',
@@ -63,6 +63,7 @@ var historyController = function () {
 			success: function (res) {
 				try {
 					historyController.showUploadedFiles();
+					$.notify("File uploaded successfully", "success");
 				} catch (e) {
 					_that.vm.isLoading(false);
 					console.error(e);
@@ -70,6 +71,7 @@ var historyController = function () {
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("ERROR, textStatus=" + textStatus + ", errorThrown=" + errorThrown);
+				$.notify("Error during upload", "error");
 			},
 			complete: function () {
 				_that.vm.isLoading(false);
@@ -135,19 +137,24 @@ var historyController = function () {
 	    
 	    $('.removeFile').on('click', function () {
 	    	var data = historyTable.row( $(this).parents('tr') ).data();
-	    	deleteFile({ md5: data[0], fileType: data[2] });
-//			restService.delete("deleteUploadedFile", { md5: data[0], fileType: data[2] }, historyController.showUploadedFiles);
-			
+	    	deleteFile({ md5: data[0], fileType: data[2] });		
 	    } );
+	    
+		var uploadedFileName = $('.input-group').find(':text');
+		if (uploadedFileName.length) {
+			uploadedFileName.val('');
+			$('#uploadBtn').attr('disabled', true);
+		}
+		
+		
 	};
 	
 	var deleteFile = function(data){
 		$.ajax({
-			url: "/deleteUploadedFile",
+			url: "/PerParserSPA/deleteUploadedFile",
 			data: JSON.stringify(data),
 			cache: false,
-			contentType: false,
-			processData: false,
+			contentType: "application/json",
 			type: 'POST',
 			beforeSend: function () {
 				_that.vm.isLoading(true);
@@ -155,6 +162,7 @@ var historyController = function () {
 			success: function (res) {
 				try {
 					historyController.showUploadedFiles();
+					$.notify("File deleted successfully", "success");
 				} catch (e) {
 					_that.vm.isLoading(false);
 					console.error(e);
@@ -162,6 +170,7 @@ var historyController = function () {
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("ERROR, textStatus=" + textStatus + ", errorThrown=" + errorThrown);
+				$.notify("Error during file delete", "error");
 			},
 			complete: function () {
 				_that.vm.isLoading(false);

@@ -6,8 +6,22 @@ var documentService = function () {
         filterFactory.addFilter('md5', '$eq', md5);
         var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
         restService.post(url, callback);
+
     };
 
+    var _getPageViewMillions = function(fromDate,toDate,callback){
+        filterFactory.reset();
+        filterFactory.addFilter('day', '$gt', fromDate);
+        filterFactory.addFilter('day', '$lt', toDate);
+        filterFactory.addFilter('metricName', '$eq', 'EndUser');
+        filterFactory.addFilter('metricValue', '$eq', 'callCount');
+        var sortConfig = {
+            sortField:'day',
+            sortType:1
+        };
+        var url = urlFactory.getDocs(appConstants.collectionNames.newRelic, filterFactory.getFilters(),sortConfig);
+        restService.post(url, callback);
+    };
     
     return {
         getGL: function (md5,callback) {
@@ -19,5 +33,8 @@ var documentService = function () {
         getOS: function (md5,callback) {
             return _getParsedDocuments(appConstants.collectionNames.OS,md5,callback);
         },
+        getPageViewMillions: function (fromDate,toDate,callback) {
+            return _getPageViewMillions(fromDate,toDate,callback);
+        }
     }
 }();

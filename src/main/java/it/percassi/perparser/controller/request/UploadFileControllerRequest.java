@@ -8,6 +8,8 @@ public class UploadFileControllerRequest {
 
 	private String fileType;
 
+        private String localeCod;
+        
 	public MultipartFile getUploadedFile() {
 		return uploadedFile;
 	}
@@ -23,6 +25,14 @@ public class UploadFileControllerRequest {
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
+
+    public String getLocaleCod() {
+        return localeCod;
+    }
+
+    public void setLocaleCod(String localeCod) {
+        this.localeCod = localeCod;
+    }
 	
 
 }

@@ -1,5 +1,7 @@
 package it.percassi.perparser.controller.request;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -54,7 +56,15 @@ public class GetDocumentsRequest {
 	}
 
 	public String getFilters() {
-		return filters;
+            try{
+                if (this.filters != null){
+		return URLDecoder.decode(this.filters, "utf-8");
+                } else {
+                    return null;
+                }
+            }catch (UnsupportedEncodingException ue){
+                return this.filters;
+            }
 	}
 
 	public void setFilters(String filters) {

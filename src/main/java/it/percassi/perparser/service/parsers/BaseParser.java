@@ -4,6 +4,7 @@ import it.percassi.perparser.exception.NotValidFileException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -11,5 +12,6 @@ import java.util.List;
  */
 public abstract class BaseParser<T> {
 
-	public abstract List<T> parse(InputStream stream)  throws IOException,NotValidFileException;
+    public abstract List<T> parse(InputStream stream, Locale locale) throws IOException, NotValidFileException;
+
 }
