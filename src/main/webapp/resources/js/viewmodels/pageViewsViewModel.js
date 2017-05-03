@@ -3,24 +3,20 @@
  */
 var pageViewsViewModel = function () {
     var that = this;
-
-    that.fromDateFilter = ko.observable();
-    that.toDateFilter = ko.observable();
+    that.dateFrom = ko.observable(moment().add(-7, 'day')); 
+    that.dateTo = ko.observable(moment()); 
     that.chartData = ko.observable();
 
 
     var toBackEndData = function (aDate) {
         if (aDate) {
-            var arr = aDate.split("-");
-            return arr[2] + "-" + arr[1] + "-" + arr[0] + " 00:00";
+            return moment(aDate).format('YYYY-MM-DD') + " 00:00";
+        } else {
+            return moment().format('YYYY-MM-DD') + " 00:00";
         }
     };
 
     this.drawChartDaily = function () {
-        var fromDay, toDay;
-        fromDay = $('#fromDateFilterVal').val();
-        toDay = $('#toDateFilterVal').val();
-
         var labels = [];
         var data = [];
         var drawChartDailyCallBack = function (res) {
@@ -31,8 +27,6 @@ var pageViewsViewModel = function () {
                 data.push(value.value);
             });
 
-            console.log(labels);
-            console.log(data);
             var chartDataTmp = {
                 labels: labels,
                 datasets: [
@@ -64,7 +58,7 @@ var pageViewsViewModel = function () {
 
             that.chartData(chartDataTmp);
         };
-        documentService.getPageViewMillionsDaily(toBackEndData(fromDay), toBackEndData(toDay), drawChartDailyCallBack);
+        documentService.getPageViewMillionsDaily(toBackEndData(that.dateFrom()), toBackEndData(that.dateTo()), drawChartDailyCallBack);
     };
 
 
@@ -75,7 +69,6 @@ var pageViewsViewModel = function () {
 
         var labels = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Gug', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
 
-        var initYearValue = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined];
         var data = [];
         var years = {};
         var drawChartMonthlyCallBack = function (res) {
@@ -111,8 +104,6 @@ var pageViewsViewModel = function () {
                 var month = Number(yearMonth.substring(4)) - 1;
                 years[year][month] = value.value;
             });
-
-            console.log(years);
 
             var datasets = [];
             _.forEach(years, function (value, key) {
