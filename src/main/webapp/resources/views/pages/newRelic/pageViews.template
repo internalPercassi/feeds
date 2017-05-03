@@ -52,6 +52,3 @@
 
                 </script>
                 
-                
-                <span data-bind="text: message"></span><br />
-<input data-bind="datepicker: myDate, value: myDate,defaultDate: '', dateFormat: 'dd, MM yy'" />
