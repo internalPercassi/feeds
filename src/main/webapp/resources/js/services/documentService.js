@@ -15,7 +15,11 @@ var documentService = function () {
         filterFactory.addFilter('day', '$lt', toDate);
         filterFactory.addFilter('metricName', '$eq', 'EndUser');
         filterFactory.addFilter('metricValue', '$eq', 'callCount');
-        var url = urlFactory.getDocs(appConstants.collectionNames.newRelic, filterFactory.getFilters());
+        var sortConfig = {
+            sortField:'day',
+            sortType:1
+        };
+        var url = urlFactory.getDocs(appConstants.collectionNames.newRelic, filterFactory.getFilters(),sortConfig);
         restService.post(url, callback);
     };
     

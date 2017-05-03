@@ -31,6 +31,8 @@ var pageViewsViewModel = function () {
                 data.push(value.value);
             });
 
+            console.log(labels);
+            console.log(data);
             var chartDataTmp = {
                 labels: labels,
                 datasets: [
@@ -59,7 +61,7 @@ var pageViewsViewModel = function () {
                 ],
                 height: "30"
             };
-
+            
             that.chartData(chartDataTmp);
         };
         documentService.getPageViewMillions(toBackEndData(fromDay), toBackEndData(toDay), callBack);

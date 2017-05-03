@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <div class="col-md-6">
                 <div class='input-group date' id='fromDateFilter'>
-                    <input type='text' class="form-control" id='fromDateFilterVal' />
+                    <input type='text' class="form-control" id='fromDateFilterVal' onkeydown="return false"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -27,7 +27,7 @@
             </div>
             <div class="col-md-6">
                 <div class='input-group date' id='toDateFilter'>
-                    <input type='text' class="form-control" id='toDateFilterVal'/>
+                    <input type='text' class="form-control" id='toDateFilterVal' onkeydown="return false"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
