@@ -69,7 +69,7 @@ public class MongoService {
 
     }
 
-    private final static BasicDBObject buildFilter(List<MongodbFilter> filters, String fileType) throws NoSuchFieldException, ParseException {
+    private static BasicDBObject buildFilter(List<MongodbFilter> filters, String fileType) throws NoSuchFieldException, ParseException {
         BasicDBObject query = new BasicDBObject();
         List<BasicDBObject> objList = new ArrayList<BasicDBObject>();
         BasicDBObject subQ = null;
