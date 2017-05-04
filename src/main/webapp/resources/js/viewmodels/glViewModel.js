@@ -36,16 +36,16 @@ var glViewModel = function () {
 		}
 
 		if (minstock) {
-			filterFactory.addFilter("stockedQty", "$gt", minstock);
+			filterFactory.addFilter("stockedQty", "$gte", minstock);
 		}
 		if (maxstock) {
-			filterFactory.addFilter("stockedQty", "$lt", maxstock);
+			filterFactory.addFilter("stockedQty", "$lte", maxstock);
 		}
 		if (minbook) {
-			filterFactory.addFilter("bookedQty", "$gt", minbook);
+			filterFactory.addFilter("bookedQty", "$gte", minbook);
 		}
 		if (maxbook) {
-			filterFactory.addFilter("bookedQty", "$lt", maxbook);
+			filterFactory.addFilter("bookedQty", "$lte", maxbook);
 		}
 		if (accstate) {
 			filterFactory.addFilter("accountingState", "$eq", accstate);

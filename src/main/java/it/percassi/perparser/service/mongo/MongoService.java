@@ -105,7 +105,7 @@ public class MongoService {
 
     private static final BasicDBObject buildSort(MongoSortConfig sortConfig) {
         BasicDBObject sort = null;
-        if (sortConfig == null && sortConfig.getSortType() != null && sortConfig.getSortField() != null) {
+        if (sortConfig != null && sortConfig.getSortType() != null && sortConfig.getSortField() != null) {
             sort = new BasicDBObject(sortConfig.getSortField(), sortConfig.getSortType());
         }
         return sort;

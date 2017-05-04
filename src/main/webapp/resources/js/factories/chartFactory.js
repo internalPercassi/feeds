@@ -56,7 +56,7 @@ var chartFactory = function () {
     
    
     var _drawChartMonthly = function (chartType,vm) {
-        var labels = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Gug', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+        var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         var data = [];
         var years = {};
         var drawChartMonthlyCallBack = function (res) {

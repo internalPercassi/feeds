@@ -37,7 +37,7 @@ public class QueryFacade {
 
 	public JSONObject getDocs(GetDocumentsRequest request) throws IOException, NoSuchFieldException, NotValidFilterException, ParseException {
 		List<MongodbFilter> filters = buildFilterList(request.getFilters());
-		MongoSortConfig sortConfig = new MongoSortConfig(request.getSortField(), request.getLength());
+		MongoSortConfig sortConfig = new MongoSortConfig(request.getSortField(), request.getSortType());
 		MongoPaginationConfig pagConfig = new MongoPaginationConfig(request.getStart(), request.getLength());
 		return mongoService.getDocs(request.getCollectionName(), filters, request.getExclude(), sortConfig, pagConfig);
 	}

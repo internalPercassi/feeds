@@ -11,7 +11,7 @@ var urlFactory = function () {
 		return constats.uploadFileUrl + '?fileType=' + fileType;
 	}
 	var _getUploadedFiles = function () {
-		return docDefUrl + "&collectionName=uploadedFile&start=0&length=";
+		return docDefUrl + "&collectionName=uploadedFile&start=0&length=1000&sortField=date&sortType=-1";
 	};
 	var _getDocs = function (collectionName, filters, sortConfig, isCsv) {
 		var url = docDefUrl + "&collectionName=" + collectionName;
