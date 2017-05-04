@@ -11,7 +11,6 @@ var pageViewsViewModel = function () {
         chartFactory.drawChartDaily(appConstants.chartType.pageViewMillions, that, that.dateFrom(), that.dateTo());
     };
 
-
     this.drawChartMonthly = function () {
         chartFactory.drawChartMonthly(appConstants.chartType.pageViewMillions, that);
     };

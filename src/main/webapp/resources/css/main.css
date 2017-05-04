@@ -44,3 +44,8 @@
 .notifyjs-corner .notifyjs-wrapper{
 	top:50px;
 }
+
+.datepicker{
+	background-color: #FFFFFF;
+	/*background: radial-gradient(red, yellow, green);*/
+}
