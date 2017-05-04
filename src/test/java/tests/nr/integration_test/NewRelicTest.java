@@ -4,6 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -66,9 +74,12 @@ public class NewRelicTest {
 
 	private String nrResponseAsJSON;
 
+	private final static String defaultFilePath = System.getProperty("user.home");
+
+	private BufferedWriter out;
 
 	@Test
-	public void getHttpDispatcher_call_count_daily_success() {
+	public void getHttpDispatcher_call_count_daily_success() throws IOException {
 
 		/**
 		 * public static LocalDateTime of(int year, int month, int
@@ -82,14 +93,27 @@ public class NewRelicTest {
 		 * from 0 to 59
 		 */
 
-		final LocalDateTime fromDate = LocalDateTime.now().minusDays(1).toLocalDate().atStartOfDay();
-		final LocalDateTime toDate = LocalDateTime.now().toLocalDate().atStartOfDay().minusSeconds(1);
+		// default interval of time the day before today from 0:00:00 to
+		// 23:59:59
+		// if you need to change the day overwrite fromDate and toDate variable
+		// using
+		// LocalDateTime.of(year, month, dayOfMonth, hour, minute, second)
+
+		// fromDate=LocalDateTime.of(2017, 4, 23, 00, 00, 00);
+		// toDate=LocalDateTime.of(2017, 4, 23, 23, 59, 59);
+		LocalDateTime fromDate = LocalDateTime.now().minusDays(1).toLocalDate().atStartOfDay();
+		LocalDateTime toDate = LocalDateTime.now().toLocalDate().atStartOfDay().minusSeconds(1);
+
+		fromDate = LocalDateTime.of(2017, 4, 23, 00, 00, 00);
+		toDate = LocalDateTime.of(2017, 4, 23, 23, 59, 59);
+
 		String metricName = PerPortalConstants.NR_METRICS[0];
 		String metricValue = PerPortalConstants.NEW_RELIC_CALL_COUNT_VALUE;
 
 		final NewRelicServiceRequest serviceRequest = new NewRelicServiceRequest(fromDate, toDate, metricName, 0, true,
 				metricValue, Integer.valueOf(feId));
 		try {
+
 			NewRelicServiceResponse serviceResponse = nrMetricService.getNrMetric(serviceRequest);
 			System.out.println("NR response is: " + serviceResponse);
 			assertNotNull(serviceResponse);
@@ -97,12 +121,12 @@ public class NewRelicTest {
 			assertNotNull(serviceResponse.getNewRelicResponse());
 			nrResponseAsJSON = convertToJSONNewRelicResponse(serviceResponse.getNewRelicResponse());
 			assertNotNull(nrResponseAsJSON);
-
+			addDataEntry();
 
 		} catch (Exception e) {
 			System.err.println("Exception: " + e);
 			fail(e.getMessage());
-		}
+		} 
 	}
 
 	@Test
@@ -136,6 +160,7 @@ public class NewRelicTest {
 			assertNotNull(serviceResponse.getNewRelicResponse());
 			nrResponseAsJSON = convertToJSONNewRelicResponse(serviceResponse.getNewRelicResponse());
 			assertNotNull(nrResponseAsJSON);
+			addDataEntry();
 
 		} catch (Exception e) {
 			System.err.println("Exception: " + e);
@@ -174,6 +199,7 @@ public class NewRelicTest {
 			assertNotNull(serviceResponse.getNewRelicResponse());
 			nrResponseAsJSON = convertToJSONNewRelicResponse(serviceResponse.getNewRelicResponse());
 			assertNotNull(nrResponseAsJSON);
+			addDataEntry();
 
 		} catch (Exception e) {
 			System.err.println("Exception: " + e);
@@ -212,7 +238,7 @@ public class NewRelicTest {
 			assertNotNull(serviceResponse.getNewRelicResponse());
 			nrResponseAsJSON = convertToJSONNewRelicResponse(serviceResponse.getNewRelicResponse());
 			assertNotNull(nrResponseAsJSON);
-
+			addDataEntry();
 		} catch (Exception e) {
 			System.err.println("Exception: " + e);
 			fail(e.getMessage());
@@ -243,5 +269,34 @@ public class NewRelicTest {
 		LOG.info("newRelicMongoItem: " + mongoDocument.toString());
 
 		return mongoDocument.toJson();
+	}
+
+	private boolean addDataEntry() throws IOException{
+		Path filePath;
+		Path path = Paths.get(defaultFilePath + File.separator + "nrdaily.txt");
+		try {
+			if (path.toFile().exists()) {
+
+				filePath = path;
+	
+
+			} else {
+				
+				filePath = Files.createFile(path);
+			}
+
+			LOG.debug("file created at {}", filePath);
+			out = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+			out.write(nrResponseAsJSON);
+			out.write("\n");
+			
+			return true;
+		} catch (Exception e) {
+			LOG.error("exception occured {}",e.getMessage());
+			return false;
+		}
+		finally{
+			out.close();
+		}
 	}
 }
