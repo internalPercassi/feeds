@@ -3,9 +3,9 @@ var chartFactory = function () {
     
     var _toBackEndData = function (aDate) {
         if (aDate) {
-            return moment(aDate).format('YYYY-MM-DD') + " 02:00"; //workaround for timezone...
+            return moment(aDate).format('YYYY-MM-DD') + " 00:00";
         } else {
-            return moment().format('YYYY-MM-DD') + " 02:00";//workaround for timezone...
+            return moment().format('YYYY-MM-DD') + " 00:00";
         }
     };
     

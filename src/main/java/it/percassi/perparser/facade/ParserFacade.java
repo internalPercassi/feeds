@@ -73,7 +73,7 @@ public class ParserFacade {
 			LOG.info("File {} is already present with md5 {} ", fileName, fileModel.getMd5());
 		}
 		long difference = System.nanoTime() - startTime;
-		LOG.info("Parsing executed in {} secons",Long.toString(TimeUnit.SECONDS.convert(difference, TimeUnit.NANOSECONDS)));
+		LOG.info("Parsing executed in {} seconds",Long.toString(TimeUnit.SECONDS.convert(difference, TimeUnit.NANOSECONDS)));
 		return fileModel.getMd5();
 	}
 
