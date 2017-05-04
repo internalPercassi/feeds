@@ -32,11 +32,16 @@ var historyController = function () {
             {"title": "Type"},
             {"title": "Upload Date"},
             {"title": "Actions"}
-        ]
+        ],
+        order: [[ 3, "desc" ]]
     };
 
     var _search = function (filters) {
-        var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
+        var sortConfig = {
+            sortField:"date",
+            sortType:-1
+        };
+        var url = urlFactory.getDocs(collectionName, filterFactory.getFilters(),sortConfig);
         _loadHistoryGrid(collectionName, url);
     };
 
