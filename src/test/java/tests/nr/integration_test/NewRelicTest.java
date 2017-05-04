@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import it.percassi.perparser.model.newrelic.NewRelicModel;
+import it.percassi.perparser.model.newrelic.NewRelicDailyModel;
 import it.percassi.perparser.model.newrelic.NewRelicResponse;
 import it.percassi.perparser.model.newrelic.Values;
 import it.percassi.perparser.service.newrelic.NewRelicServiceRequest;
@@ -226,7 +226,7 @@ public class NewRelicTest {
 		Values values = response.getMetricData().getMetrics().get(0).getTimeslices().get(0).getValues();
 		Date day = Date.from(zdt.toInstant());
 
-		NewRelicModel newRelicMongoItem = new NewRelicModel();
+		NewRelicDailyModel newRelicMongoItem = new NewRelicDailyModel();
 
 		boolean isAverageTimeNull = (values.getAverageResponseTime() == 0);
 		float summarizeValue = (!isAverageTimeNull) ? values.getAverageResponseTime() : values.getCallCount();
@@ -235,7 +235,7 @@ public class NewRelicTest {
 
 		newRelicMongoItem.setDay(day);
 		newRelicMongoItem.setMetricName(response.getMetricData().getMetrics().get(0).getName());
-		newRelicMongoItem.setMetricValue(valueName);
+		newRelicMongoItem.setValueName(valueName);
 		newRelicMongoItem.setValue(summarizeValue);
 
 		Document mongoDocument = newRelicMongoItem.toBSONDoc();
