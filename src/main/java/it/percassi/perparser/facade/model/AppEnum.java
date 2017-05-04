@@ -83,7 +83,9 @@ public class AppEnum {
 		EQUALS("$eq"),
 		NOT_EQUALS("$ne"),
 		GREATER("$gt"),
-		LESSER("$lt");
+                GREATER_EQUALS("$gte"),
+		LESSER("$lt"),
+                LESSER_EQUALS("$lte");
 
 		private String mongoCode;
 

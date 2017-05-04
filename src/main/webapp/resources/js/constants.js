@@ -23,22 +23,22 @@ var appConstants = {
     chartType:{
         pageViewMillions:{
             metricName:'EndUser',
-            valueName:'callCount',
+            valueName:'call_count',
             label:'Page Views'
         },
         loadTime:{
             metricName:'EndUser',
-            valueName:'averageResponseTime',
+            valueName:'average_response_time',
             label:'Load Time'
         },
         requestMillions:{
             metricName:'HttpDispatcher',
-            valueName:'callCount',
+            valueName:'call_count',
             label:'Server Requests'
         },
         responseTime:{
             metricName:'HttpDispatcher',
-            valueName:'averageResponseTime',
+            valueName:'average_response_time',
             label:'Server Response Time'
         }
     }

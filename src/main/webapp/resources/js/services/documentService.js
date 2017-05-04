@@ -11,8 +11,8 @@ var documentService = function () {
     
     var _getChartDataDaily = function(chartType,fromDate,toDate,callback){
         filterFactory.reset();
-        filterFactory.addFilter('day', '$gt', fromDate);
-        filterFactory.addFilter('day', '$lt', toDate);
+        filterFactory.addFilter('day', '$gte', fromDate);
+        filterFactory.addFilter('day', '$lte', toDate);
         filterFactory.addFilter('metricName', '$eq', chartType.metricName);
         filterFactory.addFilter('valueName', '$eq', chartType.valueName);
         var sortConfig = {

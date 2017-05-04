@@ -4,7 +4,7 @@
 var responseTimeViewModel = function () {
     var that = this;
     that.dateFrom = ko.observable(moment().add(-7, 'day'));
-    that.dateTo = ko.observable(moment());
+    that.dateTo = ko.observable(moment().add(-1, 'day'));
     that.chartData = ko.observable();
 
 
