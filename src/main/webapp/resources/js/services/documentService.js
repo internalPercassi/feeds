@@ -8,13 +8,13 @@ var documentService = function () {
         restService.post(url, callback);
 
     };
-
-    var _getPageViewMillionsDaily = function(fromDate,toDate,callback){
+    
+    var _getChartDataDaily = function(chartType,fromDate,toDate,callback){
         filterFactory.reset();
         filterFactory.addFilter('day', '$gt', fromDate);
         filterFactory.addFilter('day', '$lt', toDate);
-        filterFactory.addFilter('metricName', '$eq', 'EndUser');
-        filterFactory.addFilter('valueName', '$eq', 'callCount');
+        filterFactory.addFilter('metricName', '$eq', chartType.metricName);
+        filterFactory.addFilter('valueName', '$eq', chartType.valueName);
         var sortConfig = {
             sortField:'day',
             sortType:1
@@ -23,10 +23,10 @@ var documentService = function () {
         restService.post(url, callback);
     };
     
-    var _getPageViewMillionsMonthly = function(callback){
+    var _getChartDataMonthly = function(chartType,callback){
         filterFactory.reset();
-        filterFactory.addFilter('metricName', '$eq', 'EndUser');
-        filterFactory.addFilter('valueName', '$eq', 'callCount');
+        filterFactory.addFilter('metricName', '$eq', chartType.metricName);
+        filterFactory.addFilter('valueName', '$eq', chartType.valueName);
         var sortConfig = {
             sortField:'yearMonth',
             sortType:1
@@ -45,11 +45,11 @@ var documentService = function () {
         getOS: function (md5,callback) {
             return _getParsedDocuments(appConstants.collectionNames.OS,md5,callback);
         },
-        getPageViewMillionsDaily: function (fromDate,toDate,callback) {
-            return _getPageViewMillionsDaily(fromDate,toDate,callback);
+        getChartDataDaily: function (chartType,fromDate,toDate,callback) {
+            return _getChartDataDaily(chartType,fromDate,toDate,callback);
         },
-        getPageViewMillionsMonthly: function (callback) {
-            return _getPageViewMillionsMonthly(callback);
+        getChartDataMonthly: function (chartType,callback) {
+            return _getChartDataMonthly(chartType,callback);
         }
     }
 }();

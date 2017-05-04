@@ -1,148 +1,149 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>PerPortal</title>
-		<link rel="icon" type="image/x-icon" href="/PerParserSPA/resources/images/logo-p.png" />
-		
-		<!-- meta -->
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">    								
-		
-		<!-- css -->
-		<link href="/PerParserSPA/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" >
-		<link href="/PerParserSPA/resources/css/dashboard.css" rel="stylesheet" type="text/css" >	
-		<link href="/PerParserSPA/resources/css/main.css" rel="stylesheet" type="text/css" >	
-		<link href="/PerParserSPA/resources/libraries/DataTables-1.10.13/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<link href="/PerParserSPA/resources/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-         <link href="/PerParserSPA/resources/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" >
-<!--         <link href="/PerParserSPA/resources/bootstrap/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" > -->
-		
-		<!-- libraries -->
-		<script src="/PerParserSPA/resources/libraries/jquery-3.1.1.min.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/libraries/chart/chart.min.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/libraries/knockout/knockout.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/libraries/knockout/knockout.chart.min.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/libraries/sammy/sammy.min.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/libraries/sammy/sammy.template.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/bootstrap/js/bootstrap.min.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/libraries/jquery.bootpag.min.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/libraries/DataTables-1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script>
-		<script src="/PerParserSPA/resources/libraries/DataTables-1.10.13/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
-		<script src="/PerParserSPA/resources/libraries/DataTables-1.10.13/js/dataTables.scroller.min.js" type="text/javascript"></script>
-		<script src="/PerParserSPA/resources/libraries/lodash/lodash.min.js" type="text/javascript"></script>
-		<script src="/PerParserSPA/resources/libraries/bootstrap-notify.min.js" type="text/javascript"></script>
+    <head>
+        <title>PerPortal</title>
+        <link rel="icon" type="image/x-icon" href="/PerParserSPA/resources/images/logo-p.png" />
+
+        <!-- meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">    								
+
+        <!-- css -->
+        <link href="/PerParserSPA/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" >
+        <link href="/PerParserSPA/resources/css/dashboard.css" rel="stylesheet" type="text/css" >	
+        <link href="/PerParserSPA/resources/css/main.css" rel="stylesheet" type="text/css" >	
+        <link href="/PerParserSPA/resources/libraries/DataTables-1.10.13/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/PerParserSPA/resources/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/PerParserSPA/resources/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" >
+        <!--         <link href="/PerParserSPA/resources/bootstrap/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" > -->
+
+        <!-- libraries -->
+        <script src="/PerParserSPA/resources/libraries/jquery-3.1.1.min.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/libraries/chart/chart.min.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/libraries/knockout/knockout.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/libraries/knockout/knockout.chart.min.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/libraries/sammy/sammy.min.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/libraries/sammy/sammy.template.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/bootstrap/js/bootstrap.min.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/libraries/jquery.bootpag.min.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/libraries/DataTables-1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <script src="/PerParserSPA/resources/libraries/DataTables-1.10.13/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+        <script src="/PerParserSPA/resources/libraries/DataTables-1.10.13/js/dataTables.scroller.min.js" type="text/javascript"></script>
+        <script src="/PerParserSPA/resources/libraries/lodash/lodash.min.js" type="text/javascript"></script>
+        <script src="/PerParserSPA/resources/libraries/bootstrap-notify.min.js" type="text/javascript"></script>
         <script src="/PerParserSPA/resources/libraries/moment/moment.min.js" type="text/javascript"></script>
-         <script src="/PerParserSPA/resources/bootstrap/js/bootstrap-datetimepicker.min.js" type="text/javascript" ></script>
-<!--         <script src="/PerParserSPA/resources/bootstrap/js/bootstrap-datepicker.min.js" type="text/javascript" ></script> -->
-		
-		<!-- directives -->
-		<script src="/PerParserSPA/resources/js/directives/dateTimePicker.js" type="text/javascript" ></script>
-		
-		<!-- main -->
-		<script src="/PerParserSPA/resources/js/app.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/constants.js" type="text/javascript" ></script>
-		
-		<!-- services -->
-		<script src="/PerParserSPA/resources/js/services/restService.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/services/documentService.js" type="text/javascript" ></script>
-                
-		<!-- controllers -->
-		<script src="/PerParserSPA/resources/js/controllers/historyController.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/controllers/facebookController.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/controllers/glController.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/controllers/osController.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/controllers/pageViewsController.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/controllers/loadTimeController.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/controllers/requestController.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/controllers/responseTimeController.js" type="text/javascript" ></script>
-		
-		<!-- factories -->
-		<script src="/PerParserSPA/resources/js/factories/tableFactory.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/factories/filterFactory.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/factories/urlFactory.js" type="text/javascript" ></script>
-		
-		<!-- viewmodels -->
-		<script src="/PerParserSPA/resources/js/viewmodels/historyViewModel.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/viewmodels/facebookViewModel.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/viewmodels/glViewModel.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/viewmodels/osViewModel.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/viewmodels/pageViewsViewModel.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/viewmodels/loadTimeViewModel.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/viewmodels/requestViewModel.js" type="text/javascript" ></script>
-		<script src="/PerParserSPA/resources/js/viewmodels/responseTimeViewModel.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/bootstrap/js/bootstrap-datetimepicker.min.js" type="text/javascript" ></script>
+        <!--         <script src="/PerParserSPA/resources/bootstrap/js/bootstrap-datepicker.min.js" type="text/javascript" ></script> -->
 
-	</head>
-	
-	<body>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-		      <a class="headerLogo" href="#">PerPortal</a>
-		    </div>
-		    <div id="navbar" class="navbar-collapse collapse">
-		      <ul class="nav navbar-nav navbar-right">
-		        <li><a href="#">Dashboard</a></li>
-		        <li><a href="#">Settings</a></li>
-		        <li><a href="#">Help</a></li>
-		      </ul>
-		    </div>
-		  </div>
-		</nav>
-		
-		<div class="col-sm-3 col-md-2 sidebar">
-			  <ul class="nav nav-sidebar">
-				    <li class="active">
-				    	<a href="#/history/">History<span class="sr-only">(current)</span></a>
-				    </li>
-				   
-				    <li class="active">
-		                 <a href="javascript:;" data-toggle="collapse" data-target="#newRelicMenu">New Relic <i class="fa fa-fw fa-caret-down"></i></a>
-			                 <ul id="newRelicMenu" class="collapse navbarUl">
-			                     <li class="active">
-		                           	<a href="javascript:;" data-toggle="collapse" data-target="#newRelicSubMenu">End user time <i class="fa fa-fw fa-caret-down"></i></a>
-						                 <ul id="newRelicSubMenu" class="collapse navbarUl">
-						                     <li>
-						                         <a href="#/pageViews">Page Views millions</a>
-						                     </li>
-						                      <li>
-						                         <a href="#/loadTime">Load time sec</a>
-						                     </li>
-						                 </ul>
-						           
-				                      <a href="javascript:;" data-toggle="collapse" data-target="#applicationServerMenu">Application server <i class="fa fa-fw fa-caret-down"></i></a>
-						                 <ul id="applicationServerMenu" class="collapse navbarUl">
-						                     <li>
-						                         <a href="#/request">Request millions</a>
-						                     </li>
-						                     <li>
-						                         <a href="#/responseTime">Resp. time ms</a>
-						                     </li>
-						                 </ul>
-									         
-			                     </li>
-			                 </ul>
-			          
-		             </li>
-			  </ul>
+        <!-- directives -->
+        <script src="/PerParserSPA/resources/js/directives/dateTimePicker.js" type="text/javascript" ></script>
 
-		</div>
-		
-		<div class="main-container">
-		  	<div class="container-fluid">
-		    	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="app">
-					<div class="progress" data-notify="progressbar">
-		    	</div>
-		    </div>
-		  </div>
-		</div>
-	  
-	</body>
+        <!-- main -->
+        <script src="/PerParserSPA/resources/js/app.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/constants.js" type="text/javascript" ></script>
+
+        <!-- services -->
+        <script src="/PerParserSPA/resources/js/services/restService.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/services/documentService.js" type="text/javascript" ></script>
+
+        <!-- controllers -->
+        <script src="/PerParserSPA/resources/js/controllers/historyController.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/controllers/facebookController.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/controllers/glController.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/controllers/osController.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/controllers/pageViewsController.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/controllers/loadTimeController.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/controllers/requestController.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/controllers/responseTimeController.js" type="text/javascript" ></script>
+
+        <!-- factories -->
+        <script src="/PerParserSPA/resources/js/factories/tableFactory.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/factories/filterFactory.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/factories/urlFactory.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/factories/chartFactory.js" type="text/javascript" ></script>
+
+        <!-- viewmodels -->
+        <script src="/PerParserSPA/resources/js/viewmodels/historyViewModel.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/viewmodels/facebookViewModel.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/viewmodels/glViewModel.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/viewmodels/osViewModel.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/viewmodels/pageViewsViewModel.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/viewmodels/loadTimeViewModel.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/viewmodels/requestViewModel.js" type="text/javascript" ></script>
+        <script src="/PerParserSPA/resources/js/viewmodels/responseTimeViewModel.js" type="text/javascript" ></script>
+
+    </head>
+
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="headerLogo" href="#">PerPortal</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="#">Settings</a></li>
+                        <li><a href="#">Help</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active">
+                    <a href="#/history/">History<span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="active">
+                    <a href="javascript:;" data-toggle="collapse" data-target="#newRelicMenu">New Relic <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="newRelicMenu" class="collapse navbarUl">
+                        <li class="active">
+                            <a href="javascript:;" data-toggle="collapse" data-target="#newRelicSubMenu">End user time <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="newRelicSubMenu" class="collapse navbarUl">
+                                <li>
+                                    <a href="#/pageViews">Page Views Thousands</a>
+                                </li>
+                                <li>
+                                    <a href="#/loadTime">Load Time Sec</a>
+                                </li>
+                            </ul>
+
+                            <a href="javascript:;" data-toggle="collapse" data-target="#applicationServerMenu">Application server <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="applicationServerMenu" class="collapse navbarUl">
+                                <li>
+                                    <a href="#/request">Request Millions</a>
+                                </li>
+                                <li>
+                                    <a href="#/responseTime">Resp. Time ms</a>
+                                </li>
+                            </ul>
+
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="main-container">
+            <div class="container-fluid">
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="app">
+                    <div class="progress" data-notify="progressbar">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
 
 </html>

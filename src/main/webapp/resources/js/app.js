@@ -56,6 +56,7 @@ var app = $.sammy('#app', function () {
                     var vm = new loadTimeViewModel();
                     loadTimeController.setViewModel(vm);
                     loadView(response, vm);
+                    vm.drawChartDaily();
                 });
     });
 
@@ -66,6 +67,7 @@ var app = $.sammy('#app', function () {
                     var vm = new requestViewModel();
                     requestController.setViewModel(vm);
                     loadView(response, vm);
+                    vm.drawChartDaily();
                 });
     });
 
@@ -76,6 +78,7 @@ var app = $.sammy('#app', function () {
                     var vm = new responseTimeViewModel();
                     responseTimeController.setViewModel(vm);
                     loadView(response, vm);
+                    vm.drawChartDaily();
                 });
     });
 
