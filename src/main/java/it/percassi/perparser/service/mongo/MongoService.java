@@ -52,8 +52,8 @@ public class MongoService {
         return ret;
     }
 
-    public boolean isFileAlreadyUploaded(String md5) throws IOException {
-        return mongoRepository.isFileAlreadyUploaded(md5);
+    public boolean isFileAlreadyUploaded(String md5, String type) throws IOException {
+        return mongoRepository.isFileAlreadyUploaded(md5,type);
     }
 
     public void saveUploadedFileModel(UploadedFileModel uploadedFile) throws IOException {

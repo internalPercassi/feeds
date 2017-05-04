@@ -3,8 +3,6 @@ var historyViewModel = function () {
 
 	var _that = this;
 
-	this.isLoading = ko.observable(false);
-	
 	this.types = [
 		{name: "GL"},
 		{name: "OS"},

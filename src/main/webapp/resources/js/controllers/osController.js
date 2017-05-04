@@ -29,8 +29,6 @@ var osController = function () {
     };
 
     var _loadOSGrid = function (collectionNamePar, url) {
-        _that.vm.isLoading(true);
-
         if (collectionNamePar) {
             collectionName = collectionNamePar;
         }
@@ -54,8 +52,7 @@ var osController = function () {
 
     var _loadNewGrid = function (md5, viewModel) {
         _setViewModel(viewModel);
-        _that.vm.isLoading(true);
-        documentService.getOS(md5, callback);
+       documentService.getOS(md5, callback);
     };
     
     var callback = function (res) {
@@ -67,7 +64,6 @@ var osController = function () {
             $(selectorId).empty();
         }
         osTable = $(selectorId).DataTable(tabOpt);
-        _that.vm.isLoading(false);
     };   
     
     return {

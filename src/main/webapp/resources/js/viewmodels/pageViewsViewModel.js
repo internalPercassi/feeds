@@ -7,7 +7,6 @@ var pageViewsViewModel = function () {
     that.dateTo = ko.observable(moment().add(-1, 'day'));
     that.chartData = ko.observable();
 
-
     this.drawChartDaily = function () {
         chartFactory.drawChartDaily(appConstants.chartType.pageViewMillions, that, that.dateFrom(), that.dateTo());
     };

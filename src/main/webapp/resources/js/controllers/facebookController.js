@@ -58,7 +58,6 @@ var facebookController = function () {
     };
 
     var _loadFacebookGrid = function (collectionNamePar, url) {
-        _that.vm.isLoading(true);
         if (collectionNamePar) {
             collectionName = collectionNamePar;
         }
@@ -79,8 +78,6 @@ var facebookController = function () {
 
     var _loadNewGrid = function (md5, viewModel) {
         _setViewModel(viewModel);
-        _that.vm.isLoading(true);
-
         documentService.getFacebook(md5, callback);
     };
     
@@ -93,7 +90,6 @@ var facebookController = function () {
             $(selectorId).empty();
         }
         facebookTable = $(selectorId).DataTable(tabOpt);
-        _that.vm.isLoading(false);
     };
     
     return {

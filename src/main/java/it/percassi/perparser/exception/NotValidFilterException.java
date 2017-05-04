@@ -4,7 +4,7 @@ package it.percassi.perparser.exception;
  *
  * @author Daniele Sperto
  */
-public class NotValidFilterException extends Exception {
+public class NotValidFilterException extends PerParserException {
 
 	public final static String MSG_PREABLE = "Not valid filter: ";
 

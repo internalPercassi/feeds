@@ -124,7 +124,6 @@ public class PerPerserController {
 			return new ResponseEntity<String>(buf.toString(), httpHeader, HttpStatus.OK);
 
 		} else {
-
 			return new ResponseEntity<String>(JSON.serialize(jsonObj), HttpStatus.OK);
 		}
 

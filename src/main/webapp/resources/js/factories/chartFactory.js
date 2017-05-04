@@ -120,8 +120,8 @@ var chartFactory = function () {
     };
     
     return {
-        drawChartDaily: function (chartType,vm,dateFrom,dateTo) {
-            return _drawChartDaily(chartType,vm,dateFrom,dateTo);
+        drawChartDaily: function (chartType,dateFrom,dateTo) {
+            return _drawChartDaily(chartType,dateFrom,dateTo);
         },
         drawChartMonthly: function (chartType, vm) {
             return _drawChartMonthly(chartType, vm);

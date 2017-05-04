@@ -4,7 +4,7 @@ package it.percassi.perparser.exception;
  *
  * @author Daniele Sperto
  */
-public class NotValidFileException extends Exception{
+public class NotValidFileException extends PerParserException{
 
 	public final static String MSG_PREABLE = "Not valid file: ";
 	

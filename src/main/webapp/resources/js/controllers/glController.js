@@ -35,8 +35,6 @@ var glController = function () {
     };
 
     var _loadGlGrid = function (collectionNamePar, url) {
-        _that.vm.isLoading(true);
-
         if (collectionNamePar) {
             collectionName = collectionNamePar;
         }
@@ -53,7 +51,6 @@ var glController = function () {
 
      var _loadNewGrid = function (md5,viewModel) {
         _setViewModel(viewModel);
-        _that.vm.isLoading(true);
         documentService.getGL(md5,callback);
     };
     
@@ -67,7 +64,6 @@ var glController = function () {
             $(selectorId).empty();
         }
         glTable = $(selectorId).DataTable(tabOpt);
-        _that.vm.isLoading(false);
     }
     return {
         init: function () {

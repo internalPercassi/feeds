@@ -55,7 +55,7 @@ public class ParserFacade {
 		UploadedFileModel fileModel = new UploadedFileModel(fileName, bytes, fileType);
 		long startTime = System.nanoTime();
 		LOG.info("Start parsing of file {} , type is {}, length is {} Bytes", fileName, fileType, bytes.length);
-		if (!mongoService.isFileAlreadyUploaded(fileModel.getMd5())) {
+		if (!mongoService.isFileAlreadyUploaded(fileModel.getMd5(),fileModel.getType())) {
                     BaseParser parser = getParser(fileType);
 			List<BaseModel> feeds = parser.parse(inputStream,locale);
 			if (feeds.size() > 0) {
@@ -70,7 +70,8 @@ public class ParserFacade {
 				LOG.info("Nothing to import for the file {} ", fileName);
 			}
 		} else {
-			LOG.info("File {} is already present with md5 {} ", fileName, fileModel.getMd5());
+			String errMsg = "File "+fileName+" is already present ";
+                        throw new NotValidFileException(errMsg);
 		}
 		long difference = System.nanoTime() - startTime;
 		LOG.info("Parsing executed in {} seconds",Long.toString(TimeUnit.SECONDS.convert(difference, TimeUnit.NANOSECONDS)));

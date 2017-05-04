@@ -140,7 +140,7 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
         int availabilityIdx = 19;
         Matcher matcher;
         if (tokens.length != ROW_LENGTH) {
-            throw new NotValidFileException("Length expeted " + ROW_LENGTH + ", get " + tokens.length);
+            throw new NotValidFileException("Row length expected " + ROW_LENGTH + ", get " + tokens.length);
         }
         
         matcher = RegexPatterns.URL_PATTERN.matcher(tokens[linkIdx].trim());

@@ -109,10 +109,17 @@ public class MongoDocRepository extends BaseRepository {
         this.getDb().getCollection(UPLOAD_FILE_COLLECTION).replaceOne(eq("md5", uploadedFile.getMd5()), jsonToInsert);
     }
 
-    public boolean isFileAlreadyUploaded(String md5) throws IOException {
-        BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.put("md5", md5);
-        MongoCursor cursor = this.getDb().getCollection(UPLOAD_FILE_COLLECTION).find(whereQuery).iterator();
+    public boolean isFileAlreadyUploaded(String md5,String type) throws IOException {
+        List<BasicDBObject> whereClauses = new ArrayList<>();
+        BasicDBObject whereQueryMd5 = new BasicDBObject();
+        whereQueryMd5.put("md5", md5);
+        whereClauses.add(whereQueryMd5);
+        BasicDBObject whereQueryType = new BasicDBObject();
+        whereQueryType.put("type", type);
+        whereClauses.add(whereQueryMd5);
+        BasicDBObject where = new BasicDBObject();
+        where.put("$and", whereClauses);
+        MongoCursor cursor = this.getDb().getCollection(UPLOAD_FILE_COLLECTION).find(where).iterator();
         try {
             if (cursor.hasNext()) {
                 return true;

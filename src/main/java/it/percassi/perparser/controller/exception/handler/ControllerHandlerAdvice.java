@@ -2,6 +2,7 @@ package it.percassi.perparser.controller.exception.handler;
 
 import it.percassi.perparser.controller.response.BaseControllerResponse;
 import it.percassi.perparser.exception.NotValidFileException;
+import it.percassi.perparser.exception.PerParserException;
 import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,25 +16,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ControllerHandlerAdvice {
 
 	private final static Logger LOG = LogManager.getLogger(ControllerHandlerAdvice.class);
-
-	@ExceptionHandler(IOException.class)
-	public ResponseEntity<String> handlerException(Exception ex) {
-		LOG.error("Exception occured", ex);
-		final BaseControllerResponse res = new BaseControllerResponse(ex.getMessage(),
-				HttpStatus.INTERNAL_SERVER_ERROR);
-		return new ResponseEntity<String>(res.getMessage(), res.getErrorCode());
-	}
-
-	@ExceptionHandler(NumberFormatException.class)
-	public ResponseEntity<String> numberFormatException(Exception ex) {
-		LOG.error("Exception occured", ex);
-		final BaseControllerResponse res = new BaseControllerResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
-		return new ResponseEntity<String>(res.getMessage(), res.getErrorCode());
-
-	}
-
-	@ExceptionHandler(NotValidFileException.class)
-	public ResponseEntity<String> notValidFileExceptionHandler(Exception ex) {
+        private final static String DEF_ERR_MSG = "A technical error occurred";
+        
+	
+	@ExceptionHandler(PerParserException.class)
+	public ResponseEntity<String> perParserExceptionHandler(Exception ex) {
 		LOG.error("Exception occured", ex);
 		final BaseControllerResponse res = new BaseControllerResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<String>(res.getMessage(), res.getErrorCode());
@@ -43,7 +30,7 @@ public class ControllerHandlerAdvice {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> genericExceptionHandler(Exception ex) {
 		LOG.error("Exception occured", ex);
-		final BaseControllerResponse res = new BaseControllerResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+		final BaseControllerResponse res = new BaseControllerResponse(DEF_ERR_MSG, HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<String>(res.getMessage(), res.getErrorCode());
 
 	}

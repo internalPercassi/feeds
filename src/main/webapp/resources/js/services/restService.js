@@ -11,6 +11,7 @@ var restService = function () {
 			processData: false,
 			type: type,
 			beforeSend: function () {
+                            $('#loading').show();
 			},
 			success: function (res) {
 				if (res && res.data && res.data.length > 0) {
@@ -22,8 +23,10 @@ var restService = function () {
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.error(JSON.stringify(jqXHR));
+                                $.notify(jqXHR.responseText, "error");
 			},
 			complete: function () {
+                            $('#loading').hide();
 			}
 		});
 	};

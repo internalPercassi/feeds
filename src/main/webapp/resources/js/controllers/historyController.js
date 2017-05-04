@@ -58,23 +58,22 @@ var historyController = function () {
 			processData: false,
 			type: 'POST',
 			beforeSend: function () {
-				_that.vm.isLoading(true);
+				$('#loading').show();
 			},
 			success: function (res) {
 				try {
 					historyController.showUploadedFiles();
 					$.notify("File uploaded successfully", "success");
 				} catch (e) {
-					_that.vm.isLoading(false);
 					console.error(e);
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("ERROR, textStatus=" + textStatus + ", errorThrown=" + errorThrown);
-				$.notify("Error during upload", "error");
+				$.notify(jqXHR.responseText, "error");
 			},
 			complete: function () {
-				_that.vm.isLoading(false);
+				$('#loading').hide();
 			}
 		});
 	};
@@ -157,14 +156,14 @@ var historyController = function () {
 			contentType: "application/json",
 			type: 'POST',
 			beforeSend: function () {
-				_that.vm.isLoading(true);
+				$('#loading').show();
 			},
 			success: function (res) {
 				try {
 					historyController.showUploadedFiles();
 					$.notify("File deleted successfully", "success");
 				} catch (e) {
-					_that.vm.isLoading(false);
+					$('#loading').hide();
 					console.error(e);
 				}
 			},
@@ -173,7 +172,7 @@ var historyController = function () {
 				$.notify("Error during file delete", "error");
 			},
 			complete: function () {
-				_that.vm.isLoading(false);
+				$('#loading').hide();
 			}
 		});
 	}

@@ -3,8 +3,6 @@ var glViewModel = function () {
 
 	var _that = this;
 
-	this.isLoading = ko.observable(false);
-	
 	this.filters = {
 		minstock: ko.observable(''),
 		maxstock: ko.observable(''),
