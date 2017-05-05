@@ -84,6 +84,7 @@ var appConstants = {
                                 labelString: 'Thousands'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + 'k';
                                 }
@@ -124,6 +125,7 @@ var appConstants = {
                                 labelString: 'Millions'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + 'M';
                                 }
@@ -170,6 +172,7 @@ var appConstants = {
                                 labelString: 'Millions'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + 'M';
                                 }
@@ -215,6 +218,7 @@ var appConstants = {
                                 labelString: 'Seconds'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + ' sec.';
                                 }
@@ -254,6 +258,7 @@ var appConstants = {
                                 labelString: 'Seconds'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + ' sec.';
                                 }
@@ -294,6 +299,7 @@ var appConstants = {
                                 labelString: 'Seconds'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + ' sec.';
                                 }
@@ -339,6 +345,7 @@ var appConstants = {
                                 labelString: 'Millions'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + 'M';
                                 }
@@ -379,6 +386,7 @@ var appConstants = {
                                 labelString: 'Millions'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + 'M';
                                 }
@@ -419,6 +427,7 @@ var appConstants = {
                                 labelString: 'Millions'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + 'M';
                                 }
@@ -464,6 +473,7 @@ var appConstants = {
                                 labelString: 'Milliseconds'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + ' ms';
                                 }
@@ -504,6 +514,7 @@ var appConstants = {
                                 labelString: 'Milliseconds'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + ' ms';
                                 }
@@ -544,6 +555,7 @@ var appConstants = {
                                 labelString: 'Milliseconds'
                             },
                             ticks: {
+                                beginAtZero: true,
                                 callback: function (label, index, labels) {
                                     return parseFloat(label).toFixed(1) + ' ms';
                                 }
