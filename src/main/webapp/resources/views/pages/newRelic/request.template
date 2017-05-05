@@ -1,11 +1,14 @@
 
-<h1 class="page-header">Server Requests Millions</h1>
+<h1 class="page-header">Server Requests</h1>
 <ul class="nav nav-tabs">
     <li class="active">
         <a  href="#1" data-toggle="tab" data-bind="click: drawChartDaily">Specific Period</a>
     </li>
     <li>
-        <a href="#2" data-toggle="tab" data-bind="click: drawChartMonthly">Monthly Report</a>
+        <a href="#2" data-toggle="tab" data-bind="click: drawChartWeekly">Weekly Report</a>
+    </li>
+    <li>
+        <a href="#3" data-toggle="tab" data-bind="click: drawChartMonthly">Monthly Report</a>
     </li>
 </ul>
 
@@ -41,11 +44,11 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane" id="2">
-    </div>
+     <div class="tab-pane" id="2"></div>
+    <div class="tab-pane" id="3"></div>
 </div>
 <div>
-    &nbsp;<canvas data-bind="chart: { type: 'line', data: chartData }"></canvas>
+    &nbsp;<canvas data-bind="chart: { type: 'line', data: chartData,options: chartOptions }"></canvas>
 </div>
 <script type="text/javascript">
     var dateToday = new Date();

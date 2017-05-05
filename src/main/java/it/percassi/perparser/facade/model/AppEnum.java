@@ -8,6 +8,7 @@ package it.percassi.perparser.facade.model;
 import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.facade.model.UploadedFileModel;
 import it.percassi.perparser.model.newrelic.NewRelicDailyModel;
+import it.percassi.perparser.model.newrelic.NewRelicWeeklyModel;
 import it.percassi.perparser.service.parsers.model.FacebookFeed;
 import it.percassi.perparser.service.parsers.model.GLmodel;
 import it.percassi.perparser.service.parsers.model.OSmodel;
@@ -51,7 +52,8 @@ public class AppEnum {
 		WAF("WAF", WAFModel.class),
 		UPLOADED_FILE("uploadedFile", UploadedFileModel.class),
                 NEW_RELIC_DAILY("newRelicDaily", NewRelicDailyModel.class),
-                NEW_RELIC_MONTHLY("newRelicMonthly", NewRelicDailyModel.class);
+                NEW_RELIC_MONTHLY("newRelicMonthly", NewRelicDailyModel.class),
+                NEW_RELIC_WEEKLY("newRelicWeekly", NewRelicWeeklyModel.class);
 
 		private String code;
 		private Class modelClass;
