@@ -35,6 +35,18 @@ var documentService = function () {
         restService.post(url, callback);
     };
     
+    var _getChartDataWeekly = function(chartType,callback){
+        filterFactory.reset();
+        filterFactory.addFilter('metricName', '$eq', chartType.metricName);
+        filterFactory.addFilter('valueName', '$eq', chartType.valueName);
+        var sortConfig = {
+            sortField:'weekNumber',
+            sortType:1
+        };
+        var url = urlFactory.getDocs(appConstants.collectionNames.newRelicWeekly, filterFactory.getFilters(),sortConfig);
+        restService.post(url, callback);
+    };
+    
     return {
         getGL: function (md5,callback) {
             return _getParsedDocuments(appConstants.collectionNames.GL,md5,callback);
@@ -50,6 +62,9 @@ var documentService = function () {
         },
         getChartDataMonthly: function (chartType,callback) {
             return _getChartDataMonthly(chartType,callback);
+        },
+        getChartDataWeekly: function (chartType,callback) {
+            return _getChartDataWeekly(chartType,callback);
         }
     }
 }();

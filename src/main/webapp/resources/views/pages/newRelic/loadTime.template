@@ -1,11 +1,14 @@
 
-<h1 class="page-header">Load Time Seconds</h1>
+<h1 class="page-header">Load Time</h1>
 <ul class="nav nav-tabs">
     <li class="active">
         <a  href="#1" data-toggle="tab" data-bind="click: drawChartDaily">Specific Period</a>
     </li>
     <li>
-        <a href="#2" data-toggle="tab" data-bind="click: drawChartMonthly">Monthly Report</a>
+        <a href="#2" data-toggle="tab" data-bind="click: drawChartWeekly">Weekly Report</a>
+    </li>
+    <li>
+        <a href="#3" data-toggle="tab" data-bind="click: drawChartMonthly">Monthly Report</a>
     </li>
 </ul>
 
@@ -16,7 +19,7 @@
             <div class="col-md-6">
                 <div class="col-md-4">
                     <label class="control-label">From:</label>
-                    <div class="input-group date" data-bind='dateTimePicker: dateFrom' >
+                    <div class="input-group date" data-bind='dateTimePicker: dateFrom, maxDate: dateTo' >
                         <input class="form-control  input-group-addon datepicker"  onkeydown="return false"/>
                         <span class="input-group-addon">
                             <i class="glyphicon glyphicon-calendar"></i>
@@ -25,7 +28,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="control-label">To:</label>
-                    <div class="input-group date" data-bind='dateTimePicker: dateTo' >
+                    <div class="input-group date" data-bind='dateTimePicker: dateTo, maxDate: moment().subtract(1,"days")' >
                         <input class="form-control  input-group-addon datepicker"  onkeydown="return false"/>
                         <span class="input-group-addon">
                             <i class="glyphicon glyphicon-calendar"></i>
@@ -41,11 +44,11 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane" id="2">
-    </div>
+    <div class="tab-pane" id="2"></div>
+    <div class="tab-pane" id="3"></div>
 </div>
 <div>
-    &nbsp;<canvas data-bind="chart: { type: 'line', data: chartData }"></canvas>
+    &nbsp;<canvas data-bind="chart: { type: 'line', data: chartData,options: chartOptions }"></canvas>
 </div>
 <script type="text/javascript">
     var dateToday = new Date();
