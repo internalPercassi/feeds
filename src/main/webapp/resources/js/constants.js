@@ -103,7 +103,7 @@ var appConstants = {
                         beforeBody: labelChartVoid,
                         beforeLabel: function (tooltipItem, data) {
                             var ret = data.labels[tooltipItem.index];
-                            return ret;
+                            return 'week '+ret;
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
@@ -237,7 +237,7 @@ var appConstants = {
                         beforeBody: labelChartVoid,
                         beforeLabel: function (tooltipItem, data) {
                             var ret = data.labels[tooltipItem.index];
-                            return ret;
+                            return 'week '+ret;
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
@@ -364,7 +364,7 @@ var appConstants = {
                         beforeBody: labelChartVoid,
                         beforeLabel: function (tooltipItem, data) {
                             var ret = data.labels[tooltipItem.index];
-                            return ret;
+                            return 'week '+ret;
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
