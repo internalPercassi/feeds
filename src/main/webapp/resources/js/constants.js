@@ -150,7 +150,8 @@ var appConstants = {
                         beforeBody: labelChartVoid,
                         beforeLabel: function (tooltipItem, data) {
                             var ret = data.labels[tooltipItem.index];
-                            return ret;
+                            var year = data.datasets[tooltipItem.datasetIndex].label;
+                            return ret+ ' '+year;
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
@@ -277,7 +278,8 @@ var appConstants = {
                         beforeBody: labelChartVoid,
                         beforeLabel: function (tooltipItem, data) {
                             var ret = data.labels[tooltipItem.index];
-                            return ret;
+                            var year = data.datasets[tooltipItem.datasetIndex].label;
+                            return ret+ ' '+year;
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
@@ -405,7 +407,8 @@ var appConstants = {
                         beforeBody: labelChartVoid,
                         beforeLabel: function (tooltipItem, data) {
                             var ret = data.labels[tooltipItem.index];
-                            return ret;
+                            var year = data.datasets[tooltipItem.datasetIndex].label;
+                            return ret+ ' '+year;
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
@@ -533,7 +536,8 @@ var appConstants = {
                         beforeBody: labelChartVoid,
                         beforeLabel: function (tooltipItem, data) {
                             var ret = data.labels[tooltipItem.index];
-                            return ret;
+                            var year = data.datasets[tooltipItem.datasetIndex].label;
+                            return ret+ ' '+year;
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
