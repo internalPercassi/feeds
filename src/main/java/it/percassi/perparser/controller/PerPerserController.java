@@ -1,12 +1,12 @@
 package it.percassi.perparser.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,16 +14,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +30,6 @@ import com.mongodb.util.JSON;
 
 import it.percassi.perparser.controller.request.DeleteDocumentRequest;
 import it.percassi.perparser.controller.request.GetDocumentsRequest;
-import it.percassi.perparser.controller.request.GetNewRelicControllerRequest;
 import it.percassi.perparser.controller.request.UploadFileControllerRequest;
 import it.percassi.perparser.controller.response.BaseControllerResponse;
 import it.percassi.perparser.controller.validator.GetDocumentsRequestValidator;
@@ -45,8 +40,6 @@ import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
 import it.percassi.perparser.utils.PerPortalUtils;
-import java.util.Locale;
-import org.apache.commons.lang3.LocaleUtils;
 
 @RestController
 public class PerPerserController {
@@ -84,10 +77,10 @@ public class PerPerserController {
 		final MultipartFile file = request.getUploadedFile();
 		final String fileType = request.getFileType();
 		final String fileName = file.getOriginalFilename();
-                final String localeStr = request.getLocaleCod();
-                
+		final String localeStr = request.getLocaleCod();
+
 		byte[] bytes = IOUtils.toByteArray(file.getInputStream());
-                Locale locale = LocaleUtils.toLocale(localeStr);
+		Locale locale = LocaleUtils.toLocale(localeStr);
 		final String md5 = parserFacade.parseAndSave(fileName, fileType, locale, bytes);
 		LOG.info("md5 of {}  is: {} ", fileName, md5);
 		return new ResponseEntity<Void>(HttpStatus.OK);
@@ -129,41 +122,6 @@ public class PerPerserController {
 
 	}
 
-	@GetMapping("/getNewRelicData")
-	public ResponseEntity<String> getNewRelicApi(GetNewRelicControllerRequest request, BindingResult bindResult)
-			throws IOException {
-		Resource resource = new ClassPathResource("chart_mock_daily.json");
-		InputStream resourceInputStream = resource.getInputStream();
-		String jsonAsString;
-		try {
-			jsonAsString = IOUtils.toString(resourceInputStream, Charset.defaultCharset());
-		} catch (IOException e) {
-			return new ResponseEntity<String>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return new ResponseEntity<String>(jsonAsString, HttpStatus.OK);
-
-	}
-
-	@GetMapping("/{metric}/{type}")
-	public ResponseEntity<String> getNewRelicApi(@PathVariable("metric") String metric,
-			@PathVariable("type") String type) throws IOException {
-		
-		if(metric == null  || type == null){
-			return new ResponseEntity<String>("Parameters : "+metric+ ","+type,HttpStatus.BAD_REQUEST);
-		}
-		
-		Resource resource = new ClassPathResource("monthly_"+metric+"_"+type+".json");
-		InputStream resourceInputStream = resource.getInputStream();
-		String jsonAsString;
-		try {
-			jsonAsString = IOUtils.toString(resourceInputStream, Charset.defaultCharset());
-		} catch (IOException e) {
-			return new ResponseEntity<String>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return new ResponseEntity<String>(jsonAsString, HttpStatus.OK);
-
-	}
-
 	@PostMapping("/deleteUploadedFile")
 	public ResponseEntity<String> deleteFileUploaded(@RequestBody DeleteDocumentRequest request) throws Exception {
 		String message;
@@ -175,16 +133,19 @@ public class PerPerserController {
 			boolean deleteSuccess = queryFacade.deleteDocument(request.getMd5(), request.getFileType());
 			if (deleteSuccess) {
 				message = "Document " + request.getMd5() + " deleted";
-				
-				final BaseControllerResponse response = new BaseControllerResponse(objectMapper.writeValueAsString(message), HttpStatus.OK);
+
+				final BaseControllerResponse response = new BaseControllerResponse(
+						objectMapper.writeValueAsString(message), HttpStatus.OK);
 				return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 			} else {
 				message = "Document not found";
-				final BaseControllerResponse response = new BaseControllerResponse(objectMapper.writeValueAsString(message), HttpStatus.OK);
-				return new ResponseEntity<String>(response.getMessage(),response.getErrorCode());
+				final BaseControllerResponse response = new BaseControllerResponse(
+						objectMapper.writeValueAsString(message), HttpStatus.OK);
+				return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 			}
 		} catch (Exception e) {
-			final BaseControllerResponse response = new BaseControllerResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			final BaseControllerResponse response = new BaseControllerResponse(e.getMessage(),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 
 		}
