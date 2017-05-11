@@ -66,7 +66,6 @@ var chartFactory = function () {
         }
         var data = [];
         var years = {};
-
         var drawChartWeeklyCallBack = function (res) {
             var defDatasets =
                     {
@@ -86,14 +85,9 @@ var chartFactory = function () {
                         data: data,
                         spanGaps: false
                     };
-
-            var maxYear = 0;
             _.forEach(res.data, function (value, key) {
                 var dateTmp = new Date(value.day.$date);
                 var year = dateTmp.getFullYear();
-                if (maxYear < year) {
-                    year = maxYear;
-                }
                 if (!years.hasOwnProperty(year)) {
                     years[year] = [];
                     for (var i = 1; i <= 52; i++) {
@@ -101,28 +95,13 @@ var chartFactory = function () {
                     }
                 }
             });
-            var secondLastYear = maxYear - 1;
 
-            var maxWeekNumber = 0;
             _.forEach(res.data, function (value, key) {
                 var dateTmp = new Date(value.day.$date);
                 var year = dateTmp.getFullYear();
                 var weekNumber = value.weekNumber;
-                if (maxWeekNumber < weekNumber) {
-                    maxWeekNumber = weekNumber;
-                }
                 years[year][weekNumber] = value.value;
             });
-            var secondLastWeek = maxWeekNumber - 1;
-
-            var lastValue = parseFloat(years[maxYear][maxWeekNumber] ? years[maxYear][maxWeekNumber] : 0);
-            var secondLastValue = parseFloat(years[maxYear][secondLastWeek] ? years[maxYear][secondLastWeek] : 0);
-            var previousYearValue = parseFloat(years[secondLastYear][maxWeekNumber] ? years[secondLastYear][maxWeekNumber] : 0);
-            
-            var deltaPrevious = ((lastValue-secondLastValue)/secondLastValue)*100;
-            var deltaPreviousYear  = ((lastValue-previousYearValue)/previousYearValue)*100;
-            vm.deltaToPrevious(deltaPrevious.toFixed(2));
-            vm.deltaToPreviousYear(deltaPreviousYear.toFixed(2));
 
             var datasets = [];
             _.forEach(years, function (value, key) {
