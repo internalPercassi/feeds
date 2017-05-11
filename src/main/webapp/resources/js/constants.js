@@ -43,6 +43,7 @@ var appConstants = {
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            data = parseFloat(data/1000).toFixed(1);
                             return data + 'k';
                         },
                         afterLabel: labelChartVoid,
@@ -54,43 +55,26 @@ var appConstants = {
                     }
                 },
                 scales: {
-                    tooltips: {
-                        displayColors: false,
-                        callbacks: {
-                            beforeTitle: labelChartVoid,
-                            title: labelChartVoid,
-                            afterTitle: labelChartVoid,
-                            beforeBody: labelChartVoid,
-                            beforeLabel: function (tooltipItem, data) {
-                                var ret = data.labels[tooltipItem.index];
-                                return ret;
-                            },
-                            label: function (tooltipItem, data) {
-                                var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                                return data + 'M';
-                            },
-                            afterLabel: labelChartVoid,
-                            afterBody: labelChartVoid,
-                            beforeFooter: labelChartVoid,
-                            footer: labelChartVoid,
-                            afterFooter: labelChartVoid,
-                            dataPoints: labelChartVoid
-                        }
-                    },
                     yAxes: [
                         {
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Thousands'
+                                labelString: 'Millions'
                             },
                             ticks: {
                                 beginAtZero: true,
                                 callback: function (label, index, labels) {
-                                    return parseFloat(label).toFixed(1) + 'k';
+                                    return parseFloat(label/1000).toFixed(1) + 'k';
                                 }
                             }
                         }
-                    ]
+                    ],
+                    xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Week number'
+                            }
+                        }]
                 }
             },
             optionsWeekly: {
@@ -107,6 +91,7 @@ var appConstants = {
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            data = parseFloat(data/1000000).toFixed(2);
                             return data + 'M';
                         },
                         afterLabel: labelChartVoid,
@@ -127,7 +112,7 @@ var appConstants = {
                             ticks: {
                                 beginAtZero: true,
                                 callback: function (label, index, labels) {
-                                    return parseFloat(label).toFixed(1) + 'M';
+                                    return parseFloat(label/1000000).toFixed(2) + 'M';
                                 }
                             }
                         }
@@ -155,6 +140,7 @@ var appConstants = {
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            data = parseFloat(data/1000000).toFixed(2);
                             return data + 'M';
                         },
                         afterLabel: labelChartVoid,
@@ -175,7 +161,7 @@ var appConstants = {
                             ticks: {
                                 beginAtZero: true,
                                 callback: function (label, index, labels) {
-                                    return parseFloat(label).toFixed(1) + 'M';
+                                    return parseFloat(label/1000000).toFixed(1) + 'M';
                                 }
                             }
                         }
@@ -201,6 +187,7 @@ var appConstants = {
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            data = parseFloat(data/1000).toFixed(1);
                             return data + ' sec.';
                         },
                         afterLabel: labelChartVoid,
@@ -221,7 +208,7 @@ var appConstants = {
                             ticks: {
                                 beginAtZero: true,
                                 callback: function (label, index, labels) {
-                                    return parseFloat(label).toFixed(1) + ' sec.';
+                                    return parseFloat(label/1000).toFixed(1) + ' sec.';
                                 }
                             }
                         }
@@ -242,6 +229,7 @@ var appConstants = {
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            data = parseFloat(data/1000).toFixed(1);
                             return data + ' sec.';
                         },
                         afterLabel: labelChartVoid,
@@ -261,7 +249,7 @@ var appConstants = {
                             ticks: {
                                 beginAtZero: true,
                                 callback: function (label, index, labels) {
-                                    return parseFloat(label).toFixed(1) + ' sec.';
+                                    return parseFloat(label/1000).toFixed(1) + ' sec.';
                                 }
                             }
                         }
@@ -283,6 +271,7 @@ var appConstants = {
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            data = parseFloat(data/1000).toFixed(1);
                             return data + ' sec.';
                         },
                         afterLabel: labelChartVoid,
@@ -303,7 +292,7 @@ var appConstants = {
                             ticks: {
                                 beginAtZero: true,
                                 callback: function (label, index, labels) {
-                                    return parseFloat(label).toFixed(1) + ' sec.';
+                                    return parseFloat(label/1000).toFixed(1) + ' sec.';
                                 }
                             }
                         }
@@ -329,6 +318,7 @@ var appConstants = {
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            data = parseFloat(data/1000000).toFixed(2);
                             return data + 'M';
                         },
                         afterLabel: labelChartVoid,
@@ -349,7 +339,7 @@ var appConstants = {
                             ticks: {
                                 beginAtZero: true,
                                 callback: function (label, index, labels) {
-                                    return parseFloat(label).toFixed(1) + 'M';
+                                    return parseFloat(label/1000000).toFixed(2) + 'M';
                                 }
                             }
                         }
@@ -370,6 +360,7 @@ var appConstants = {
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            data = parseFloat(data/1000000).toFixed(1);
                             return data + 'M';
                         },
                         afterLabel: labelChartVoid,
@@ -390,7 +381,7 @@ var appConstants = {
                             ticks: {
                                 beginAtZero: true,
                                 callback: function (label, index, labels) {
-                                    return parseFloat(label).toFixed(1) + 'M';
+                                    return parseFloat(label/1000000).toFixed(1) + 'M';
                                 }
                             }
                         }
@@ -412,6 +403,7 @@ var appConstants = {
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            data = parseFloat(data/1000000).toFixed(1);
                             return data + 'M';
                         },
                         afterLabel: labelChartVoid,
@@ -432,7 +424,7 @@ var appConstants = {
                             ticks: {
                                 beginAtZero: true,
                                 callback: function (label, index, labels) {
-                                    return parseFloat(label).toFixed(1) + 'M';
+                                    return parseFloat(label/1000000).toFixed(1) + 'M';
                                 }
                             }
                         }
@@ -495,7 +487,7 @@ var appConstants = {
                         beforeBody: labelChartVoid,
                         beforeLabel: function (tooltipItem, data) {
                             var ret = data.labels[tooltipItem.index];
-                            return ret;
+                            return 'week '+ret;
                         },
                         label: function (tooltipItem, data) {
                             var data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
