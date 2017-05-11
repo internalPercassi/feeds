@@ -53,7 +53,7 @@ ko.bindingHandlers.dateTimePicker = {
 	        var value = moment(ko.utils.unwrapObservable(valueAccessor()) || ''),
 	            picker = $(element).data("DateTimePicker");
 	        if (value.isValid() && picker) {
-	            picker.maxDate(value.toDate());                
+	            picker.maxDate(value.toDate());  
 	        }
 	    }
 	};
