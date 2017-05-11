@@ -66,6 +66,7 @@ var chartFactory = function () {
         }
         var data = [];
         var years = {};
+
         var drawChartWeeklyCallBack = function (res) {
             var defDatasets =
                     {
@@ -85,9 +86,14 @@ var chartFactory = function () {
                         data: data,
                         spanGaps: false
                     };
+
+            var maxYear = 0;
             _.forEach(res.data, function (value, key) {
                 var dateTmp = new Date(value.day.$date);
                 var year = dateTmp.getFullYear();
+                if (maxYear < year) {
+                    maxYear = year;
+                }
                 if (!years.hasOwnProperty(year)) {
                     years[year] = [];
                     for (var i = 1; i <= 52; i++) {
@@ -95,13 +101,51 @@ var chartFactory = function () {
                     }
                 }
             });
+            var secondLastYear = maxYear - 1;
 
+            var maxWeekNumber = 0;
             _.forEach(res.data, function (value, key) {
                 var dateTmp = new Date(value.day.$date);
                 var year = dateTmp.getFullYear();
                 var weekNumber = value.weekNumber;
                 years[year][weekNumber] = value.value;
+                if (maxWeekNumber < weekNumber) {
+                    maxWeekNumber = weekNumber;
+                }
             });
+            var secondLastWeek = maxWeekNumber - 1;
+
+            var lastValue = 0;
+            try {
+                lastValue = parseFloat(years[maxYear][maxWeekNumber]);
+            } catch (Err) {
+                console.warn('weekly chart: error getting last value');
+            }
+            var secondLastValue = 0;
+            try {
+                secondLastValue = parseFloat(years[maxYear][secondLastWeek]);
+            } catch (Err) {
+                console.warn('weekly chart: error getting secondLastValue');
+            }
+            try {
+                var previousYearValue = 0;
+                previousYearValue = parseFloat(years[secondLastYear][maxWeekNumber]);
+            } catch (Err) {
+                console.warn('weekly chart: error getting previousYearValue');
+            }
+
+
+            var deltaPrevious = 0;
+            if (secondLastValue != 0) {
+                deltaPrevious = ((lastValue - secondLastValue) / secondLastValue) * 100;
+            }
+            var deltaPreviousYear = 0;
+            if (previousYearValue != 0) {
+                deltaPreviousYear = ((lastValue - previousYearValue) / previousYearValue) * 100;
+            }
+
+            vm.deltaToPrevious(deltaPrevious.toFixed(2));
+            vm.deltaToPreviousYear(deltaPreviousYear.toFixed(2));
 
             var datasets = [];
             _.forEach(years, function (value, key) {
@@ -153,21 +197,34 @@ var chartFactory = function () {
                         data: data,
                         spanGaps: false
                     };
+            var maxYear = 0;
             _.forEach(res.data, function (value, key) {
                 var yearMonth = value.yearMonth.toString();
                 var year = yearMonth.substring(0, 4);
+                if (year > maxYear) {
+                    maxYear = year;
+                }
                 if (!years.hasOwnProperty(year)) {
                     years[year] = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined];
                 }
             });
-
+            var secondLastYear = maxYear-1;
+            
+            var maxMonth = 0;
             _.forEach(res.data, function (value, key) {
                 var yearMonth = value.yearMonth.toString();
                 var year = yearMonth.substring(0, 4);
                 var month = Number(yearMonth.substring(4)) - 1;
+                if (year == maxYear && month > maxMonth) {
+                    maxMonth = month;
+                }
                 years[year][month] = value.value;
             });
-
+            var secondLastMonth = maxMonth-1;
+            if (secondLastMonth < 0){
+                secondLastMonth = 11;
+            }
+            
             var datasets = [];
             _.forEach(years, function (value, key) {
                 var dataSetTmp = $.extend({}, defDatasets);
@@ -182,6 +239,38 @@ var chartFactory = function () {
                 datasets.push(dataSetTmp);
             });
 
+
+            var lastValue = 0;
+            try {
+                lastValue = parseFloat(years[maxYear][maxMonth]);
+            } catch (Err) {
+                console.warn('Monhtly chart: error getting last value');
+            }
+            var secondLastValue = 0;
+            try {
+                secondLastValue = parseFloat(years[maxYear][secondLastMonth]);
+            } catch (Err) {
+                console.warn('Monhtly chart: error getting secondLastValue');
+            }
+            try {
+                var previousYearValue = 0;
+                previousYearValue = parseFloat(years[secondLastYear][maxMonth]);
+            } catch (Err) {
+                console.warn('Monhtly chart: error getting previousYearValue');
+            }
+
+
+            var deltaPrevious = 0;
+            if (secondLastValue != 0) {
+                deltaPrevious = ((lastValue - secondLastValue) / secondLastValue) * 100;
+            }
+            var deltaPreviousYear = 0;
+            if (previousYearValue != 0) {
+                deltaPreviousYear = ((lastValue - previousYearValue) / previousYearValue) * 100;
+            }
+
+            vm.deltaToPrevious(deltaPrevious.toFixed(2));
+            vm.deltaToPreviousYear(deltaPreviousYear.toFixed(2));
 
             var chartDataTmp = {
                 labels: labels,
