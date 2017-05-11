@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-sm-4 col-md-4 col-lg-2">
                     <label class="control-label">To</label>
-                    <div class="input-group date" data-bind='dateTimePicker: dateTo, maxDate: moment().subtract(1,"days")' >
+                    <div class="input-group date" data-bind='dateTimePicker: dateTo, minDate: dateFrom, maxDate: moment().subtract(1,"days")'>
                         <input class="form-control input-group-addon datepicker"  onkeydown="return false"/>
                         <span class="input-group-addon">
                             <i class="glyphicon glyphicon-calendar"></i>
@@ -55,21 +55,4 @@
 <div>
     &nbsp;<canvas data-bind="chart: { type: 'line', data: chartData, options: chartOptions }"></canvas>
 </div>
-<script type="text/javascript">
-    var dateToday = new Date();
 
-    $(function () {
-        var defFromDate = new Date();
-        defFromDate.setDate(defFromDate.getDate() - 7);
-        $('#fromDateFilter').datetimepicker({
-            defaultDate: defFromDate,
-            format: 'DD-MM-YYYY'});
-    });
-    $(function () {
-        $('#toDateFilter').datetimepicker({
-            defaultDate: new Date(),
-            format: 'DD-MM-YYYY',
-            minDate: new Date()});
-    });
-
-</script>
