@@ -137,15 +137,15 @@ var chartFactory = function () {
 
             var deltaPrevious = 0;
             if (secondLastValue != 0) {
-                deltaPrevious = ((lastValue - secondLastValue) / secondLastValue) * 100;
+                deltaPrevious = Math.round(((lastValue - secondLastValue) / secondLastValue) * 100);
             }
             var deltaPreviousYear = 0;
             if (previousYearValue != 0) {
-                deltaPreviousYear = ((lastValue - previousYearValue) / previousYearValue) * 100;
+                deltaPreviousYear = Math.round(((lastValue - previousYearValue) / previousYearValue) * 100);
             }
 
-            vm.deltaToPrevious(deltaPrevious.toFixed(2));
-            vm.deltaToPreviousYear(deltaPreviousYear.toFixed(2));
+            vm.deltaToPrevious(deltaPrevious);
+            vm.deltaToPreviousYear(deltaPreviousYear);
 
             var datasets = [];
             _.forEach(years, function (value, key) {
@@ -264,15 +264,15 @@ var chartFactory = function () {
 
             var deltaPrevious = 0;
             if (secondLastValue != 0) {
-                deltaPrevious = ((lastValue - secondLastValue) / secondLastValue) * 100;
+                deltaPrevious = Math.round(((lastValue - secondLastValue) / secondLastValue) * 100);
             }
             var deltaPreviousYear = 0;
             if (previousYearValue != 0) {
-                deltaPreviousYear = ((lastValue - previousYearValue) / previousYearValue) * 100;
+                deltaPreviousYear = Math.round(((lastValue - previousYearValue) / previousYearValue) * 100);
             }
 
-            vm.deltaToPrevious(deltaPrevious.toFixed(2));
-            vm.deltaToPreviousYear(deltaPreviousYear.toFixed(2));
+            vm.deltaToPrevious(deltaPrevious);
+            vm.deltaToPreviousYear(deltaPreviousYear);
 
             var chartDataTmp = {
                 labels: labels,
