@@ -221,8 +221,10 @@ var chartFactory = function () {
                 years[year][month] = value.value;
             });
             var secondLastMonth = maxMonth-1;
+            var secondLastMonthYear = maxYear;
             if (secondLastMonth < 0){
                 secondLastMonth = 11;
+                secondLastMonthYear = maxYear-1
             }
             
             var datasets = [];
@@ -248,12 +250,12 @@ var chartFactory = function () {
             }
             var secondLastValue = 0;
             try {
-                secondLastValue = parseFloat(years[maxYear][secondLastMonth]);
+                secondLastValue = parseFloat(years[secondLastMonthYear][secondLastMonth]);
             } catch (Err) {
                 console.warn('Monhtly chart: error getting secondLastValue');
             }
+            var previousYearValue = 0;
             try {
-                var previousYearValue = 0;
                 previousYearValue = parseFloat(years[secondLastYear][maxMonth]);
             } catch (Err) {
                 console.warn('Monhtly chart: error getting previousYearValue');
