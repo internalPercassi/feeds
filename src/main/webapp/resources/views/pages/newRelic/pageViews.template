@@ -44,10 +44,12 @@
         </div>
     </div>
     <div class="tab-pane" id="2">
-        <!--<div>
-            <canvas data-bind="chart: { type: 'line', data: chartData }"></canvas>
-        </div>-->
-
+        <p>Differenza rispetto alla settimana precedente:<span data-bind="text: deltaToPrevious"> </span>&#37;</p>
+        <p>Differenza rispetto all'anno precedente:<span data-bind="text: deltaToPreviousYear"> </span>&#37;</p>
+    </div>
+    <div class="tab-pane" id="3">
+        <p>Differenza rispetto alla mese precedente:<span data-bind="text: deltaToPrevious"> </span>&#37;</p>
+        <p>Differenza rispetto all'anno precedente:<span data-bind="text: deltaToPreviousYear"> </span>&#37;</p>
     </div>
 </div>
 <div>
