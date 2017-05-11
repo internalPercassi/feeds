@@ -14,10 +14,10 @@
 <div class="tab-content ">
     <div class="tab-pane active" id="1">
         <br>
-        <div class="col-md-12 serverFilters">
-            <div class="col-md-6">
-                <div class="col-md-4">
-                    <label class="control-label">From:</label>
+
+
+                <div class="col-sm-4 col-md-4 col-lg-2">
+                    <label class="control-label">From</label>
                     <div class="input-group date" data-bind='dateTimePicker: dateFrom, maxDate: dateTo' >
                         <input class="form-control input-group-addon datepicker" onkeydown="return false"/>
                         <span class="input-group-addon">
@@ -25,8 +25,8 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <label class="control-label">To:</label>
+                <div class="col-sm-4 col-md-4 col-lg-2">
+                    <label class="control-label">To</label>
                     <div class="input-group date" data-bind='dateTimePicker: dateTo, maxDate: moment().subtract(1,"days")' >
                         <input class="form-control input-group-addon datepicker"  onkeydown="return false"/>
                         <span class="input-group-addon">
@@ -34,14 +34,14 @@
                         </span>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <label class="control-label">&nbsp;</label>
-                <div class="col-sm-6 col-md-2 col-xl-2 pull-right">
+
+            <div class="col-sm-4 col-md-4 col-lg-8 no-padding">
+                <div class="col-sm-8 col-md-8 col-lg-2 col-xl-3 pull-right">
+                    <label class="col-md-12 control-label">&nbsp;</label>
                     <div class="btn btn-default form-control" data-bind="click: drawChartDaily">Search</div>
                 </div>
             </div>
-        </div>
+
     </div>
     <div class="tab-pane" id="2">
         <!--<div>
