@@ -1,6 +1,6 @@
 <div class="row">
 <form id="uploadForm">
-	<h1 class="page-header">Upload</h1>
+	<h2 class="page-header">Upload</h2>
 	<div class="col-md-3">
   		<select name="fileType" id="fileType" class="form-control">
 	       <option value="GL">GL File</option>
@@ -27,7 +27,7 @@
 </div>	
 </br>
 <div class="row">
-	<h1 class="page-header">Filters</h1>
+	<h2 class="page-header">Filters</h2>
 	<div class="col-md-3">
 		<label class="control-label">File Name</label>
 		<input type="text" class="form-control" data-bind="textInput: filters.name">
@@ -49,7 +49,7 @@
 	
 <div class="row">
 	</br>
-	<h1 class="page-header">History</h1>
+	<h2 class="page-header">History</h2>
 	<!-- <div data-bind='historyGrid: gridViewModel'> </div> -->
 	<div class="col-md-12">
 		<table id="historyTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>

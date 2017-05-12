@@ -1,4 +1,4 @@
-<h1 class="page-header">Page Views Thousands</h1>
+<h2 class="page-header">Page Views Thousands</h2>
 <ul class="nav nav-tabs">
     <li class="active">
         <a  href="#1" data-toggle="tab" data-bind="click: drawChartDaily">Specific Period</a>
