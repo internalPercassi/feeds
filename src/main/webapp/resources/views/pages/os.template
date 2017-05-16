@@ -1,5 +1,5 @@
 <div class="row">
-	<h1 class="page-header">Filters</h1>
+	<h2 class="page-header">Filters</h2>
 	<div class="col-md-12">
 		<div class="col-md-3">
 			<div class="form-group">
@@ -63,7 +63,7 @@
 </div>		
 <div class="row">
 	</br>
-	<h1 class="page-header">Results</h1>
+	<h2 class="page-header">Results</h2>
 	<!-- Export btns -->
 	<div class="col-md-9 pull-right serverFilters">
 		<div class="col-sm-6 col-md-2 col-xl-2 pull-right">

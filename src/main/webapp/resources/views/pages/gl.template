@@ -1,5 +1,5 @@
 <div class="row">
-	<h1 class="page-header">Filters</h1>
+	<h2 class="page-header">Filters</h2>
 </div>	
 <div class="row">
 	<div class="col-md-12 serverFilters">
@@ -58,15 +58,15 @@
 </div>
 <div class="row">
 	</br>
-	<h1 class="page-header">Results</h1>
+	<h2 class="page-header">Results</h2>
 	<!-- Export btns -->
 	<div class="col-md-8 pull-right margin-bottom">
 		<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
 			<div class="btn btn-default form-control" data-bind="click: getCSV">CSV</div>
 		</div>
-<!-- 			<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
-				<div class="btn btn-default form-control">Excel</div>
-			</div> -->
+		<div class="col-sm-6 col-md-3 col-xl-2 pull-right">
+			<div class="btn btn-default form-control" data-bind="click: getExcel">Excel</div>
+		</div> 
 	</div>
 	<div class="col-md-12">
 		<table id="glTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>

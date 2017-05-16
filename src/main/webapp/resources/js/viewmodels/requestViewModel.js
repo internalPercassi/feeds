@@ -7,6 +7,8 @@ var requestViewModel = function () {
     that.dateTo = ko.observable(moment().add(-1, 'day'));
     that.chartData = ko.observable();
     that.chartOptions = ko.observable();
+    that.deltaToPrevious = ko.observable(0);
+    that.deltaToPreviousYear = ko.observable(0);
     
     this.drawChartDaily = function () {
         chartFactory.drawChartDaily(appConstants.chartType.requestMillions, that, that.dateFrom(), that.dateTo());

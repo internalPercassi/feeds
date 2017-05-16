@@ -76,7 +76,7 @@ public class MongoService {
         Class modelClass = getModelClass(fileType);
         //TODO mettere il formato data in una classe di costante (o nel properties)
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        formatter.setTimeZone(TimeZone.getTimeZone("CEST"));
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         for (MongodbFilter filter : filters) {
             subQ = new BasicDBObject();
             Class fieldType = getFieldType(filter.getField(), modelClass);
