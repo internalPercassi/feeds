@@ -47,5 +47,16 @@
 
 .datepicker{
 	background-color: #FFFFFF;
-	/*background: radial-gradient(red, yellow, green);*/
+}
+
+.list-group-item {
+  background-color: #EEEEEE;
+}
+
+.navbarUl{
+	-webkit-padding-start: 0px;
+}
+.navbarUl>li{
+	padding-left:17px;
+	background-color: #FFFFFF;
 }

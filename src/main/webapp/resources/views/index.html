@@ -100,8 +100,60 @@
             </div>
         </nav>
 
-        <div class="col-sm-3 col-md-2 sidebar">
+        	<div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
+            	<!--
+            	<div id="MainMenu">
+				        <div class="list-group panel">
+				          <a href="#/history/" class="list-group-item list-group-item-success">History<span class="sr-only">(current)</span></a>
+				          <a href="#newRelicMenu" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">New Relic <i class="fa fa-caret-down"></i></a>
+				          <div class="collapse" id="newRelicMenu">
+				            <a href="#endUserMenu" class="list-group-item" data-toggle="collapse" data-parent="#newRelicMenu">End User Time <i class="fa fa-caret-down"></i></a>
+				            <div class="collapse list-group-submenu" id="endUserMenu">
+				              <a href="#/pageViews" class="list-group-item" data-parent="#endUserMenu">Page Views</a>
+				              <a href="#/loadTime" class="list-group-item" data-parent="#endUserMenu">Load Time Sec</a>
+				            </div>
+				            <a href="#applicationServerMenu" class="list-group-item" data-toggle="collapse" data-parent="#newRelicMenu">Application Server <i class="fa fa-caret-down"></i></a>
+				            <div class="collapse list-group-submenu" id="applicationServerMenu">
+				              <a href="#/request" class="list-group-item" data-parent="#applicationServerMenu">Request Millions</a>
+				              <a href="#/responseTime" class="list-group-item" data-parent="#applicationServerMenu">Resp. Time ms</a>
+				            </div>
+				          </div>
+				        </div>
+				      </div>
+				      -->
+				      
+				      	<li class="active">
+                    <a href="#/history/">History<span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="active">
+                    <a href="#newRelicMenu" data-toggle="collapse">New Relic <i class="fa fa-caret-down"></i></a>
+                    <div id="newRelicMenu" class="collapse">
+                    	<a href="#endUserMenu" class="list-group-item" data-toggle="collapse" data-parent="#endUserMenu">End User Time <i class="fa fa-fw fa-caret-down"></i></a>
+                      	<ul id="endUserMenu" class="collapse navbarUl">
+                        	<li>
+                          	<a href="#/pageViews">Page Views</a>
+                          </li>
+                          <li>
+                          	<a href="#/loadTime">Load Time Sec</a>
+                          </li>
+                        </ul>
+                      <a href="#applicationServerMenu" class="list-group-item" data-toggle="collapse" data-target="#applicationServerMenu">Application server <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="applicationServerMenu" class="collapse navbarUl">
+                        	<li>
+                        		<a href="#/request">Request Millions</a>
+                        	</li>
+                        	<li>
+                        		<a href="#/responseTime">Resp. Time ms</a>
+                        	</li>
+                        </ul>
+                    </div>
+
+                </li>
+                
+                
+                <!--
                 <li class="active">
                     <a href="#/history/">History<span class="sr-only">(current)</span></a>
                 </li>
@@ -134,9 +186,10 @@
                     </ul>
 
                 </li>
+                -->
             </ul>
 
-        </div>
+        </div> 
 
         <div class="main-container">
             <div class="container-fluid">
