@@ -89,7 +89,7 @@ var chartFactory = function () {
 
             var maxYear = 0;
             _.forEach(res.data, function (value, key) {
-                if(value){
+                if(value.day != null){
 	            	var dateTmp = new Date(value.day.$date);
 	                var year = dateTmp.getFullYear();
 	                if (maxYear < year) {
@@ -107,7 +107,7 @@ var chartFactory = function () {
 
             var maxWeekNumber = 0;
             _.forEach(res.data, function (value, key) {
-            	if(value){
+            	if(value.day != null){
             		var dateTmp = new Date(value.day.$date);
 	                var year = dateTmp.getFullYear();
 	                var weekNumber = value.weekNumber-1;
