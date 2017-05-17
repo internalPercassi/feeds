@@ -37,8 +37,8 @@ var chartFactory = function () {
                         pointBackgroundColor: "#fff",
                         pointBorderWidth: 7,
                         pointHoverRadius: 5,
-//                        pointHoverBackgroundColor: "rgba(75,192,192,1)",
-//                        pointHoverBorderColor: "rgba(220,220,220,1)",
+//                      pointHoverBackgroundColor: "rgba(75,192,192,1)",
+//                      pointHoverBorderColor: "rgba(220,220,220,1)",
                         pointHoverBorderWidth: 2,
                         pointRadius: 1,
                         pointHitRadius: 10,
@@ -89,29 +89,33 @@ var chartFactory = function () {
 
             var maxYear = 0;
             _.forEach(res.data, function (value, key) {
-                var dateTmp = new Date(value.day.$date);
-                var year = dateTmp.getFullYear();
-                if (maxYear < year) {
-                    maxYear = year;
-                }
-                if (!years.hasOwnProperty(year)) {
-                    years[year] = [];
-                    for (var i = 1; i <= 52; i++) {
-                        years[year].push(undefined);
-                    }
+                if(value){
+	            	var dateTmp = new Date(value.day.$date);
+	                var year = dateTmp.getFullYear();
+	                if (maxYear < year) {
+	                    maxYear = year;
+	                }
+	                if (!years.hasOwnProperty(year)) {
+	                    years[year] = [];
+	                    for (var i = 1; i <= 52; i++) {
+	                        years[year].push(undefined);
+	                    }
+	                }
                 }
             });
             var secondLastYear = maxYear - 1;
 
             var maxWeekNumber = 0;
             _.forEach(res.data, function (value, key) {
-                var dateTmp = new Date(value.day.$date);
-                var year = dateTmp.getFullYear();
-                var weekNumber = value.weekNumber-1;
-                years[year][weekNumber] = value.value;
-                if (maxWeekNumber < weekNumber) {
-                    maxWeekNumber = weekNumber;
-                }
+            	if(value){
+            		var dateTmp = new Date(value.day.$date);
+	                var year = dateTmp.getFullYear();
+	                var weekNumber = value.weekNumber-1;
+	                years[year][weekNumber] = value.value;
+	                if (maxWeekNumber < weekNumber) {
+	                    maxWeekNumber = weekNumber;
+	                }
+            	}
             });
             var secondLastWeek = maxWeekNumber - 1;
 
