@@ -7,8 +7,27 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>PerParserSPA Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-
-	<properties>
+ <build>
+  <plugins>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>2.3.2</version>
+    <configuration>
+     <encoding>${project.build.sourceEncoding}</encoding>
+    </configuration>
+   </plugin>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-resources-plugin</artifactId>
+    <version>2.4.3</version>
+    <configuration>
+     <encoding>${project.build.sourceEncoding}</encoding>
+    </configuration>
+   </plugin>
+  </plugins>
+ </build>
+ <properties>
 		<spring.version>4.3.7.RELEASE</spring.version>
 		<jackson.version>2.8.6</jackson.version>
 		<java.version>1.8</java.version>
@@ -16,10 +35,11 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<app.version>1.0.0</app.version>
 		<version>${app.version}</version>
-		<skipTests>false</skipTests>
+		<skipTests>true</skipTests>
 		<m2e.jaxrs.activation>false</m2e.jaxrs.activation>
 		<m2e.jpa.activation>false</m2e.jpa.activation>
 		<m2e.jsf.activation>false</m2e.jsf.activation>
+	 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->

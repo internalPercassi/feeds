@@ -1,6 +1,17 @@
 'use strict';
 var chartFactory = function () {
 
+    var weekData = {
+        endUser: {
+            pageViews: {},
+            loadTime: {}
+        },
+        appServer: {
+            requests: {},
+            respTime: {}
+        }
+    };
+
     var _toBackEndData = function (aDate) {
         if (aDate) {
             return moment(aDate).format('YYYY-MM-DD') + " 00:00";
@@ -57,65 +68,89 @@ var chartFactory = function () {
         documentService.getChartDataDaily(chartType, _toBackEndData(dateFrom), _toBackEndData(dateTo), drawChartDailyCallBack);
     };
 
-    var _drawChartWeekly = function (chartType, vm) {
+    var _drawChartWeekly = function (chartType, vm, renderChart) {
         var labels = [];
         for (var i = 1; i <= 52; i++) {
-//            var d = new Date(2017, 0, 1+((i-1)*7));
-//            labels.push(i+" ("+d.getDay()+"-"+(d.getMonth()+1)+")");
             labels.push(i);
         }
         var data = [];
         var years = {};
 
-        var drawChartWeeklyCallBack = function (res) {
-            var defDatasets =
-                    {
-                        label: chartType.label,
-                        fill: false,
-                        lineTension: 0.3,
-                        borderCapStyle: 'butt',
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        borderJoinStyle: 'miter',
-                        pointBackgroundColor: "#fff",
-                        pointBorderWidth: 7,
-                        pointHoverRadius: 5,
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 1,
-                        pointHitRadius: 10,
-                        data: data,
-                        spanGaps: false
-                    };
+        var defDatasets =
+                {
+                    label: chartType.label,
+                    fill: false,
+                    lineTension: 0.3,
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 7,
+                    pointHoverRadius: 5,
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: data,
+                    spanGaps: false
+                };
 
+        var setChartData = function () {
+            var datasets = [];
+            _.forEach(years, function (value, key) {
+                var dataSetTmp = $.extend({}, defDatasets);
+                dataSetTmp.data = value;
+                dataSetTmp.label = key;
+                dataSetTmp.backgroundColor = appConstants.colors[key];
+                dataSetTmp.borderColor = appConstants.colors[key];
+                dataSetTmp.borderCapStyle = appConstants.colors[key];
+                dataSetTmp.pointBorderColor = appConstants.colors[key];
+                dataSetTmp.pointHoverBackgroundColor = appConstants.colors[key];
+                dataSetTmp.pointHoverBorderColor = appConstants.colors[key];
+                datasets.push(dataSetTmp);
+            });
+
+
+            var chartDataTmp = {
+                labels: labels,
+                height: "30",
+                datasets: datasets
+            };
+            var chartOptions = chartType.optionsWeekly;
+            vm.chartOptions(chartOptions);
+            vm.chartData(chartDataTmp);
+        };
+
+        var drawChartWeeklyCallBack = function (res) {
             var maxYear = 0;
             _.forEach(res.data, function (value, key) {
-                if(value.day != null){
-	            	var dateTmp = new Date(value.day.$date);
-	                var year = dateTmp.getFullYear();
-	                if (maxYear < year) {
-	                    maxYear = year;
-	                }
-	                if (!years.hasOwnProperty(year)) {
-	                    years[year] = [];
-	                    for (var i = 1; i <= 52; i++) {
-	                        years[year].push(undefined);
-	                    }
-	                }
+                if (value.weekNumber) {
+                    var weekNumber = value.weekNumber;
+                    var year = Math.floor(weekNumber / 100);
+                    if (maxYear < year) {
+                        maxYear = year;
+                    }
+                    if (!years.hasOwnProperty(year)) {
+                        years[year] = [];
+                        for (var i = 1; i <= 52; i++) {
+                            years[year].push(undefined);
+                        }
+                    }
                 }
             });
             var secondLastYear = maxYear - 1;
 
             var maxWeekNumber = 0;
             _.forEach(res.data, function (value, key) {
-            	if(value.day != null){
-            		var dateTmp = new Date(value.day.$date);
-	                var year = dateTmp.getFullYear();
-	                var weekNumber = value.weekNumber-1;
-	                years[year][weekNumber] = value.value;
-	                if (maxWeekNumber < weekNumber) {
-	                    maxWeekNumber = weekNumber;
-	                }
-            	}
+                if (value.weekNumber) {
+                    var weekNumber = value.weekNumber;
+                    var year = Math.floor(weekNumber / 100);
+                    var weekNumber = weekNumber % 100;
+                    years[year][weekNumber] = value.value;
+                    if (maxWeekNumber < weekNumber) {
+                        maxWeekNumber = weekNumber;
+                    }
+                }
             });
             var secondLastWeek = maxWeekNumber - 1;
 
@@ -148,35 +183,85 @@ var chartFactory = function () {
                 deltaPreviousYear = Math.round(((lastValue - previousYearValue) / previousYearValue) * 100);
             }
 
-            vm.deltaToPrevious(deltaPrevious);
-            vm.deltaToPreviousYear(deltaPreviousYear);
+            var arrowUp = "<i class='fa fa-level-up'></i>";
+            var arrowDown = "<i class='fa fa-level-down'></i>";
+            var deltaPreviousHTML = deltaPrevious > 0 ? deltaPrevious + '%' + arrowUp : deltaPrevious + '%' + arrowDown;
+            var deltaPreviousYearHTML = deltaPreviousYear > 0 ? deltaPreviousYear + '%' + arrowUp : deltaPreviousYear + '%' + arrowDown;
 
-            var datasets = [];
-            _.forEach(years, function (value, key) {
-                var dataSetTmp = $.extend({}, defDatasets);
-                dataSetTmp.data = value;
-                dataSetTmp.label = key;
-                dataSetTmp.backgroundColor = appConstants.colors[key];
-                dataSetTmp.borderColor = appConstants.colors[key];
-                dataSetTmp.borderCapStyle = appConstants.colors[key];
-                dataSetTmp.pointBorderColor = appConstants.colors[key];
-                dataSetTmp.pointHoverBackgroundColor = appConstants.colors[key];
-                dataSetTmp.pointHoverBorderColor = appConstants.colors[key];
-                datasets.push(dataSetTmp);
-            });
-
-
-            var chartDataTmp = {
-                labels: labels,
-                height: "30",
-                datasets: datasets
-            };
-            var chartOptions = chartType.optionsWeekly;
-            vm.chartOptions(chartOptions);
-            vm.chartData(chartDataTmp);
+            if (chartType.metricName == 'EndUser') {
+                if (chartType.valueName == 'call_count') {
+                    vm.statistics.endUser.pageViews.lastValue(Math.round(lastValue / 1000).toLocaleString('it-IT') + 'k');
+                    vm.statistics.endUser.pageViews.deltaToLastWeek(deltaPreviousHTML);
+                    vm.statistics.endUser.pageViews.deltaToLastYearWeek(deltaPreviousYearHTML);
+                    weekData.endUser.pageViews = res;
+                    if (renderChart) {
+                        setChartData();
+                    }
+                } else if (chartType.valueName == 'average_response_time') {
+                    vm.statistics.endUser.loadTime.lastValue(Math.round(lastValue / 1000).toLocaleString('it-IT') + ' sec.');
+                    vm.statistics.endUser.loadTime.deltaToLastWeek(deltaPreviousHTML);
+                    vm.statistics.endUser.loadTime.deltaToLastYearWeek(deltaPreviousYearHTML);
+                    weekData.endUser.loadTime = res;
+                    if (renderChart) {
+                        setChartData();
+                    }
+                }
+            } else if (chartType.metricName == 'HttpDispatcher') {
+                if (chartType.valueName == 'call_count') {
+                    vm.statistics.appServer.requests.lastValue(Math.round(lastValue / 1000000).toLocaleString('it-IT') + 'M');
+                    vm.statistics.appServer.requests.deltaToLastWeek(deltaPreviousHTML);
+                    vm.statistics.appServer.requests.deltaToLastYearWeek(deltaPreviousYearHTML);
+                    weekData.appServer.requests = res;
+                    if (renderChart) {
+                        setChartData();
+                    }
+                } else if (chartType.valueName == 'average_response_time') {
+                    vm.statistics.appServer.respTime.lastValue(lastValue + 'ms');
+                    vm.statistics.appServer.respTime.deltaToLastWeek(deltaPreviousHTML);
+                    vm.statistics.appServer.respTime.deltaToLastYearWeek(deltaPreviousYearHTML);
+                    weekData.appServer.respTime = res;
+                    if (renderChart) {
+                        setChartData();
+                    }
+                }
+            }
         };
-        documentService.getChartDataWeekly(chartType, drawChartWeeklyCallBack);
+        if (chartType.metricName == 'EndUser') {
+            if (chartType.valueName == 'call_count') {
+                if (weekData.endUser.pageViews.hasOwnProperty('data')) {
+                    drawChartWeeklyCallBack(weekData.endUser.pageViews);
+                } else {
+                    documentService.getChartDataWeekly(chartType, drawChartWeeklyCallBack);
+                }
+
+            } else if (chartType.valueName == 'average_response_time') {
+                if (weekData.endUser.loadTime.hasOwnProperty('data')) {
+                    drawChartWeeklyCallBack(weekData.endUser.loadTime);
+                } else {
+                    documentService.getChartDataWeekly(chartType, drawChartWeeklyCallBack);
+                }
+
+            }
+        } else if (chartType.metricName == 'HttpDispatcher') {
+            if (chartType.valueName == 'call_count') {
+                if (weekData.appServer.requests.hasOwnProperty('data')) {
+                    drawChartWeeklyCallBack(weekData.appServer.requests);
+                } else {
+                    documentService.getChartDataWeekly(chartType, drawChartWeeklyCallBack);
+                }
+
+            } else if (chartType.valueName == 'average_response_time') {
+                if (weekData.appServer.respTime.hasOwnProperty('data')) {
+                    drawChartWeeklyCallBack(weekData.appServer.respTime);
+                } else {
+                    documentService.getChartDataWeekly(chartType, drawChartWeeklyCallBack);
+                }
+
+            }
+        }
+
     };
+
 
     var _drawChartMonthly = function (chartType, vm) {
         var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -212,8 +297,8 @@ var chartFactory = function () {
                     years[year] = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined];
                 }
             });
-            var secondLastYear = maxYear-1;
-            
+            var secondLastYear = maxYear - 1;
+
             var maxMonth = 0;
             _.forEach(res.data, function (value, key) {
                 var yearMonth = value.yearMonth.toString();
@@ -224,13 +309,13 @@ var chartFactory = function () {
                 }
                 years[year][month] = value.value;
             });
-            var secondLastMonth = maxMonth-1;
+            var secondLastMonth = maxMonth - 1;
             var secondLastMonthYear = maxYear;
-            if (secondLastMonth < 0){
+            if (secondLastMonth < 0) {
                 secondLastMonth = 11;
-                secondLastMonthYear = maxYear-1
+                secondLastMonthYear = maxYear - 1
             }
-            
+
             var datasets = [];
             _.forEach(years, function (value, key) {
                 var dataSetTmp = $.extend({}, defDatasets);
@@ -297,8 +382,8 @@ var chartFactory = function () {
         drawChartMonthly: function (chartType, vm) {
             return _drawChartMonthly(chartType, vm);
         },
-        drawChartWeekly: function (chartType, vm) {
-            return _drawChartWeekly(chartType, vm);
+        drawChartWeekly: function (chartType, vm, renderChart) {
+            return _drawChartWeekly(chartType, vm, renderChart);
         }
     };
 }()

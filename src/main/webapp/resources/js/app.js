@@ -38,6 +38,17 @@ var app = $.sammy('#app', function () {
                 });
     });
 
+    this.get('#/statistics/', function (context) {
+        context.app.swap('');
+        context.load('/PerParserSPA/resources/views/pages/statistics.template')
+                .then(function (response) {
+                    this.vm = new statisticsViewModel();
+                    statisticsController.setViewModel(this.vm);
+                    loadView(response, this.vm);
+                    vm.initPage();
+                });
+    });
+    
     this.get('#/pageViews', function (context) {
         context.app.swap('');
         context.load('/PerParserSPA/resources/views/pages/newRelic/pageViews.template')

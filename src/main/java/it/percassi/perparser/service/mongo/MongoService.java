@@ -87,7 +87,9 @@ public class MongoService {
                 subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(), filter.getSearchVal()));
             } else if (fieldType.equals(Date.class)) {
                 Date qDate = null;
+                LOG.debug("FE raw date = "+filter.getSearchVal());
                 qDate = formatter.parse(filter.getSearchVal());
+                LOG.debug("FE formatted date = "+qDate.getTime());
                 subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(), qDate));
             }
 
