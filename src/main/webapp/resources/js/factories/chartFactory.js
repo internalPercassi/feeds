@@ -183,14 +183,28 @@ var chartFactory = function () {
                 deltaPreviousYear = Math.round(((lastValue - previousYearValue) / previousYearValue) * 100);
             }
 
-            var arrowUp = "<i class='fa fa-level-up'></i>";
-            var arrowDown = "<i class='fa fa-level-down'></i>";
-            var deltaPreviousHTML = deltaPrevious > 0 ? deltaPrevious + '%' + arrowUp : deltaPrevious + '%' + arrowDown;
-            var deltaPreviousYearHTML = deltaPreviousYear > 0 ? deltaPreviousYear + '%' + arrowUp : deltaPreviousYear + '%' + arrowDown;
-
+            var arrowUp = "<i style='padding-left:10px' class='fa fa-long-arrow-up'></i>";
+            var arrowDown = "<i style='padding-left:10px' class='fa fa-long-arrow-down'></i>";
+            var arrowZero = "<i style='padding-left:3px' class='fa fa-arrows-h'></i>";
+            var deltaPreviousHTML =  deltaPrevious + '%' + arrowZero;
+            if (deltaPrevious > 0){
+                deltaPreviousHTML =  deltaPrevious + '%' + arrowUp;
+            } else if (deltaPrevious < 0){
+                deltaPreviousHTML =  deltaPrevious + '%' + arrowDown;
+            }
+            
+            var deltaPreviousYearHTML =  deltaPreviousYear + '%' + arrowZero;
+            if (deltaPreviousYear > 0){
+                deltaPreviousYearHTML =  deltaPreviousYear + '%' + arrowUp;
+            } else if (deltaPreviousYear < 0){
+                deltaPreviousYearHTML =  deltaPreviousYear + '%' + arrowDown;
+            }
+            
             if (chartType.metricName == 'EndUser') {
                 if (chartType.valueName == 'call_count') {
                     vm.statistics.endUser.pageViews.lastValue(Math.round(lastValue / 1000).toLocaleString('it-IT') + 'k');
+                    vm.statistics.endUser.pageViews.deltaToLastWeekVal(deltaPrevious);
+                    vm.statistics.endUser.pageViews.deltaToLastYearWeekVal(deltaPreviousYear);
                     vm.statistics.endUser.pageViews.deltaToLastWeek(deltaPreviousHTML);
                     vm.statistics.endUser.pageViews.deltaToLastYearWeek(deltaPreviousYearHTML);
                     weekData.endUser.pageViews = res;
@@ -286,35 +300,22 @@ var chartFactory = function () {
                         data: data,
                         spanGaps: false
                     };
-            var maxYear = 0;
+
             _.forEach(res.data, function (value, key) {
                 var yearMonth = value.yearMonth.toString();
                 var year = yearMonth.substring(0, 4);
-                if (year > maxYear) {
-                    maxYear = year;
-                }
                 if (!years.hasOwnProperty(year)) {
                     years[year] = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined];
                 }
             });
-            var secondLastYear = maxYear - 1;
 
             var maxMonth = 0;
             _.forEach(res.data, function (value, key) {
                 var yearMonth = value.yearMonth.toString();
                 var year = yearMonth.substring(0, 4);
                 var month = Number(yearMonth.substring(4)) - 1;
-                if (year == maxYear && month > maxMonth) {
-                    maxMonth = month;
-                }
                 years[year][month] = value.value;
             });
-            var secondLastMonth = maxMonth - 1;
-            var secondLastMonthYear = maxYear;
-            if (secondLastMonth < 0) {
-                secondLastMonth = 11;
-                secondLastMonthYear = maxYear - 1
-            }
 
             var datasets = [];
             _.forEach(years, function (value, key) {
@@ -329,39 +330,6 @@ var chartFactory = function () {
                 dataSetTmp.pointHoverBorderColor = appConstants.colors[key];
                 datasets.push(dataSetTmp);
             });
-
-
-            var lastValue = 0;
-            try {
-                lastValue = parseFloat(years[maxYear][maxMonth]);
-            } catch (Err) {
-                console.warn('Monhtly chart: error getting last value');
-            }
-            var secondLastValue = 0;
-            try {
-                secondLastValue = parseFloat(years[secondLastMonthYear][secondLastMonth]);
-            } catch (Err) {
-                console.warn('Monhtly chart: error getting secondLastValue');
-            }
-            var previousYearValue = 0;
-            try {
-                previousYearValue = parseFloat(years[secondLastYear][maxMonth]);
-            } catch (Err) {
-                console.warn('Monhtly chart: error getting previousYearValue');
-            }
-
-
-            var deltaPrevious = 0;
-            if (secondLastValue != 0) {
-                deltaPrevious = Math.round(((lastValue - secondLastValue) / secondLastValue) * 100);
-            }
-            var deltaPreviousYear = 0;
-            if (previousYearValue != 0) {
-                deltaPreviousYear = Math.round(((lastValue - previousYearValue) / previousYearValue) * 100);
-            }
-
-            vm.deltaToPrevious(deltaPrevious);
-            vm.deltaToPreviousYear(deltaPreviousYear);
 
             var chartDataTmp = {
                 labels: labels,
