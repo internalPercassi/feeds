@@ -48,50 +48,6 @@ var app = $.sammy('#app', function () {
                     vm.initPage();
                 });
     });
-    
-    this.get('#/pageViews', function (context) {
-        context.app.swap('');
-        context.load('/PerParserSPA/resources/views/pages/newRelic/pageViews.template')
-                .then(function (response) {
-                    this.vm = new pageViewsViewModel();
-                    pageViewsController.setViewModel(this.vm);
-                    loadView(response, this.vm);
-                    vm.drawChartDaily();
-                });
-    });
-
-    this.get('#/loadTime', function (context) {
-        context.app.swap('');
-        context.load('/PerParserSPA/resources/views/pages/newRelic/loadTime.template')
-                .then(function (response) {
-                    this.vm = new loadTimeViewModel();
-                    loadTimeController.setViewModel(this.vm);
-                    loadView(response, this.vm);
-                    vm.drawChartDaily();
-                });
-    });
-
-    this.get('#/request', function (context) {
-        context.app.swap('');
-        context.load('/PerParserSPA/resources/views/pages/newRelic/request.template')
-                .then(function (response) {
-                    this.vm = new requestViewModel();
-                    requestController.setViewModel(this.vm);
-                    loadView(response, this.vm);
-                    vm.drawChartDaily();
-                });
-    });
-
-    this.get('#/responseTime', function (context) {
-        context.app.swap('');
-        context.load('/PerParserSPA/resources/views/pages/newRelic/responseTime.template')
-                .then(function (response) {
-                    this.vm = new responseTimeViewModel();
-                    responseTimeController.setViewModel(this.vm);
-                    loadView(response, this.vm);
-                    vm.drawChartDaily();
-                });
-    });
 
     this.get('#/history/', function (context) {
         context.app.swap('');
@@ -102,16 +58,6 @@ var app = $.sammy('#app', function () {
                     historyController.setViewModel(this.vm);
                     loadView(response, this.vm);
                     historyController.showUploadedFiles();
-                });
-    });
-
-    this.get('#/requestMillions', function (context) {
-        context.app.swap('');
-        context.load('/PerParserSPA/resources/views/partials/newRelic/requestMillions.template')
-                .then(function (response) {
-                    this.vm = new requestMillionsViewModel();
-                    requestMillionsController.setViewModel(this.vm);
-                    loadView(response, this.vm);
                 });
     });
 
