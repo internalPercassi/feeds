@@ -13,77 +13,40 @@ var glController = function () {
             }
         ],
         columns: [
-            {"title": "md5", },
-            {"title": "Unique Product Code"},
-            {"title": "Stocked Qty"},
-            {"title": "Booked Qty"},
-            {"title": "Accounting State"},
+            {"title": "md5",mongoName:"md5" },
+            {"title": "Unique Product Code",mongoName:"uniqueProductCode"},
+            {"title": "Stocked Qty",mongoName:"stockedQty"},
+            {"title": "Booked Qty",mongoName:"bookedQty"},
+            {"title": "Accounting State",mongoName:"accountingState"},
         ]
-    };
-
-    var _search = function () {
-        var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
-        _loadGlGrid(collectionName, url);
     };
 
     var _getCSV = function () {
         tableFactory.downloadCsv(collectionName);
     };
 
-    var _resetFilter = function () {
-        filterFactory.reset();
-    };
-
-    var _loadGlGrid = function (collectionNamePar, url) {
-        if (collectionNamePar) {
-            collectionName = collectionNamePar;
-        }
-        if (!url) {
-            url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
-        }
-
-        restService.post(url, callback);
-    };
-
     var _setViewModel = function (vm) {
         _that.vm = vm;
     };
 
-     var _loadNewGrid = function (md5,viewModel) {
+    var _loadDataTable = function (md5, viewModel) {
         _setViewModel(viewModel);
-        documentService.getGL(md5,callback);
-    };
-    
-    var _init = function () {};
-    var callback = function (res) {
-        var tabOpt = jQuery.extend(true, {}, tableOptions);
-        tabOpt.data = tableFactory.getRowsForDatatables(res);
         if (glTable) {
             glTable.destroy();
             glTable = undefined;
             $(selectorId).empty();
         }
-        glTable = $(selectorId).DataTable(tabOpt);
-    }
+        glTable = tableFactory.loadTable(selectorId,tableOptions, appConstants.collectionNames.GL,md5);
+    };
     return {
-        init: function () {
-            _init();
-        },
         setViewModel: function (vm) {
             _setViewModel(vm);
-        },
-        search: function () {
-            _search();
         },
         getCSV: function () {
             _getCSV();
         },
-        resetFilter: function () {
-            _resetFilter();
-            _showDocs();
-        },
-        loadNewGrid: function (md5,viewModel) {
-            _loadNewGrid(md5,viewModel);
+        loadDataTable: function (md5, viewModel) {
+            _loadDataTable(md5, viewModel);
         }
     }
 }($);

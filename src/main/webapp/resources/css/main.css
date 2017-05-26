@@ -3,7 +3,7 @@
     left: 50%;
     top: 50%;
     position: fixed;
-    content:url('/PerParserSPA/resources/images/ring.svg');
+    content:url('/PerPortal/resources/images/ring.svg');
 }
 
 #loading {
@@ -19,44 +19,62 @@
 }
 
 .margin-top{
-	margin-top: 20px;
+    margin-top: 20px;
 }
 .margin-left{
-	margin-left: 20px;
+    margin-left: 20px;
 }
 .margin-right{
-	margin-right: 20px;
+    margin-right: 20px;
 }
 .margin-bottom{
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 [data-notify="progressbar"] {
-	margin-bottom: 0px;
-	position: absolute;
-	bottom: 0px;
-	top:100px;
-	left: 0px;
-	width: 100%;
-	height: 5px;
+    margin-bottom: 0px;
+    position: absolute;
+    bottom: 0px;
+    top:100px;
+    left: 0px;
+    width: 100%;
+    height: 5px;
 }
 
 .notifyjs-corner .notifyjs-wrapper{
-	top:50px;
+    top:50px;
 }
 
 .datepicker{
-	background-color: #FFFFFF;
+    background-color: #FFFFFF;
 }
 
 .list-group-item {
-  background-color: #EEEEEE;
+    background-color: #EEEEEE;
 }
 
 .navbarUl{
-	-webkit-padding-start: 0px;
+    -webkit-padding-start: 0px;
 }
 .navbarUl>li{
-	padding-left:17px;
-	background-color: #FFFFFF;
+    padding-left:17px;
+    background-color: #FFFFFF;
+}
+
+
+
+
+div.hoverBox:hover{
+    background-color: #c4c4c4;
+    -webkit-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
+    cursor:pointer;
+}
+
+div.hoverBoxActive{
+    -webkit-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
+    background-color: #f2efef;
 }

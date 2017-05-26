@@ -153,7 +153,7 @@ var historyController = function () {
 
     var deleteFile = function (data) {
         $.ajax({
-            url: "/PerParserSPA/deleteUploadedFile",
+            url: "deleteUploadedFile",
             data: JSON.stringify(data),
             cache: false,
             contentType: "application/json",

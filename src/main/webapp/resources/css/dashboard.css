@@ -44,7 +44,7 @@ body {
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #ddd;
+    background-color: #2f4050;
     border-right: 1px solid #eee;
   }
 }
@@ -188,7 +188,7 @@ tfoot input {
     height:     100%;
     width:      100%;
     background: rgba( 255, 255, 255, .8 ) 
-                url('/PerParserSPA/resources/images/ajax-loader.gif') 
+                url('resources/images/ajax-loader.gif') 
                 50% 50% 
                 no-repeat;
 }

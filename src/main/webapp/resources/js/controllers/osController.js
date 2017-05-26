@@ -8,34 +8,19 @@ var osController = function () {
         pageable: true,
         columnDefs: [
             {
-                "targets": [0],
-                "visible": false,
+                target: [0],
+                visible: false,
             }
         ],
         columns: [
-            {"title": "md5", },
-            {"title": "Product Code"},
-            {"title": "Model Code"},
-            {"title": "Warehouse"},
-            {"title": "Physical Inventory"},
-            {"title": "Order Status"},
-            {"title": "Replenishment Level"},
+            {title: "md5",mongoName:"md5" },
+            {title: "Product Code",mongoName:"productCode" },
+            {title: "Model Code",mongoName:"modelCode" },
+            {title: "Warehouse",mongoName:"warehouse" },
+            {title: "Physical Inventory",mongoName:"physicalInventory" },
+            {title: "Order Status",mongoName:"orderStatus" },
+            {title: "Replenishment Level",mongoName:"replenishmentLevel" },
         ]
-    };
-
-    var _search = function () {
-        var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
-        _loadOSGrid(collectionName, url);
-    };
-
-    var _loadOSGrid = function (collectionNamePar, url) {
-        if (collectionNamePar) {
-            collectionName = collectionNamePar;
-        }
-        if (!url) {
-            url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
-        }
-        restService.post(url, callback);
     };
 
     var _getCSV = function () {
@@ -46,41 +31,25 @@ var osController = function () {
         _that.vm = vm;
     };
 
-    var _init = function () {
-
-    };
-
-    var _loadNewGrid = function (md5, viewModel) {
+    var _loadDataTable = function (md5, viewModel) {
         _setViewModel(viewModel);
-       documentService.getOS(md5, callback);
-    };
-    
-    var callback = function (res) {
-        var tabOpt = jQuery.extend(true, {}, tableOptions);
-        tabOpt.data = tableFactory.getRowsForDatatables(res);
         if (osTable) {
             osTable.destroy();
             osTable = undefined;
             $(selectorId).empty();
         }
-        osTable = $(selectorId).DataTable(tabOpt);
-    };   
+        osTable = tableFactory.loadTable(selectorId,tableOptions, appConstants.collectionNames.OS,md5);
+    };
     
     return {
-        init: function () {
-            _init();
-        },
         setViewModel: function (vm) {
             _setViewModel(vm);
-        },
-        search: function () {
-            _search();
         },
         getCSV: function () {
             _getCSV();
         },
-        loadNewGrid: function (md5, viewModel) {
-            _loadNewGrid(md5, viewModel);
+        loadDataTable: function (md5, viewModel) {
+            _loadDataTable(md5, viewModel);
         }
     }
 }($);

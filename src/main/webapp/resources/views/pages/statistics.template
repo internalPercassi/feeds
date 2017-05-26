@@ -1,0 +1,128 @@
+<div class="row">
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="label label-success pull-right">End User</span>
+                <h5>Page Views</h5>
+            </div>
+            <div id="pageViewMillions" class="ibox-content hoverBox hoverBoxActive"  data-bind="click: drawChartWeeklyPageViewMillions">
+                <h1 class="no-margins" data-bind="text: statistics.endUser.pageViews.lastValue"></h1>
+                <div>
+                    <div class="stat-percent font-bold" data-bind="html: statistics.endUser.pageViews.deltaToLastWeek"></div>
+                    <span>Delta to last week</span>
+                </div>
+                <div>
+                    <div class="stat-percent font-bold" data-bind="html: statistics.endUser.pageViews.deltaToLastYearWeek"></div>
+                    <span>Delta to last year</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins" >
+            <div class="ibox-title">
+                <span class="label label-success pull-right">End User</span>
+                <h5>Load Time</h5>
+            </div>
+            <div id="loadTime" class="ibox-content hoverBox" data-bind="click: drawChartWeeklyLoadTime">
+                <h1 class="no-margins" data-bind="text: statistics.endUser.loadTime.lastValue"></h1>
+                <div>
+                    <div class="stat-percent font-bold" data-bind="html: statistics.endUser.loadTime.deltaToLastWeek"></div>
+                    <span>Delta to last week</span>
+                </div>
+                <div>
+                    <div class="stat-percent font-bold" data-bind="html: statistics.endUser.loadTime.deltaToLastYearWeek"></div>
+                    <span>Delta to last year</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins" >
+            <div class="ibox-title">
+                <span class="label label-info pull-right">App Server</span>
+                <h5>Server Request</h5>
+            </div>
+            <div id="requestMillions" class="ibox-content hoverBox" data-bind="click: drawChartWeeklyRequestMillions">
+                <h1 class="no-margins" data-bind="text: statistics.appServer.requests.lastValue"></h1>
+                <div>
+                    <div class="stat-percent font-bold" data-bind="html: statistics.appServer.requests.deltaToLastWeek"></div>
+                    <span>Delta to last week</span>
+                </div>
+                <div>
+                    <div class="stat-percent font-bold" data-bind="html: statistics.appServer.requests.deltaToLastYearWeek"></div>
+                    <span>Delta to last year</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="label label-info pull-right">App Server</span>
+                <h5>Resp. time</h5>
+            </div>
+            <div id="responseTime" class="ibox-content hoverBox"  data-bind="click: drawChartWeeklyResponseTime">
+                <h1 class="no-margins" data-bind="text: statistics.appServer.respTime.lastValue"></h1>
+                <div>
+                    <div class="stat-percent font-bold" data-bind="html: statistics.appServer.respTime.deltaToLastWeek"></div>
+                    <span>Delta to last week</span>
+                </div>
+                <div>
+                    <div class="stat-percent font-bold" data-bind="html: statistics.appServer.respTime.deltaToLastYearWeek"></div>
+                    <span>Delta to last year</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ibox-content">
+    <ul class="nav nav-tabs">
+        <li  class="active">
+            <a href="#2" data-toggle="tab" data-bind="click: drawChartWeekly">Weekly Report</a>
+        </li>
+        <li>
+            <a href="#3" data-toggle="tab" data-bind="click: drawChartMonthly">Monthly Report</a>
+        </li>
+        <li>
+            <a  href="#1" data-toggle="tab" data-bind="click: drawChartDaily">Specific Period</a>
+        </li>
+    </ul>
+
+    <div class="tab-content ">
+        <div class="tab-pane" id="1">
+            <br>
+            <div class="col-sm-4 col-md-4 col-lg-2">
+                <label class="control-label">From</label>
+                <div class="input-group date" data-bind='dateTimePicker: dateFrom, maxDate: dateTo' >
+                    <input class="form-control input-group-addon datepicker" onkeydown="return false"/>
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-2">
+                <label class="control-label">To</label>
+                <div class="input-group date" data-bind='dateTimePicker: dateTo, minDate: dateFrom, maxDate: moment().subtract(1,"days")'>
+                    <input class="form-control input-group-addon datepicker"  onkeydown="return false"/>
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-lg-8 no-padding">
+                <div class="col-sm-8 col-md-8 col-lg-2 col-xl-3 pull-right">
+                    <label class="control-label">&nbsp;</label>
+                    <div class="btn btn-default form-control" data-bind="click: drawChartDaily">Search</div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="2"></div>
+        <div class="tab-pane" id="3"></div>
+    </div>
+    <div>
+        &nbsp;<canvas height="110" id="chartCanvas" data-bind="chart: { type: 'line', data: chartData, options: chartOptions }"></canvas>
+    </div>
+</div>
+

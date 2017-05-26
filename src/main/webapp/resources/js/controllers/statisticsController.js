@@ -1,7 +1,7 @@
 /**
  * 
  */
-var pageViewsController = function () {
+var statisticsController = function () {
     var _that = this;
     var _setViewModel = function (vm) {
         _that.vm = vm;
