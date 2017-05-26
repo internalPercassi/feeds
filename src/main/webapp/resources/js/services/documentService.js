@@ -6,7 +6,12 @@ var documentService = function () {
         filterFactory.addFilter('md5', '$eq', md5);
         var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
         restService.post(url, callback);
-
+    };
+    
+    var _getParsedDocumentsURL = function(collectionName,md5){
+        filterFactory.addFilter('md5', '$eq', md5);
+        var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
+        return url
     };
     
     var _getChartDataDaily = function(chartType,fromDate,toDate,callback){
@@ -56,6 +61,9 @@ var documentService = function () {
         },
         getOS: function (md5,callback) {
             return _getParsedDocuments(appConstants.collectionNames.OS,md5,callback);
+        },
+        getDocumentsURL : function(collectionNames,md5){
+            return _getParsedDocumentsURL(collectionNames,md5);
         },
         getChartDataDaily: function (chartType,fromDate,toDate,callback) {
             return _getChartDataDaily(chartType,fromDate,toDate,callback);

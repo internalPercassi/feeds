@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -53,7 +54,7 @@ public class MongoService {
     }
 
     public boolean isFileAlreadyUploaded(String md5, String type) throws IOException {
-        return mongoRepository.isFileAlreadyUploaded(md5,type);
+        return mongoRepository.isFileAlreadyUploaded(md5, type);
     }
 
     public void saveUploadedFileModel(UploadedFileModel uploadedFile) throws IOException {
@@ -87,9 +88,9 @@ public class MongoService {
                 subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(), filter.getSearchVal()));
             } else if (fieldType.equals(Date.class)) {
                 Date qDate = null;
-                LOG.debug("FE raw date = "+filter.getSearchVal());
                 qDate = formatter.parse(filter.getSearchVal());
-                LOG.debug("FE formatted date = "+qDate.getTime());
+                LOG.debug("FE formatted date = " + qDate.getTime());
+                LOG.debug("FE raw date = " + filter.getSearchVal());
                 subQ.put(filter.getField(), new BasicDBObject(filter.getSearchOperator(), qDate));
             }
 

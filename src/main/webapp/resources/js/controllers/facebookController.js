@@ -3,7 +3,6 @@ var facebookController = function () {
     var collectionName = appConstants.collectionNames.FacebookProduct;
     var selectorId = '#facebookTable';
     var facebookTable;
-
     var tableOptions = {
         pageable: true,
         columnDefs: [
@@ -13,100 +12,63 @@ var facebookController = function () {
             }
         ],
         columns: [
-            {"title": "md5"},
-            {"title": "Id"},
-            {"title": "Availability"},
-            {"title": "Condition"},
-            {"title": "Description"},
-            {"title": "imageLink"},
-            {"title": "link"},
-            {"title": "Title"},
-            {"title": "price", },
-            {"title": "brand"},
-            {"title": "additionalImageLink"},
-            {"title": "ageGroup"},
-            {"title": "color"},
-            {"title": "expirationDate"},
-            {"title": "gender"},
-            {"title": "itemGroupId"},
-            {"title": "googleProductCategory"},
-            {"title": "material"},
-            {"title": "pattern"},
-            {"title": "productType"},
-            {"title": "salePrice"},
-            {"title": "shipping"},
-            {"title": "shippingWeight"},
-            {"title": "customLabel0"},
-            {"title": "customLabel1"},
-            {"title": "customLabel2"},
-            {"title": "customLabel3"},
-            {"title": "customLabel4"}
+            {"title": "md5", searchable: false,mongoName:"md5"},
+            {"title": "id",mongoName:"id"},
+            {"title": "availability",mongoName:"availability"},
+            {"title": "Condition",mongoName:"condition"},
+            {"title": "description",mongoName:"description"},
+            {"title": "imageLink",mongoName:"imageLink"},
+            {"title": "link",mongoName:"link"},
+            {"title": "Title",mongoName:"title"},
+            {"title": "price",mongoName:"price" },
+            {"title": "brand",mongoName:"brand"},
+            {"title": "additionalImageLink", searchable: false,mongoName:"additionalImageLink"},
+            {"title": "ageGroup", searchable: false,mongoName:"ageGroup"},
+            {"title": "color", searchable: false,mongoName:"color"},
+            {"title": "expirationDate", searchable: false,mongoName:"expirationDate"},
+            {"title": "gender", searchable: false,mongoName:"gender"},
+            {"title": "itemGroupId", searchable: false,mongoName:"itemGroupId"},
+            {"title": "googleProductCategory", searchable: false,mongoName:"googleProductCategory"},
+            {"title": "material", searchable: false,mongoName:"material"},
+            {"title": "pattern", searchable: false,mongoName:"pattern"},
+            {"title": "productType", searchable: false,mongoName:"productType"},
+            {"title": "salePrice", searchable: false,mongoName:"salePrice"},
+            {"title": "shipping", searchable: false,mongoName:"shipping"},
+            {"title": "shippingWeight", searchable: false,mongoName:"shippingWeight"},
+            {"title": "customLabel0", searchable: false,mongoName:"customLabel0"},
+            {"title": "customLabel1", searchable: false,mongoName:"customLabel1"},
+            {"title": "customLabel2", searchable: false,mongoName:"customLabel2"},
+            {"title": "customLabel3", searchable: false,mongoName:"customLabel3"},
+            {"title": "customLabel4", searchable: false,mongoName:"customLabel4"}
         ]
     };
-
-    var _search = function () {
-        var url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
-        _loadFacebookGrid(collectionName, url);
-    };
-
-    var _resetFilter = function () {
-        filterFactory.reset();
-    };
-
+    
     var _getCSV = function () {
         tableFactory.downloadCsv(collectionName);
     };
-
-    var _loadFacebookGrid = function (collectionNamePar, url) {
-        if (collectionNamePar) {
-            collectionName = collectionNamePar;
-        }
-
-        if (!url) {
-            url = urlFactory.getDocs(collectionName, filterFactory.getFilters());
-        }
-        restService.post(url, callback);
-    };
-
-    var _init = function () {
-
-    };
-
+    
     var _setViewModel = function (vm) {
         _that.vm = vm;
     };
-
-    var _loadNewGrid = function (md5, viewModel) {
+    var _loadDataTable = function (md5, viewModel) {
         _setViewModel(viewModel);
-        documentService.getFacebook(md5, callback);
-    };
-    
-    var callback = function (res) {
-        var tabOpt = jQuery.extend(true, {}, tableOptions);
-        tabOpt.data = tableFactory.getRowsForDatatables(res);
         if (facebookTable) {
             facebookTable.destroy();
             facebookTable = undefined;
             $(selectorId).empty();
         }
-        facebookTable = $(selectorId).DataTable(tabOpt);
+        facebookTable = tableFactory.loadTable(selectorId,tableOptions, appConstants.collectionNames.FacebookProduct,md5);
     };
     
     return {
-        init: function () {
-            _init();
-        },
         setViewModel: function (vm) {
             _setViewModel(vm);
-        },
-        search: function () {
-            _search();
         },
         getCSV: function () {
             _getCSV();
         },
-        loadNewGrid: function (md5, viewModel) {
-            _loadNewGrid(md5, viewModel);
+        loadDataTable: function (md5, viewModel) {
+            _loadDataTable(md5, viewModel);
         }
     }
 }($);

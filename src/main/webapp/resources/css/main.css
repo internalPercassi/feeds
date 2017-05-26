@@ -3,7 +3,7 @@
     left: 50%;
     top: 50%;
     position: fixed;
-    content:url('/PerParserSPA/resources/images/ring.svg');
+    content:url('/PerPortal/resources/images/ring.svg');
 }
 
 #loading {

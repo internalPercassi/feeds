@@ -7,22 +7,24 @@ var app = $.sammy('#app', function () {
     this.get('#/FacebookProduct/:id', function (context) {
         context.app.swap('');
         var md5 = context.params['id'];
-        context.load('/PerParserSPA/resources/views/pages/facebook.template')
+        context.load('resources/views/pages/facebook.template')
                 .then(function (response) {
                     this.vm = new facebookViewModel();
-                    facebookController.loadNewGrid(md5, this.vm);
                     loadView(response, this.vm);
+                    filterFactory.reset();
+                    setTimeout(function(){facebookController.loadDataTable(md5, this.vm)},200);
                 });
     });
 
     this.get('#/GL/:id', function (context) {
         context.app.swap('');
         var md5 = context.params['id'];
-        context.load('/PerParserSPA/resources/views/pages/gl.template')
+        context.load('resources/views/pages/gl.template')
                 .then(function (response) {
                     this.vm = new glViewModel();
-                    glController.loadNewGrid(md5, this.vm);
                     loadView(response, this.vm);
+                    filterFactory.reset();
+                    setTimeout(function(){glController.loadDataTable(md5, this.vm)},200);
                 });
 
     });
@@ -30,17 +32,17 @@ var app = $.sammy('#app', function () {
     this.get('#/OS/:id', function (context) {
         context.app.swap('');
         var md5 = context.params['id'];
-        context.load('/PerParserSPA/resources/views/pages/os.template')
+        context.load('resources/views/pages/os.template')
                 .then(function (response) {
                     this.vm = new osViewModel()
-                    osController.loadNewGrid(md5, this.vm);
                     loadView(response, this.vm);
+                    setTimeout(function(){osController.loadDataTable(md5, this.vm)},200);
                 });
     });
 
     this.get('#/statistics/', function (context) {
         context.app.swap('');
-        context.load('/PerParserSPA/resources/views/pages/statistics.template')
+        context.load('resources/views/pages/statistics.template')
                 .then(function (response) {
                     this.vm = new statisticsViewModel();
                     statisticsController.setViewModel(this.vm);
@@ -51,7 +53,7 @@ var app = $.sammy('#app', function () {
 
     this.get('#/history/', function (context) {
         context.app.swap('');
-        context.load('/PerParserSPA/resources/views/pages/history.template')
+        context.load('resources/views/pages/history.template')
                 .then(function (response) {
                     this.vm = new historyViewModel();
                     historyController.init();
@@ -82,7 +84,7 @@ var app = $.sammy('#app', function () {
 
 
 $(document).ready(function () {
-    app.run('#/history/');
+    app.run('#/statistics/');
 });
 
 $.notify({

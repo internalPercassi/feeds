@@ -9,11 +9,11 @@
                 <h1 class="no-margins" data-bind="text: statistics.endUser.pageViews.lastValue"></h1>
                 <div>
                     <div class="stat-percent font-bold" data-bind="html: statistics.endUser.pageViews.deltaToLastWeek"></div>
-                    <span>Delta to last week:</span>
+                    <span>Delta to last week</span>
                 </div>
                 <div>
                     <div class="stat-percent font-bold" data-bind="html: statistics.endUser.pageViews.deltaToLastYearWeek"></div>
-                    <span>Delta to last year:</span>
+                    <span>Delta to last year</span>
                 </div>
             </div>
         </div>
@@ -28,11 +28,11 @@
                 <h1 class="no-margins" data-bind="text: statistics.endUser.loadTime.lastValue"></h1>
                 <div>
                     <div class="stat-percent font-bold" data-bind="html: statistics.endUser.loadTime.deltaToLastWeek"></div>
-                    <span>Delta to last week:</span>
+                    <span>Delta to last week</span>
                 </div>
                 <div>
                     <div class="stat-percent font-bold" data-bind="html: statistics.endUser.loadTime.deltaToLastYearWeek"></div>
-                    <span>Delta to last year:</span>
+                    <span>Delta to last year</span>
                 </div>
             </div>
         </div>
@@ -47,11 +47,11 @@
                 <h1 class="no-margins" data-bind="text: statistics.appServer.requests.lastValue"></h1>
                 <div>
                     <div class="stat-percent font-bold" data-bind="html: statistics.appServer.requests.deltaToLastWeek"></div>
-                    <span>Delta to last week:</span>
+                    <span>Delta to last week</span>
                 </div>
                 <div>
                     <div class="stat-percent font-bold" data-bind="html: statistics.appServer.requests.deltaToLastYearWeek"></div>
-                    <span>Delta to last year:</span>
+                    <span>Delta to last year</span>
                 </div>
             </div>
         </div>
@@ -65,12 +65,12 @@
             <div id="responseTime" class="ibox-content hoverBox"  data-bind="click: drawChartWeeklyResponseTime">
                 <h1 class="no-margins" data-bind="text: statistics.appServer.respTime.lastValue"></h1>
                 <div>
-                    <div class="stat-percent font-bold text-success" data-bind="html: statistics.appServer.respTime.deltaToLastWeek"></div>
-                    <span>Delta to last week:</span>
+                    <div class="stat-percent font-bold" data-bind="html: statistics.appServer.respTime.deltaToLastWeek"></div>
+                    <span>Delta to last week</span>
                 </div>
                 <div>
-                    <div class="stat-percent font-bold text-success" data-bind="html: statistics.appServer.respTime.deltaToLastYearWeek"></div>
-                    <span>Delta to last year:</span>
+                    <div class="stat-percent font-bold" data-bind="html: statistics.appServer.respTime.deltaToLastYearWeek"></div>
+                    <span>Delta to last year</span>
                 </div>
             </div>
         </div>

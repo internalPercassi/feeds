@@ -42,8 +42,10 @@ var statisticsViewModel = function () {
     };
 
     this.drawChartDaily = function () {
-        chartFactory.drawChartDaily(that.chartType, that, that.dateFrom(), that.dateTo());
-    };
+        var dateFrom = that.dateFrom().setHours(0, 0, 0, 0);
+        var dateTo = that.dateTo().setHours(23, 59, 59, 0);
+        chartFactory.drawChartDaily(that.chartType, that, dateFrom, dateTo);
+    };  
 
     this.drawChartWeekly = function () {
         chartFactory.drawChartWeekly(that.chartType, that, true);

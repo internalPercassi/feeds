@@ -4,14 +4,15 @@ var urlFactory = function () {
 	var constats = {
 		getDocUrl: 'getDocuments',
 		uploadFileUrl: 'parseFile',
-		defaultDocsNum: 100
+		defaultDocsNum: 10
 	};
-	var docDefUrl = constats.getDocUrl + '?length='+constats.defaultDocsNum;
+//	var docDefUrl = constats.getDocUrl + '?length='+constats.defaultDocsNum;
+        var docDefUrl = constats.getDocUrl + '?';
 	var _uploadFile = function (fileType) {
 		return constats.uploadFileUrl + '?fileType=' + fileType;
 	}
 	var _getUploadedFiles = function () {
-		return docDefUrl + "&collectionName=uploadedFile&start=0&length=1000&sortField=date&sortType=-1";
+		return docDefUrl + "&collectionName=uploadedFile&start=0&length=5000&sortField=date&sortType=-1";
 	};
 	var _getDocs = function (collectionName, filters, sortConfig, isCsv) {
 		var url = docDefUrl + "&collectionName=" + collectionName;
