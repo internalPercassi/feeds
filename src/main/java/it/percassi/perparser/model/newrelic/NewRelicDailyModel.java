@@ -15,7 +15,11 @@ import org.bson.Document;
  */
 public class NewRelicDailyModel implements Serializable {
 
-    private Date day;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3100351868904095194L;
+	private Date day;
     private String metricName;
     private String valueName;
     private Float value;
@@ -56,7 +60,7 @@ public class NewRelicDailyModel implements Serializable {
         Document ret = new Document();
         ret.append("day", this.day);
         ret.append("metricName", this.metricName);
-        ret.append("metricValue", this.valueName);
+        ret.append("valueName", this.valueName);
         ret.append("value", this.value);
         return ret;
     }

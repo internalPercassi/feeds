@@ -57,14 +57,18 @@ public class PerPortalUtils {
 	 * @return The uri {@link URI}
 	 */
 	public static URI generateUriToCall(String urlToCall, LocalDateTime fromDate, LocalDateTime toDate,
-			MultiValueMap<String, String> uriParams, int period) {
+			MultiValueMap<String, String> uriParams, int period,boolean isSummarize) {
 
 		final UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(urlToCall).queryParams(uriParams)
 				.queryParam("from", fromDate).queryParam("to", toDate);
 
+		if(Boolean.TRUE.equals(isSummarize)){
+			builder.queryParam("summarize", isSummarize);
+		}
 		if (period != 0) {
 			builder.queryParam("period", period);
 		}
+		
 
 		final URI uri = builder.buildAndExpand(uriParams).toUri();
 		return uri;

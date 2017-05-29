@@ -22,6 +22,8 @@ public class GetDocumentsRequest {
 	private Integer sortType;
 	
 	private boolean getCsv;
+	
+	private boolean isExcelToDownload;
 
 	public Integer getLength() {
 		return length;
@@ -95,9 +97,17 @@ public class GetDocumentsRequest {
 		this.getCsv = getCsv;
 	}
 
+	public boolean isExcelToDownload() {
+		return isExcelToDownload;
+	}
+
+	public void setExcelToDownload(boolean isExcelToDownload) {
+		this.isExcelToDownload = isExcelToDownload;
+	}
+
 	@Override
 	public String toString() {
 		
-		return ReflectionToStringBuilder.toString(this, ToStringStyle.NO_CLASS_NAME_STYLE);
+		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 }

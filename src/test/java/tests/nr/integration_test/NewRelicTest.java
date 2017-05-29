@@ -77,6 +77,11 @@ public class NewRelicTest {
 	private final static String defaultFilePath = System.getProperty("user.home");
 
 	private BufferedWriter out;
+	
+	LocalDateTime fromDate = LocalDateTime.now().minusDays(1).toLocalDate().atStartOfDay();
+	LocalDateTime toDate = LocalDateTime.now().toLocalDate().atStartOfDay().minusSeconds(1);
+	
+	
 
 	@Test
 	public void getHttpDispatcher_call_count_daily_success() throws IOException {
@@ -101,11 +106,10 @@ public class NewRelicTest {
 
 		// fromDate=LocalDateTime.of(2017, 4, 23, 00, 00, 00);
 		// toDate=LocalDateTime.of(2017, 4, 23, 23, 59, 59);
-		LocalDateTime fromDate = LocalDateTime.now().minusDays(1).toLocalDate().atStartOfDay();
-		LocalDateTime toDate = LocalDateTime.now().toLocalDate().atStartOfDay().minusSeconds(1);
 
-		fromDate = LocalDateTime.of(2017, 4, 23, 00, 00, 00);
-		toDate = LocalDateTime.of(2017, 4, 23, 23, 59, 59);
+		fromDate = LocalDateTime.of(2017, 5, 24, 00, 00, 00);
+		toDate = LocalDateTime.of(2017, 5, 24, 23, 59, 59);
+
 
 		String metricName = PerPortalConstants.NR_METRICS[0];
 		String metricValue = PerPortalConstants.NEW_RELIC_CALL_COUNT_VALUE;
@@ -121,7 +125,7 @@ public class NewRelicTest {
 			assertNotNull(serviceResponse.getNewRelicResponse());
 			nrResponseAsJSON = convertToJSONNewRelicResponse(serviceResponse.getNewRelicResponse());
 			assertNotNull(nrResponseAsJSON);
-			addDataEntry();
+			addDataEntry(fromDate);
 
 		} catch (Exception e) {
 			System.err.println("Exception: " + e);
@@ -144,8 +148,8 @@ public class NewRelicTest {
 		 * from 0 to 59
 		 */
 
-		final LocalDateTime fromDate = LocalDateTime.now().minusDays(1).toLocalDate().atStartOfDay();
-		final LocalDateTime toDate = LocalDateTime.now().toLocalDate().atStartOfDay().minusSeconds(1);
+		fromDate = LocalDateTime.of(2017, 5, 24, 00, 00, 00);
+		toDate = LocalDateTime.of(2017, 5, 24, 23, 59, 59);
 		String metricName = PerPortalConstants.NR_METRICS[0];
 
 		String metricValue = PerPortalConstants.NEW_RELIC_AVG_RESP_TIME_VALUE;
@@ -160,7 +164,7 @@ public class NewRelicTest {
 			assertNotNull(serviceResponse.getNewRelicResponse());
 			nrResponseAsJSON = convertToJSONNewRelicResponse(serviceResponse.getNewRelicResponse());
 			assertNotNull(nrResponseAsJSON);
-			addDataEntry();
+			addDataEntry(fromDate);
 
 		} catch (Exception e) {
 			System.err.println("Exception: " + e);
@@ -183,8 +187,8 @@ public class NewRelicTest {
 		 * from 0 to 59
 		 */
 
-		final LocalDateTime fromDate = LocalDateTime.now().minusDays(1).toLocalDate().atStartOfDay();
-		final LocalDateTime toDate = LocalDateTime.now().toLocalDate().atStartOfDay().minusSeconds(1);
+		fromDate = LocalDateTime.of(2017, 5, 24, 00, 00, 00);
+		toDate = LocalDateTime.of(2017, 5, 24, 23, 59, 59);
 		String metricName = PerPortalConstants.NR_METRICS[1];
 
 		String metricValue = PerPortalConstants.NEW_RELIC_CALL_COUNT_VALUE;
@@ -199,7 +203,7 @@ public class NewRelicTest {
 			assertNotNull(serviceResponse.getNewRelicResponse());
 			nrResponseAsJSON = convertToJSONNewRelicResponse(serviceResponse.getNewRelicResponse());
 			assertNotNull(nrResponseAsJSON);
-			addDataEntry();
+			addDataEntry(fromDate);
 
 		} catch (Exception e) {
 			System.err.println("Exception: " + e);
@@ -222,8 +226,8 @@ public class NewRelicTest {
 		 * from 0 to 59
 		 */
 
-		final LocalDateTime fromDate = LocalDateTime.now().minusDays(1).toLocalDate().atStartOfDay();
-		final LocalDateTime toDate = LocalDateTime.now().toLocalDate().atStartOfDay().minusSeconds(1);
+		fromDate = LocalDateTime.of(2017, 5, 24, 00, 00, 00);
+		toDate = LocalDateTime.of(2017, 5, 24, 23, 59, 59);
 		String metricName = PerPortalConstants.NR_METRICS[1];
 
 		String metricValue = PerPortalConstants.NEW_RELIC_AVG_RESP_TIME_VALUE;
@@ -238,7 +242,7 @@ public class NewRelicTest {
 			assertNotNull(serviceResponse.getNewRelicResponse());
 			nrResponseAsJSON = convertToJSONNewRelicResponse(serviceResponse.getNewRelicResponse());
 			assertNotNull(nrResponseAsJSON);
-			addDataEntry();
+			addDataEntry(fromDate);
 		} catch (Exception e) {
 			System.err.println("Exception: " + e);
 			fail(e.getMessage());
@@ -271,9 +275,17 @@ public class NewRelicTest {
 		return mongoDocument.toJson();
 	}
 
-	private boolean addDataEntry() throws IOException{
+	private boolean addDataEntry(LocalDateTime date) throws IOException{
 		Path filePath;
-		Path path = Paths.get(defaultFilePath + File.separator + "nrdaily.txt");
+		String monthValue;
+		int month=fromDate.getMonthValue();
+		if(month<9){
+			monthValue="0"+month;
+		}
+		else{
+			monthValue=String.valueOf(month);
+		}
+		Path path = Paths.get(defaultFilePath + File.separator + "nrdaily_"+fromDate.getYear()+"_"+monthValue+"_"+fromDate.getDayOfMonth()+".txt");
 		try {
 			if (path.toFile().exists()) {
 
