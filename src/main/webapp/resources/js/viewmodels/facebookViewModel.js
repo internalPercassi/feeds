@@ -33,4 +33,9 @@ var facebookViewModel = function () {
         _that._setFilters();
         facebookController.getCSV();
     }
+
+    this.getExcel = function () {
+        _that._setFilters();
+        facebookController.getExcel();
+    }
 };

@@ -122,10 +122,7 @@ var historyController = function () {
     var _openFile = function (element) {
         var data = historyTable.row($(element).parents('tr')).data();
         var collectionName = data[2];
-        appConstants.app.bind(collectionName, function (e, data) {
-            this.redirect('#/' + data[2], data[0]);
-        });
-        appConstants.app.trigger(collectionName, data);
+        window.location.href = '#/' + collectionName+"/"+data[0];
     };
 
     var _removeFile = function (element) {

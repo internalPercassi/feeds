@@ -47,6 +47,10 @@ var facebookController = function () {
         tableFactory.downloadCsv(collectionName);
     };
     
+    var _getExcel = function () {
+        tableFactory.downloadExcel(collectionName);
+    };
+    
     var _setViewModel = function (vm) {
         _that.vm = vm;
     };
@@ -66,6 +70,9 @@ var facebookController = function () {
         },
         getCSV: function () {
             _getCSV();
+        },
+        getExcel: function () {
+            _getExcel();
         },
         loadDataTable: function (md5, viewModel) {
             _loadDataTable(md5, viewModel);

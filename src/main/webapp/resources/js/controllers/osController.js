@@ -8,7 +8,7 @@ var osController = function () {
         pageable: true,
         columnDefs: [
             {
-                target: [0],
+                targets: [0],
                 visible: false,
             }
         ],
@@ -25,6 +25,10 @@ var osController = function () {
 
     var _getCSV = function () {
         tableFactory.downloadCsv(collectionName);
+    };
+    
+    var _getExcel = function () {
+        tableFactory.downloadExcel(collectionName);
     };
 
     var _setViewModel = function (vm) {
@@ -47,6 +51,9 @@ var osController = function () {
         },
         getCSV: function () {
             _getCSV();
+        },
+        getExcel: function () {
+            _getExcel();
         },
         loadDataTable: function (md5, viewModel) {
             _loadDataTable(md5, viewModel);

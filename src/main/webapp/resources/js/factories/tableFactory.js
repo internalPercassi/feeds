@@ -69,10 +69,21 @@ var tableFactory = function () {
         form$.submit();
         form$.remove();
     };
-
+    
+    var _downloadExcel = function (collectionName) {
+        var url = urlFactory.getXls(collectionName, filterFactory.getFilters());
+        var form$ = $('<form/>').attr("method", "post");
+        form$.attr('action', url);
+        $(document.body).append(form$);
+        form$.submit();
+        form$.remove();
+    };
     return {
         downloadCsv: function (collectionName) {
             return _downloadCsv(collectionName);
+        },
+        downloadExcel: function (collectionName) {
+            return _downloadExcel(collectionName);
         },
         getRowsForDatatables: function (jsonData) {
             return _getRowsForDatatables(jsonData);

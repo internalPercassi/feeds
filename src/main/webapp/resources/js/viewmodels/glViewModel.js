@@ -66,4 +66,9 @@ var glViewModel = function () {
         _that._setFilters();
         glController.getCSV();
     }
+    
+    this.getExcel = function () {
+        _that._setFilters();
+        glController.getExcel();
+    }
 };

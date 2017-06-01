@@ -8,6 +8,7 @@ var filterFactory = function () {
 			return;
 		}
 		
+                searchVal = searchVal.trim();
 		var filter = {
 			field: field,
 			searchOperator: searchOperator,

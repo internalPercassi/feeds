@@ -40,114 +40,117 @@ import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
 import it.percassi.perparser.utils.PerPortalUtils;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RestController
 public class PerPerserController {
 
-	@Autowired
-	@Qualifier("parserFacade")
-	private ParserFacade parserFacade;
+    @Autowired
+    @Qualifier("parserFacade")
+    private ParserFacade parserFacade;
 
-	@Autowired
-	@Qualifier("queryFacade")
-	private QueryFacade queryFacade;
+    @Autowired
+    @Qualifier("queryFacade")
+    private QueryFacade queryFacade;
 
-	@Autowired
-	@Qualifier("csvFacade")
-	private CsvFacade cvsFacade;
+    @Autowired
+    @Qualifier("csvFacade")
+    private CsvFacade cvsFacade;
 
-	private final static Logger LOG = LogManager.getLogger(PerPerserController.class);
-	private final static MediaType TEXT_CSV_TYPE = new MediaType("text", "csv");
+    private final static Logger LOG = LogManager.getLogger(PerPerserController.class);
+    private final static MediaType TEXT_CSV_TYPE = new MediaType("text", "csv");
+    private final static MediaType XLS_TYPE = new MediaType("application", "vnd.ms-excel");
 
-	@PostMapping(path = "/parseFile", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> uploadFile(UploadFileControllerRequest request, BindingResult bindingResult)
-			throws IOException, NotValidFileException {
-		final UploadFileValidator uploadValidator = new UploadFileValidator();
-		uploadValidator.validate(request, bindingResult);
+    @PostMapping(path = "/parseFile", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> uploadFile(UploadFileControllerRequest request, BindingResult bindingResult)
+            throws IOException, NotValidFileException {
+        final UploadFileValidator uploadValidator = new UploadFileValidator();
+        uploadValidator.validate(request, bindingResult);
 
-		if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
 
-			List<ObjectError> errors = bindingResult.getAllErrors();
+            List<ObjectError> errors = bindingResult.getAllErrors();
 
-			final String errorMessage = PerPortalUtils.generateErrorMessage(errors);
-			final BaseControllerResponse response = new BaseControllerResponse(errorMessage, HttpStatus.BAD_REQUEST);
-			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
-		}
+            final String errorMessage = PerPortalUtils.generateErrorMessage(errors);
+            final BaseControllerResponse response = new BaseControllerResponse(errorMessage, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
+        }
 
-		final MultipartFile file = request.getUploadedFile();
-		final String fileType = request.getFileType();
-		final String fileName = file.getOriginalFilename();
-		final String localeStr = request.getLocaleCod();
+        final MultipartFile file = request.getUploadedFile();
+        final String fileType = request.getFileType();
+        final String fileName = file.getOriginalFilename();
+        final String localeStr = request.getLocaleCod();
 
-		byte[] bytes = IOUtils.toByteArray(file.getInputStream());
-		Locale locale = LocaleUtils.toLocale(localeStr);
-		final String md5 = parserFacade.parseAndSave(fileName, fileType, locale, bytes);
-		LOG.info("md5 of {}  is: {} ", fileName, md5);
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
+        byte[] bytes = IOUtils.toByteArray(file.getInputStream());
+        Locale locale = LocaleUtils.toLocale(localeStr);
+        final String md5 = parserFacade.parseAndSave(fileName, fileType, locale, bytes);
+        LOG.info("md5 of {}  is: {} ", fileName, md5);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-	@PostMapping("/getDocuments")
-	public ResponseEntity<String> getDocuments(GetDocumentsRequest request, BindingResult bindingResult)
-			throws IOException, NumberFormatException, NoSuchFieldException, NotValidFilterException, ParseException {
+    @PostMapping("/getDocuments")
+    public ResponseEntity getDocuments(GetDocumentsRequest request, BindingResult bindingResult)
+            throws IOException, NumberFormatException, NoSuchFieldException, NotValidFilterException, ParseException {
 
-		LOG.info("Request is {}", request.toString());
+        LOG.info("Request is {}", request.toString());
 
-		final GetDocumentsRequestValidator getDocumentsRequestValidator = new GetDocumentsRequestValidator();
+        final GetDocumentsRequestValidator getDocumentsRequestValidator = new GetDocumentsRequestValidator();
 
-		getDocumentsRequestValidator.validate(request, bindingResult);
+        getDocumentsRequestValidator.validate(request, bindingResult);
 
-		if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
 
-			List<ObjectError> errors = bindingResult.getAllErrors();
-			final String errorMessage = PerPortalUtils.generateErrorMessage(errors);
-			final BaseControllerResponse response = new BaseControllerResponse(errorMessage, HttpStatus.BAD_REQUEST);
-			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
-		}
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            final String errorMessage = PerPortalUtils.generateErrorMessage(errors);
+            final BaseControllerResponse response = new BaseControllerResponse(errorMessage, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(response.getMessage(), response.getErrorCode());
+        }
 
-		final JSONObject jsonObj = queryFacade.getDocs(request);
+        final JSONObject jsonObj = queryFacade.getDocs(request);
 
-		if (request.isGetCsv()) {
+        if (request.isCsv()) {
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setContentType(TEXT_CSV_TYPE);
+            DateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            String csvFileName = request.getCollectionName()+sdf.format(new Date())+".csv";
+            httpHeader.setContentDispositionFormData("Content-Disposition", csvFileName);
 
-			HttpHeaders httpHeader = new HttpHeaders();
-			httpHeader.setContentType(TEXT_CSV_TYPE);
-			httpHeader.setContentDispositionFormData("Content-Disposition", "parParser.csv");
+            StringBuffer buf = cvsFacade.getCvs((JSONArray) jsonObj.get("data"));
 
-			StringBuffer buf = cvsFacade.getCvs((JSONArray) jsonObj.get("data"));
+            return new ResponseEntity(buf.toString(), httpHeader, HttpStatus.OK);
+        } else {
+            return new ResponseEntity(JSON.serialize(jsonObj), HttpStatus.OK);
+        }
 
-			return new ResponseEntity<String>(buf.toString(), httpHeader, HttpStatus.OK);
+    }
+    @PostMapping("/deleteUploadedFile")
+    public ResponseEntity<String> deleteFileUploaded(@RequestBody DeleteDocumentRequest request) throws Exception {
+        String message;
+        final ObjectMapper objectMapper = new ObjectMapper();
+        if (request == null || StringUtils.isBlank(request.getMd5()) || StringUtils.isBlank(request.getFileType())) {
+            return new ResponseEntity<String>("Request not valid ", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            boolean deleteSuccess = queryFacade.deleteDocument(request.getMd5(), request.getFileType());
+            if (deleteSuccess) {
+                message = "Document " + request.getMd5() + " deleted";
 
-		} else {
-			return new ResponseEntity<String>(JSON.serialize(jsonObj), HttpStatus.OK);
-		}
+                final BaseControllerResponse response = new BaseControllerResponse(
+                        objectMapper.writeValueAsString(message), HttpStatus.OK);
+                return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
+            } else {
+                message = "Document not found";
+                final BaseControllerResponse response = new BaseControllerResponse(
+                        objectMapper.writeValueAsString(message), HttpStatus.OK);
+                return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
+            }
+        } catch (Exception e) {
+            final BaseControllerResponse response = new BaseControllerResponse(e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
 
-	}
-
-	@PostMapping("/deleteUploadedFile")
-	public ResponseEntity<String> deleteFileUploaded(@RequestBody DeleteDocumentRequest request) throws Exception {
-		String message;
-		final ObjectMapper objectMapper = new ObjectMapper();
-		if (request == null || StringUtils.isBlank(request.getMd5()) || StringUtils.isBlank(request.getFileType())) {
-			return new ResponseEntity<String>("Request not valid ", HttpStatus.BAD_REQUEST);
-		}
-		try {
-			boolean deleteSuccess = queryFacade.deleteDocument(request.getMd5(), request.getFileType());
-			if (deleteSuccess) {
-				message = "Document " + request.getMd5() + " deleted";
-
-				final BaseControllerResponse response = new BaseControllerResponse(
-						objectMapper.writeValueAsString(message), HttpStatus.OK);
-				return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
-			} else {
-				message = "Document not found";
-				final BaseControllerResponse response = new BaseControllerResponse(
-						objectMapper.writeValueAsString(message), HttpStatus.OK);
-				return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
-			}
-		} catch (Exception e) {
-			final BaseControllerResponse response = new BaseControllerResponse(e.getMessage(),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-			return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
-
-		}
-	}
+        }
+    }
 }

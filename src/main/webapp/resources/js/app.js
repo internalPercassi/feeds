@@ -3,7 +3,7 @@ var app = $.sammy('#app', function () {
     this.use('Template');
     this.get('#/', function (context) {});
     this.vm;
-    
+
     this.get('#/FacebookProduct/:id', function (context) {
         context.app.swap('');
         var md5 = context.params['id'];
@@ -12,7 +12,9 @@ var app = $.sammy('#app', function () {
                     this.vm = new facebookViewModel();
                     loadView(response, this.vm);
                     filterFactory.reset();
-                    setTimeout(function(){facebookController.loadDataTable(md5, this.vm)},200);
+                    setTimeout(function () {
+                        facebookController.loadDataTable(md5, this.vm)
+                    }, 200);
                 });
     });
 
@@ -24,19 +26,27 @@ var app = $.sammy('#app', function () {
                     this.vm = new glViewModel();
                     loadView(response, this.vm);
                     filterFactory.reset();
-                    setTimeout(function(){glController.loadDataTable(md5, this.vm)},200);
+                    setTimeout(function () {
+                        glController.loadDataTable(md5, this.vm)
+                    }, 200);
                 });
 
     });
 
     this.get('#/OS/:id', function (context) {
+        console.log("App.js OS start");
         context.app.swap('');
         var md5 = context.params['id'];
         context.load('resources/views/pages/os.template')
                 .then(function (response) {
                     this.vm = new osViewModel()
                     loadView(response, this.vm);
-                    setTimeout(function(){osController.loadDataTable(md5, this.vm)},200);
+                    filterFactory.reset();
+                    setTimeout(
+                            function () {
+                                osController.loadDataTable(md5, this.vm)
+                            }
+                    , 200);
                 });
     });
 

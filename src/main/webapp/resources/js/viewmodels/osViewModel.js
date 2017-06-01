@@ -29,9 +29,13 @@ var osViewModel = function () {
         var physicalInventory = _that.filters.physicalInventory();
         var orderStatus = _that.filters.orderStatus();
         var replenishmentLevel = _that.filters.replenishmentLevel();
-
+        var md5Filter = filterFactory.getFilter("md5");
+        
         filterFactory.reset();
 
+        if (md5Filter) {
+            filterFactory.addFilter(md5Filter.field, md5Filter.searchOperator, md5Filter.searchVal);
+        }
         if (productCode) {
             filterFactory.addFilter("productCode", "$eq", productCode);
         }
@@ -70,5 +74,10 @@ var osViewModel = function () {
     this.getCSV = function () {
         _that._setFilters();
         osController.getCSV();
+    }
+
+    this.getExcel = function () {
+        _that._setFilters();
+        osController.getExcel();
     }
 };
