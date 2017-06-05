@@ -12,243 +12,245 @@ public class FacebookFeed extends BaseModel{
 	private String availability;
 	private String condition = "new";
 	private String description;
-	private String imageLink;
+	private String image_link;
 	private String link;
 	private String title;
 	private String price;
 	private String brand = "KIK";
-	private String additionalImageLink;
-	private String ageGroup;
+	private String additional_image_link;
+	private String age_group;
 	private String color;
-	private String expirationDate;
+	private String expiration_date;
 	private String gender;
-	private String itemGroupId;
-	private String googleProductCategory;
+	private String item_group_id;
+	private String google_product_category;
 	private String material;
 	private String pattern;
-	private String productType;
-	private String salePrice;
+	private String product_type;
+	private String sale_price;
 	private String shipping;
-	private String shippingWeight;	
-	private String customLabel0;
-	private String customLabel1;
-	private String customLabel2;
-	private String customLabel3;
-	private String customLabel4;
+	private String shipping_weight;	
+	private String custom_label_0;
+	private String custom_label_1;
+	private String custom_label_2;
+	private String custom_label_3;
+	private String custom_label_4;
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getAvailability() {
-		return availability;
-	}
+    public String getAvailability() {
+        return availability;
+    }
 
-	public void setAvailability(String availability) {
-		this.availability = availability;
-	}
+    public void setAvailability(String availability) {
+        this.availability = availability;
+    }
 
-	public String getCondition() {
-		return condition;
-	}
+    public String getCondition() {
+        return condition;
+    }
 
-	public void setCondition(String condition) {
-		this.condition = condition;
-	}
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getImageLink() {
-		return imageLink;
-	}
+    public String getImage_link() {
+        return image_link;
+    }
 
-	public void setImageLink(String imageLink) {
-		this.imageLink = imageLink;
-	}
+    public void setImage_link(String image_link) {
+        this.image_link = image_link;
+    }
 
-	public String getLink() {
-		return link;
-	}
+    public String getLink() {
+        return link;
+    }
 
-	public void setLink(String link) {
-		this.link = link;
-	}
+    public void setLink(String link) {
+        this.link = link;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getPrice() {
-		return price;
-	}
+    public String getPrice() {
+        return price;
+    }
 
-	public void setPrice(String price) {
-		this.price = price;
-	}
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
-	public String getBrand() {
-		return brand;
-	}
+    public String getBrand() {
+        return brand;
+    }
 
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
 
-	public String getAdditionalImageLink() {
-		return additionalImageLink;
-	}
+    public String getAdditional_image_link() {
+        return additional_image_link;
+    }
 
-	public void setAdditionalImageLink(String additionalImageLink) {
-		this.additionalImageLink = additionalImageLink;
-	}
+    public void setAdditional_image_link(String additional_image_link) {
+        this.additional_image_link = additional_image_link;
+    }
 
-	public String getAgeGroup() {
-		return ageGroup;
-	}
+    public String getAge_group() {
+        return age_group;
+    }
 
-	public void setAgeGroup(String ageGroup) {
-		this.ageGroup = ageGroup;
-	}
+    public void setAge_group(String age_group) {
+        this.age_group = age_group;
+    }
 
-	public String getColor() {
-		return color;
-	}
+    public String getColor() {
+        return color;
+    }
 
-	public void setColor(String color) {
-		this.color = color;
-	}
+    public void setColor(String color) {
+        this.color = color;
+    }
 
-	public String getExpirationDate() {
-		return expirationDate;
-	}
+    public String getExpiration_date() {
+        return expiration_date;
+    }
 
-	public void setExpirationDate(String expirationDate) {
-		this.expirationDate = expirationDate;
-	}
+    public void setExpiration_date(String expiration_date) {
+        this.expiration_date = expiration_date;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	public String getItemGroupId() {
-		return itemGroupId;
-	}
+    public String getItem_group_id() {
+        return item_group_id;
+    }
 
-	public void setItemGroupId(String itemGroupId) {
-		this.itemGroupId = itemGroupId;
-	}
+    public void setItem_group_id(String item_group_id) {
+        this.item_group_id = item_group_id;
+    }
 
-	public String getGoogleProductCategory() {
-		return googleProductCategory;
-	}
+    public String getGoogle_product_category() {
+        return google_product_category;
+    }
 
-	public void setGoogleProductCategory(String googleProductCategory) {
-		this.googleProductCategory = googleProductCategory;
-	}
+    public void setGoogle_product_category(String google_product_category) {
+        this.google_product_category = google_product_category;
+    }
 
-	public String getMaterial() {
-		return material;
-	}
+    public String getMaterial() {
+        return material;
+    }
 
-	public void setMaterial(String material) {
-		this.material = material;
-	}
+    public void setMaterial(String material) {
+        this.material = material;
+    }
 
-	public String getPattern() {
-		return pattern;
-	}
+    public String getPattern() {
+        return pattern;
+    }
 
-	public void setPattern(String pattern) {
-		this.pattern = pattern;
-	}
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
 
-	public String getProductType() {
-		return productType;
-	}
+    public String getProduct_type() {
+        return product_type;
+    }
 
-	public void setProductType(String productType) {
-		this.productType = productType;
-	}
+    public void setProduct_type(String product_type) {
+        this.product_type = product_type;
+    }
 
-	public String getSalePrice() {
-		return salePrice;
-	}
+    public String getSale_price() {
+        return sale_price;
+    }
 
-	public void setSalePrice(String salePrice) {
-		this.salePrice = salePrice;
-	}
+    public void setSale_price(String sale_price) {
+        this.sale_price = sale_price;
+    }
 
-	public String getShipping() {
-		return shipping;
-	}
+    public String getShipping() {
+        return shipping;
+    }
 
-	public void setShipping(String shipping) {
-		this.shipping = shipping;
-	}
+    public void setShipping(String shipping) {
+        this.shipping = shipping;
+    }
 
-	public String getShippingWeight() {
-		return shippingWeight;
-	}
+    public String getShipping_weight() {
+        return shipping_weight;
+    }
 
-	public void setShippingWeight(String shippingWeight) {
-		this.shippingWeight = shippingWeight;
-	}
+    public void setShipping_weight(String shipping_weight) {
+        this.shipping_weight = shipping_weight;
+    }
 
-	public String getCustomLabel0() {
-		return customLabel0;
-	}
+    public String getCustom_label_0() {
+        return custom_label_0;
+    }
 
-	public void setCustomLabel0(String customLabel0) {
-		this.customLabel0 = customLabel0;
-	}
+    public void setCustom_label_0(String custom_label_0) {
+        this.custom_label_0 = custom_label_0;
+    }
 
-	public String getCustomLabel1() {
-		return customLabel1;
-	}
+    public String getCustom_label_1() {
+        return custom_label_1;
+    }
 
-	public void setCustomLabel1(String customLabel1) {
-		this.customLabel1 = customLabel1;
-	}
+    public void setCustom_label_1(String custom_label_1) {
+        this.custom_label_1 = custom_label_1;
+    }
 
-	public String getCustomLabel2() {
-		return customLabel2;
-	}
+    public String getCustom_label_2() {
+        return custom_label_2;
+    }
 
-	public void setCustomLabel2(String customLabel2) {
-		this.customLabel2 = customLabel2;
-	}
+    public void setCustom_label_2(String custom_label_2) {
+        this.custom_label_2 = custom_label_2;
+    }
 
-	public String getCustomLabel3() {
-		return customLabel3;
-	}
+    public String getCustom_label_3() {
+        return custom_label_3;
+    }
 
-	public void setCustomLabel3(String customLabel3) {
-		this.customLabel3 = customLabel3;
-	}
+    public void setCustom_label_3(String custom_label_3) {
+        this.custom_label_3 = custom_label_3;
+    }
 
-	public String getCustomLabel4() {
-		return customLabel4;
-	}
+    public String getCustom_label_4() {
+        return custom_label_4;
+    }
 
-	public void setCustomLabel4(String customLabel4) {
-		this.customLabel4 = customLabel4;
-	}		
+    public void setCustom_label_4(String custom_label_4) {
+        this.custom_label_4 = custom_label_4;
+    }
+
+	
 }

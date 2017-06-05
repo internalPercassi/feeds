@@ -100,17 +100,17 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
                     distinctCat.add(tmp);
                     try {
                         googleTaxonomy = googleTaxonomySource.getMessage(tmp, null, locale);
-                        ret.setGoogleProductCategory(googleTaxonomy);
+                        ret.setGoogle_product_category(googleTaxonomy);
                     } catch (Exception e) {
                         googleTaxonomy = googleTaxonomySource.getMessage("DEFAULT", null, locale);
-                        ret.setGoogleProductCategory(googleTaxonomy);
+                        ret.setGoogle_product_category(googleTaxonomy);
                     }
                     break;
                 case 16:
-                    ret.setProductType(tmp);
+                    ret.setProduct_type(tmp);
                     break;
                 case 17:
-                    ret.setImageLink(tmp);
+                    ret.setImage_link(tmp);
                     break;
                 case 20:
                     FacebookAvailability availabityTmp = AppEnum.FacebookAvailability.fromString(tmp);
@@ -121,7 +121,7 @@ public class FacebookProductParser extends BaseParser<FacebookFeed> {
                     ret.setAvailability(availabityTmp.getFbCode());
                     break;
                 case 23:
-                    ret.setItemGroupId(tmp);
+                    ret.setItem_group_id(tmp);
                     break;
                 case 27:
                     ret.setColor(tmp);
