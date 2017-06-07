@@ -7,13 +7,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class GetDocumentsRequest {
 
-    private Integer length = 100000;
+    private Integer length;
 
     private String collectionName;
 
     private String[] exclude;
 
-    private Integer start = 0;
+    private Integer start;
 
     private String filters;
 

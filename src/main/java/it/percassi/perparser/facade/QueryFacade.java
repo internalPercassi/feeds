@@ -30,39 +30,40 @@ import it.percassi.perparser.service.mongo.MongoService;
 @Service("queryFacade")
 public class QueryFacade {
 
-	private final static Logger LOG = LogManager.getLogger(QueryFacade.class);
+    private final static Logger LOG = LogManager.getLogger(QueryFacade.class);
 
-	@Autowired
-	MongoService mongoService;
+    @Autowired
+    MongoService mongoService;
 
-	public JSONObject getDocs(GetDocumentsRequest request) throws IOException, NoSuchFieldException, NotValidFilterException, ParseException {
-		List<MongodbFilter> filters = buildFilterList(request.getFilters());
-		MongoSortConfig sortConfig = new MongoSortConfig(request.getSortField(), request.getSortType());
-		MongoPaginationConfig pagConfig = new MongoPaginationConfig(request.getStart(), request.getLength());
-		return mongoService.getDocs(request.getCollectionName(), filters, request.getExclude(), sortConfig, pagConfig);
-	}
+    public JSONObject getDocs(GetDocumentsRequest request) throws IOException, NoSuchFieldException, NotValidFilterException, ParseException {
+        List<MongodbFilter> filters = buildFilterList(request.getFilters());
+        MongoSortConfig sortConfig = new MongoSortConfig(request.getSortField(), request.getSortType());
+        MongoPaginationConfig pagConfig = null;
+        if (request.getStart() != null && request.getLength() != null) {
+            pagConfig = new MongoPaginationConfig(request.getStart(), request.getLength());
+        }
+        return mongoService.getDocs(request.getCollectionName(), filters, request.getExclude(), sortConfig, pagConfig);
+    }
 
-	private static List<MongodbFilter> buildFilterList(String jsonfilters) throws IOException, NotValidFilterException {
-		List<MongodbFilter> ret = new ArrayList<MongodbFilter>();
-		if (StringUtils.isBlank(jsonfilters) || StringUtils.equals(jsonfilters, "{}")) {
-			return ret;
-		}
-		ObjectMapper objectMapper = new ObjectMapper();
-		ret = objectMapper.readValue(jsonfilters, new TypeReference<List<MongodbFilter>>() {
-		});
-		for (MongodbFilter filter : ret) {
-			AppEnum.MongoFilterOperator.fromString(filter.getSearchOperator());//throw an exception if the operator is not valid
-		}
-		return ret;
-	}
+    private static List<MongodbFilter> buildFilterList(String jsonfilters) throws IOException, NotValidFilterException {
+        List<MongodbFilter> ret = new ArrayList<MongodbFilter>();
+        if (StringUtils.isBlank(jsonfilters) || StringUtils.equals(jsonfilters, "{}")) {
+            return ret;
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        ret = objectMapper.readValue(jsonfilters, new TypeReference<List<MongodbFilter>>() {
+        });
+        for (MongodbFilter filter : ret) {
+            AppEnum.MongoFilterOperator.fromString(filter.getSearchOperator());//throw an exception if the operator is not valid
+        }
+        return ret;
+    }
 
-	public boolean deleteDocument(String md5,String fileType) throws IOException{
-		if( mongoService.deleteDocument(md5, fileType)){
-			
-			return mongoService.deleteDocument(md5, AppEnum.FileType.UPLOADED_FILE.getCode());									
-		}
-		return false;
-		
-				
-	}
+    public boolean deleteDocument(String md5, String fileType) throws IOException {
+        if (mongoService.deleteDocument(md5, fileType)) {
+            return mongoService.deleteDocument(md5, AppEnum.FileType.UPLOADED_FILE.getCode());
+        }
+        return false;
+
+    }
 }

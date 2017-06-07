@@ -1,8 +1,9 @@
 package it.percassi.perparser.controller.request;
 
-import it.percassi.perparser.orchestrator.BaseRequest;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class DeleteDocumentRequest extends BaseRequest{
+public class DeleteDocumentRequest {
 	
 	private String md5;
 	private String fileType;
@@ -18,5 +19,9 @@ public class DeleteDocumentRequest extends BaseRequest{
 	}
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
+	}
+        
+        public String toString() {
+		return ReflectionToStringBuilder.toString(this,ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 }

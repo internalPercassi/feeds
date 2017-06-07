@@ -9,9 +9,7 @@ import it.percassi.perparser.controller.request.GetDocumentsRequest;
 import it.percassi.perparser.controller.validator.GetDocumentsRequestValidator;
 import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.facade.CsvFacade;
-import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
-import it.percassi.perparser.utils.PerPortalUtils;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DateFormat;
@@ -27,9 +25,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,7 +59,7 @@ public class XlsController {
 
         if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
-            final String errorMessage = PerPortalUtils.generateErrorMessage(errors);
+            final String errorMessage = ControllerUtils.generateErrorMessage(errors);
             response.sendError(HttpStatus.BAD_REQUEST.value(), errorMessage);
         }
 

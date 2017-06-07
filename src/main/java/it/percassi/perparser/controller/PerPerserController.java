@@ -25,13 +25,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.util.JSON;
 
 import it.percassi.perparser.controller.request.DeleteDocumentRequest;
 import it.percassi.perparser.controller.request.GetDocumentsRequest;
 import it.percassi.perparser.controller.request.UploadFileControllerRequest;
-import it.percassi.perparser.controller.response.BaseControllerResponse;
 import it.percassi.perparser.controller.validator.GetDocumentsRequestValidator;
 import it.percassi.perparser.controller.validator.UploadFileValidator;
 import it.percassi.perparser.exception.NotValidFileException;
@@ -39,7 +37,6 @@ import it.percassi.perparser.exception.NotValidFilterException;
 import it.percassi.perparser.facade.CsvFacade;
 import it.percassi.perparser.facade.ParserFacade;
 import it.percassi.perparser.facade.QueryFacade;
-import it.percassi.perparser.utils.PerPortalUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -73,9 +70,8 @@ public class PerPerserController {
 
             List<ObjectError> errors = bindingResult.getAllErrors();
 
-            final String errorMessage = PerPortalUtils.generateErrorMessage(errors);
-            final BaseControllerResponse response = new BaseControllerResponse(errorMessage, HttpStatus.BAD_REQUEST);
-            return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
+            final String errorMessage = ControllerUtils.generateErrorMessage(errors);
+            return new ResponseEntity<String>(errorMessage, HttpStatus.BAD_REQUEST);
         }
 
         final MultipartFile file = request.getUploadedFile();
@@ -103,9 +99,8 @@ public class PerPerserController {
         if (bindingResult.hasErrors()) {
 
             List<ObjectError> errors = bindingResult.getAllErrors();
-            final String errorMessage = PerPortalUtils.generateErrorMessage(errors);
-            final BaseControllerResponse response = new BaseControllerResponse(errorMessage, HttpStatus.BAD_REQUEST);
-            return new ResponseEntity(response.getMessage(), response.getErrorCode());
+            final String errorMessage = ControllerUtils.generateErrorMessage(errors);
+            return new ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST);
         }
 
         final JSONObject jsonObj = queryFacade.getDocs(request);
@@ -128,7 +123,6 @@ public class PerPerserController {
     @PostMapping("/deleteUploadedFile")
     public ResponseEntity<String> deleteFileUploaded(@RequestBody DeleteDocumentRequest request) throws Exception {
         String message;
-        final ObjectMapper objectMapper = new ObjectMapper();
         if (request == null || StringUtils.isBlank(request.getMd5()) || StringUtils.isBlank(request.getFileType())) {
             return new ResponseEntity<String>("Request not valid ", HttpStatus.BAD_REQUEST);
         }
@@ -136,20 +130,13 @@ public class PerPerserController {
             boolean deleteSuccess = queryFacade.deleteDocument(request.getMd5(), request.getFileType());
             if (deleteSuccess) {
                 message = "Document " + request.getMd5() + " deleted";
-
-                final BaseControllerResponse response = new BaseControllerResponse(
-                        objectMapper.writeValueAsString(message), HttpStatus.OK);
-                return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
+                return new ResponseEntity<String>(message, HttpStatus.OK);
             } else {
                 message = "Document not found";
-                final BaseControllerResponse response = new BaseControllerResponse(
-                        objectMapper.writeValueAsString(message), HttpStatus.OK);
-                return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
+                return new ResponseEntity<String>(message, HttpStatus.OK);
             }
         } catch (Exception e) {
-            final BaseControllerResponse response = new BaseControllerResponse(e.getMessage(),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-            return new ResponseEntity<String>(response.getMessage(), response.getErrorCode());
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
     }

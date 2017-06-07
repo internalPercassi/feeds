@@ -33,7 +33,8 @@ public class MongoDocRepository extends BaseRepository {
 
     private final static Logger LOG = LogManager.getLogger(MongoDocRepository.class);
     private final static String UPLOAD_FILE_COLLECTION = "uploadedFile";
-
+    
+    
     public void saveDocs(String collectionName, List<BaseModel> docs, String fileType) throws IOException {
         List<Document> jsonToInsert = new ArrayList<Document>();
         for (BaseModel ff : docs) {
@@ -69,7 +70,7 @@ public class MongoDocRepository extends BaseRepository {
         bexcludes.append("_id", false);
 
         int start = 0;
-        int length = 100;
+        int length = 100000;
         if (pagConfig != null) {
             if (pagConfig.getStart() != null) {
                 start = pagConfig.getStart();

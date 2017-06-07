@@ -45,7 +45,11 @@ public class MongoService {
         BasicDBObject filter = buildFilter(filters, collectionName);
         BasicDBObject sort = buildSort(sortConfig);
         JSONArray jarr = mongoRepository.getDocs(collectionName, filter, excludes, sort, pagConfig);
-        Long count = mongoRepository.getDocCount(collectionName, filter);
+        Long count = (long)jarr.size();
+        if (pagConfig != null) {
+            LOG.debug("calling getDocCount from pagination");
+            count = mongoRepository.getDocCount(collectionName, filter);
+        } 
         JSONObject ret = new JSONObject();
         ret.put("data", jarr);
         ret.put("recordsTotal", count);
