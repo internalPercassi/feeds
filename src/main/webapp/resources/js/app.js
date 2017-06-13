@@ -7,6 +7,7 @@ var app = $.sammy('#app', function () {
     this.get('#/FacebookProduct/:id', function (context) {
         context.app.swap('');
         var md5 = context.params['id'];
+        $('#loading').hide();
         context.load('resources/views/pages/facebook.template')
                 .then(function (response) {
                     this.vm = new facebookViewModel();
@@ -21,6 +22,7 @@ var app = $.sammy('#app', function () {
     this.get('#/GL/:id', function (context) {
         context.app.swap('');
         var md5 = context.params['id'];
+        $('#loading').hide();
         context.load('resources/views/pages/gl.template')
                 .then(function (response) {
                     this.vm = new glViewModel();
@@ -37,6 +39,7 @@ var app = $.sammy('#app', function () {
         console.log("App.js OS start");
         context.app.swap('');
         var md5 = context.params['id'];
+        $('#loading').hide();
         context.load('resources/views/pages/os.template')
                 .then(function (response) {
                     this.vm = new osViewModel()
@@ -52,6 +55,7 @@ var app = $.sammy('#app', function () {
 
     this.get('#/statistics/', function (context) {
         context.app.swap('');
+        $('#loading').hide();
         context.load('resources/views/pages/statistics.template')
                 .then(function (response) {
                     this.vm = new statisticsViewModel();
@@ -63,6 +67,7 @@ var app = $.sammy('#app', function () {
 
     this.get('#/history/', function (context) {
         context.app.swap('');
+        $('#loading').hide();
         context.load('resources/views/pages/history.template')
                 .then(function (response) {
                     this.vm = new historyViewModel();

@@ -14,13 +14,13 @@ var historyViewModel = function () {
         type: ko.observable('')
     };
     
-    this.dateFrom = ko.observable(moment().add(-30, 'day'));
+    this.dateFrom = ko.observable(moment().add(-365, 'day'));
     this.dateTo = ko.observable(moment());
 
     this.resetFilters = function () {
         _that.filters.name('');
         _that.filters.type(null);
-        _that.dateFrom(moment().add(-30, 'day'));
+        _that.dateFrom(moment().add(-365, 'day'));
         _that.dateTo(moment());
         _that.filteredSearch();
     }
