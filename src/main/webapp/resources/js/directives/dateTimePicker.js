@@ -1,9 +1,9 @@
 ko.bindingHandlers.dateTimePicker = {
     init: function (element, valueAccessor, allBindingsAccessor) {
         //initialize datepicker with some optional options
-        var options = allBindingsAccessor().dateTimePickerOptions || { format: 'DD-MM-YYYY' };
+        var options = allBindingsAccessor().dateTimePickerOptions || {format: 'DD-MM-YYYY'};
         $(element).datetimepicker(options);
-        
+
         //when a user changes the date, update the view model
         ko.utils.registerEventHandler(element, "dp.change", function (event) {
             var value = valueAccessor();
@@ -38,22 +38,22 @@ ko.bindingHandlers.dateTimePicker = {
     }
 };
 
-	ko.bindingHandlers.minDate = {
-	    update: function (element, valueAccessor) {
-	        var value = moment(ko.utils.unwrapObservable(valueAccessor()) || ''),
-	            picker = $(element).data("DateTimePicker");
-	        if (value.isValid() && picker) {
-	            picker.minDate(value.toDate());                
-	        }
-	    }
-	};
+ko.bindingHandlers.minDate = {
+    update: function (element, valueAccessor) {
+        var value = moment(ko.utils.unwrapObservable(valueAccessor()) || ''),
+                picker = $(element).data("DateTimePicker");
+        if (value.isValid() && picker) {
+            picker.minDate(value.toDate());
+        }
+    }
+};
 
-	ko.bindingHandlers.maxDate = {
-	    update: function (element, valueAccessor) {
-	        var value = moment(ko.utils.unwrapObservable(valueAccessor()) || ''),
-	            picker = $(element).data("DateTimePicker");
-	        if (value.isValid() && picker) {
-	            picker.maxDate(value.toDate());  
-	        }
-	    }
-	};
+ko.bindingHandlers.maxDate = {
+    update: function (element, valueAccessor) {
+        var value = moment(ko.utils.unwrapObservable(valueAccessor()) || ''),
+                picker = $(element).data("DateTimePicker");
+        if (value.isValid() && picker) {
+            picker.maxDate(value.toDate());
+        }
+    }
+};

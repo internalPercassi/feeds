@@ -42,10 +42,16 @@ var statisticsViewModel = function () {
     };
 
     this.drawChartDaily = function () {
-        var dateFrom = that.dateFrom().setHours(0, 0, 0, 0);
-        var dateTo = that.dateTo().setHours(23, 59, 59, 0);
+        var dateFrom = that.dateFrom()
+        if (dateFrom) {
+            dateFrom.setHours(0, 0, 0, 0);
+        }
+        var dateTo = that.dateTo()
+        if (dateTo) {
+            dateTo.setHours(23, 59, 59, 0);
+        }
         chartFactory.drawChartDaily(that.chartType, that, dateFrom, dateTo);
-    };  
+    };
 
     this.drawChartWeekly = function () {
         chartFactory.drawChartWeekly(that.chartType, that, true);

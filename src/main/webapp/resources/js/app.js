@@ -69,7 +69,7 @@ var app = $.sammy('#app', function () {
                     historyController.init();
                     historyController.setViewModel(this.vm);
                     loadView(response, this.vm);
-                    historyController.showUploadedFiles();
+                    this.vm.filteredSearch();
                 });
     });
 

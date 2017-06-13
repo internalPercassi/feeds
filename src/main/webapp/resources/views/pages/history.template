@@ -1,57 +1,83 @@
 <div class="row">
-<form id="uploadForm">
-	<h2 class="page-header">Upload</h2>
-	<div class="col-md-3">
-  		<select name="fileType" id="fileType" class="form-control">
-	       <option value="GL">GL File</option>
-	       <option value="OS">OverSelling</option>
-		    <option value="FacebookProduct">Facebook Product</option>
-    		</select>
- 		</div>
- 		<div class="col-md-4">
-  			<div class="input-group col-md-12">
-      			<div class="input-group col-md-12">
-                <input type="text" class="form-control" readonly>
-                <label class="input-group-btn">
-                    <span class="btn btn-default">Browse&hellip; 
-                		<input type="file" style="display: none;" name="uploadedFile" multiple>
-                    </span>
-                 </label>
-            	</div>
-  			</div>
- 		</div>
-	<div class="col-md-2 pull-right">
-	 <input id="uploadBtn" class="btn btn-default form-control" type="button" value="Upload File" onclick="historyController.uploadFile()" disabled/>
-	</div>
-</form>
-</div>	
-</br>
-<div class="row">
-	<h2 class="page-header">Filters</h2>
-	<div class="col-md-3">
-		<label class="control-label">File Name</label>
-		<input type="text" class="form-control" data-bind="textInput: filters.name">
-	</div>
-	<div class="col-md-3">
-		<label class="control-label">Type </label>
-		<select  class="form-control" data-bind="options:types, optionsCaption:'All', optionsText: 'name', value: filters.type">
-		</select>
-	</div>
-	<div class="col-md-9 pull-right no-padding">
-		<div class="col-sm-6 col-md-2 col-xl-2 pull-right">
-			<div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
-		</div>
-		<div class="col-sm-6 col-md-2 col-xl-2 pull-right">
-			<div class="btn btn-default form-control" data-bind="click: filteredSearch">Search</div>
-		</div>
-	</div>		
+    <form id="uploadForm">
+        <h2 class="page-header">Upload</h2>
+        <div class="col-md-3">
+            <select name="fileType" id="fileType" class="form-control">
+                <option value="GL">GL File</option>
+                <option value="OS">OverSelling</option>
+                <option value="FacebookProduct">Facebook Product</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group col-md-12">
+                <div class="input-group col-md-12">
+                    <input type="text" class="form-control" readonly>
+                    <label class="input-group-btn">
+                        <span class="btn btn-default">Browse&hellip; 
+                            <input id="uploadedFileName" type="file" style="display: none;" name="uploadedFile" multiple>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 pull-right">
+            <input id="uploadBtn" class="btn btn-default form-control" type="button" value="Upload File" onclick="historyController.uploadFile()" disabled/>
+        </div>
+    </form>
 </div>
-	
+<br>
 <div class="row">
-	</br>
-	<h2 class="page-header">History</h2>
-	<!-- <div data-bind='historyGrid: gridViewModel'> </div> -->
-	<div class="col-md-12">
-		<table id="historyTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
-	</div>
+    <h2 class="page-header">Filters</h2>
+</div>	
+<div class="row">
+    <div class="col-md-12 serverFilters">
+        <div class="col-md-3">
+            <label class="control-label">File Name</label>
+            <input type="text" class="form-control" data-bind="textInput: filters.name">
+        </div>
+
+        <div class="col-md-3">
+            <label class="control-label">Type </label>
+            <select  class="form-control" data-bind="options:types, optionsCaption:'All', optionsText: 'name', value: filters.type">
+            </select>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <label class="control-label">From</label>
+            <div class="input-group date" data-bind='dateTimePicker: dateFrom, maxDate: dateTo' >
+                <input class="form-control input-group-addon datepicker" onkeydown="return false"/>
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <label class="control-label">To</label>
+            <div class="input-group date" data-bind='dateTimePicker: dateTo, minDate: dateFrom, maxDate: moment()'>
+                <input class="form-control input-group-addon datepicker"  onkeydown="return false"/>
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-9 pull-right no-padding">
+    <div class="col-sm-6 col-md-2 col-xl-2 pull-right">
+        <div class="btn btn-default form-control" data-bind="click: resetFilters">Reset</div>
+    </div>
+    <div class="col-sm-6 col-md-2 col-xl-2 pull-right">
+        <div class="btn btn-default form-control" data-bind="click: filteredSearch">Search</div>
+    </div>
+</div>	
+
+<div class="row">
+    </br>
+    <h2 class="page-header">History</h2>
+    <!-- <div data-bind='historyGrid: gridViewModel'> </div> -->
+    <div class="col-md-12">
+        <table id="historyTable" class="nowrap table table-striped table-bordered hover" cellspacing="0" width="100%"></table>
+    </div>
 </div>				

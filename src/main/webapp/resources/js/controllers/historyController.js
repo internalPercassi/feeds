@@ -139,15 +139,14 @@ var historyController = function () {
             $(selectorId).empty();
         }
         historyTable = $(selectorId).DataTable(tabOpt);
-        var uploadedFileName = $('.input-group').find(':text');
+        var uploadedFileName = $('#uploadedFileName');
         if (uploadedFileName.length) {
             uploadedFileName.val('');
             $('#uploadBtn').attr('disabled', true);
         }
-
-
     };
 
+    
     var deleteFile = function (data) {
         $.ajax({
             url: "deleteUploadedFile",
@@ -160,7 +159,7 @@ var historyController = function () {
             },
             success: function (res) {
                 try {
-                    historyController.showUploadedFiles();
+                    historyController.search();
                     $.notify("File deleted successfully", "success");
                 } catch (e) {
                     $('#loading').hide();

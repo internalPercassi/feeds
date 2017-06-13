@@ -12,22 +12,6 @@ var chartFactory = function () {
         }
     };
 
-    var _toBackEndDataTo = function (aDate) {
-        if (aDate) {
-            return moment(aDate).format('YYYY-MM-DD') + " 23:59";
-        } else {
-            return moment().format('YYYY-MM-DD') + " 23:59";
-        }
-    };
-    
-    var _toBackEndDataFrom = function (aDate) {
-        if (aDate) {
-            return moment(aDate).format('YYYY-MM-DD') + " 00:00";
-        } else {
-            return moment().format('YYYY-MM-DD') + " 00:00";
-        }
-    };
-
     var _drawChartDaily = function (chartType, vm, dateFrom, dateTo) {
         var labels = [];
         var data = [];
@@ -73,7 +57,7 @@ var chartFactory = function () {
             vm.chartData(chartDataTmp);
 
         };
-        documentService.getChartDataDaily(chartType, _toBackEndDataFrom(dateFrom), _toBackEndDataTo(dateTo), drawChartDailyCallBack);
+        documentService.getChartDataDaily(chartType, utilsService.toBackEndDataFrom(dateFrom), utilsService.toBackEndDataTo(dateTo), drawChartDailyCallBack);
     };
 
     var _drawChartWeekly = function (chartType, vm, renderChart) {
