@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
@@ -79,6 +80,7 @@ public class UploadedFileModel implements Serializable {
 //	}
     private static String getMD5(byte[] bytes) throws IOException {
         String md5 = DigestUtils.md5Hex(bytes);
+        LOG.debug("getMD5, buffer length: "+bytes.length);
         return md5;
     }
 
@@ -87,20 +89,20 @@ public class UploadedFileModel implements Serializable {
         try {
             if (AppEnum.FileType.FACEBOOK.getCode().equalsIgnoreCase(this.type)) {
                 // es. nome file: KIK_YYYYMMDDhhmm
-                String inFileNameDate = this.fileName.substring(4);
-                DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+                String inFileNameDate = StringUtils.substring(this.fileName, 4, 12); 
+                DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
                 formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
                 ret = formatter.parse(inFileNameDate);
             } else if (AppEnum.FileType.GL.getCode().equalsIgnoreCase(this.type)) {
                 //GL_KIK_2016100102000309
-                String inFileNameDate = this.fileName.substring(7);
-                DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+                String inFileNameDate = StringUtils.substring(this.fileName, 7, 15);
+                DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
                 formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
                 ret = formatter.parse(inFileNameDate);
             } else if (AppEnum.FileType.OS.getCode().equalsIgnoreCase(this.type)) {
                 //Hybris_OversellingExt_KIK_20170516060024.txt_20170516090921550
-                String inFileNameDate = this.fileName.substring(26);
-                DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+                String inFileNameDate = StringUtils.substring(this.fileName, 26, 34); 
+                DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
                 formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
                 ret = formatter.parse(inFileNameDate);
             }

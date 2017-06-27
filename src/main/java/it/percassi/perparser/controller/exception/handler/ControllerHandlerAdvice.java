@@ -17,7 +17,7 @@ public class ControllerHandlerAdvice {
 	
 	@ExceptionHandler(PerParserException.class)
 	public ResponseEntity<String> perParserExceptionHandler(Exception ex) {
-		LOG.error("Exception occured", ex);
+		LOG.warn(ex.getMessage());
 		return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 
 	}
