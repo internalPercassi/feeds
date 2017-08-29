@@ -24,6 +24,7 @@ public class GLParser extends BaseParser<GLmodel> {
 	private final static Logger LOG = LogManager.getLogger(GLParser.class);
 	private static final int ROW_LENGTH_A = 237;
 	private static final int ROW_LENGTH_B = 224;
+        private static final int ROW_LENGTH_C = 250;
 	
 	@Override
 	public List<GLmodel> parse(InputStream stream, Locale locale) throws IOException, NotValidFileException {
@@ -56,9 +57,9 @@ public class GLParser extends BaseParser<GLmodel> {
 	}
 	
 	public void isLineValid(String line) throws NotValidFileException {
-		if ( line.length() != ROW_LENGTH_A &&  line.length() != ROW_LENGTH_B ) {
+		if ( line.length() != ROW_LENGTH_A &&  line.length() != ROW_LENGTH_B &&  line.length() != ROW_LENGTH_C) {
 			LOG.trace(line);
-			throw new NotValidFileException("Length expected:" + ROW_LENGTH_A + " or " + ROW_LENGTH_B+" , get: " + line.length());
+			throw new NotValidFileException("Length expected:" + ROW_LENGTH_A + " or " + ROW_LENGTH_B+" or " + ROW_LENGTH_C+" , get: " + line.length());
 		}
 		
 		String tmp = line.substring(150, 160).replaceFirst("^0+(?!$)", "").trim();
